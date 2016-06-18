@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<!-- 主数据源 -->
+	<ResourceLink name="jdbc/lsdb"
+            global="jdbc/lsdb"
+            type="javax.sql.DataSource" />
+    <!-- JMS连接工厂 -->
+    <!-- <ResourceLink name="jms/connectionFactory"
+            global="jms/connectionFactory"
+            type="org.apache.activemq.ActiveMQConnectionFactory" /> -->
+	
+	<!-- 行程相关照片存储路径 -->
+	<ResourceLink name="param/tripPhotoPath" global="param/LS/tripPhotoPath" type="java.lang.String" />
+	<!-- 行程相关照片访问路径 -->
+	<ResourceLink name="param/tripPhotoPathHttp" global="param/LS/tripPhotoPathHttp" type="java.lang.String" />
+</Context>

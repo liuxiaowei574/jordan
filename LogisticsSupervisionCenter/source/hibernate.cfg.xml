@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		<property name="show_sql">false</property>
+		<property name="format_sql">true</property>
+		<property name="dialect">
+			org.hibernate.dialect.SQLServerDialect
+		</property>
+		<!-- 配置结果集是否可滚动 -->
+		<property name="jdbc.use_scrollable_resultset">false</property>
+
+		<!-- 配置二级缓存 Station，Role，IpsConfigure -->
+		<property name="hibernate.cache.use_second_level_cache">true</property>
+		<property name="hibernate.cache.use_query_cache">true</property>
+		<property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property>
+	</session-factory>
+</hibernate-configuration>

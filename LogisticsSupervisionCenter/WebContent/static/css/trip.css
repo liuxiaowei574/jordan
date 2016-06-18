@@ -1,0 +1,187 @@
+.upload-delele {
+	margin-left: 5px;
+	cursor: pointer;
+}
+
+.panel-info {
+	border: none;
+	background: none;
+	box-shadow: none;
+}
+
+.panel-info>.panel-heading {
+	border: none;
+	background: none;
+	height: 40px;
+	border-bottom: #ccc solid 1px;
+	padding: 2px 15px 0;
+	border-radius: 5px 5px 0 0;
+}
+
+.panel-title {
+	line-height: 40px;
+	color: #333;
+	font-size: 21px;
+	font-family: 'Helvetica Neue', Helvetica, 'Microsoft Yahei',
+		'Hiragino Sans GB', 'WenQuanYi Micro Hei', sans-serif;
+}
+
+.form-control {
+	height: 30px;
+	padding: 5px 10px;
+	font-size: 12px;
+	line-height: 1.5;
+	border-radius: 3px;
+}
+
+.btn-danger {
+	padding: 4px 24px;
+	/* text-shadow: 0px -1px 0px #ab1109;
+	background: #ec5037;
+	box-shadow: inset 0px 1px 0px #ee7763;
+	border-color: #d32917; */
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	-ms-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+
+.btn-darch {
+	padding: 5px 24px;
+	color: #ffffff;
+	text-shadow: 0px -1px 0px #1b2f40;
+	background: #304351;
+	box-shadow: inset 0px 1px 0px #4A6680;
+	border-color: #29343a;
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	-ms-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+
+.btn-darch:hover {
+	color: #fff;
+}
+
+.progress {
+	/* margin: 5px 15px; */
+	margin: -2px 15px;
+	width: 48px;
+	height: 23px;
+	background: rgba(84, 94, 119, 0.28);
+	position: relative;
+	overflow: visible;
+}
+
+.progress-bar {
+	border-radius: 4px 0 0 4px;
+}
+
+.progress .bar-head {
+	position: absolute;
+	width: 3px;
+	background: rgba(84, 94, 119, 0.28);
+	top: 6px;
+	border-radius: 0 1px 1px 0;
+	display: block;
+	left: 49px;
+	height: 10px;
+}
+
+.progress .percentage {
+	position: absolute;
+	text-align: center;
+	width: 100%;
+	line-height: 23px;
+	color: #333;
+}
+
+.esealNumber-list, .sensorNumber-list {
+	float: left;
+}
+
+.esealNumber-list ul, .sensorNumber-list ul{
+	margin-bottom: 0px;
+}
+
+.esealNumber-list ul li, .sensorNumber-list ul li {
+	/* float: left; */
+	/* padding: 2px; */
+	margin-left: 5px;
+	/* border: #c3ced5 solid 1px; */
+	list-style-type: none;
+}
+
+.thumbnail .caption>p {
+	height: 20px;
+}
+
+.esealNumber-list ul li span, .sensorNumber-list ul li span, .thumbnail .caption p>span
+	{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: block;
+	float: left;
+}
+
+.esealNumber-list ul li span, .sensorNumber-list ul li span {
+	max-width: 130px;
+	padding-right: 5px;
+}
+
+.thumbnail .caption p>span {
+	max-width: calc(100% - 40px);
+}
+
+.esealNumber-list ul li .delete, .sensorNumber-list ul li .delete {
+	margin: 10px 3px;
+}
+
+.esealNumber-list ul li .delete .glyphicon-trash, .sensorNumber-list ul li .delete .glyphicon-trash,
+	.thumbnail .glyphicon-trash {
+	margin-left: 5px;
+}
+
+.status-ok {
+	color: #428bca;
+}
+
+.status-error {
+	color: #FF0000;
+}
+
+#deviceInfo div {
+	text-align: left;
+}
+
+.carousel-inner > .item > img, .carousel-inner > .item > a > img {
+    max-height: 178px;
+    width: 220px;
+    height: auto;
+    overflow: hidden;
+}
+#imageModal.modal.in .modal-dialog {
+    position: absolute;
+    margin: auto;
+    text-align: center;
+    width: auto;
+    height: auto;
+    max-height: 90%;
+    max-width: 90%;
+    overflow-y: hidden;
+    top: 50%;
+    left: 50%;
+    bottom: auto;
+    right: auto;
+    transform: translate(-50%, -50%);
+}
+#imageModal.modal.in .modal-dialog img{
+	max-width: 100%;
+	max-height: 100%;
+}
+table {
+	font-size: 14px;
+}

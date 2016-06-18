@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="struts.i18n.encoding" value="UTF-8"/>
+	<include file="struts-default.xml" />
+	<!--配置struts2应用于开发模式 -->
+	<constant name="struts.devMode" value="false" />
+	<!-- 配置Convention插件自动重加载映射 -->
+	<constant name="struts.convention.classes.reload" value="true" />
+	<!-- 设置result返回页面为项目根目录 -->
+	<constant name="struts.convention.result.path" value="/" />
+	<!-- 设置允许struts2标签访问静态成员 -->
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true" />
+	<!-- <constant name="struts.action.excludePattern" value="/conn/*,/conn/.*" /> -->
+	<constant name="struts.custom.i18n.resources" value="LocalizationResource_dc"/>
+	<!-- 设置最大上传文件 大小为100M -->
+	<constant name="struts.multipart.maxSize" value="102400000"/>
+	<package name="nuctech-struts-base" extends="json-default"
+		abstract="true">
+		<global-results>
+			<result name="exception">/exception.jsp</result>
+			<result name="input">/exception.jsp</result>
+		</global-results>
+		<!-- 例外类型 -->
+		<global-exception-mappings>
+			<exception-mapping name="exception" exception="java.lang.Exception" result="exception" />
+		</global-exception-mappings>
+	</package>
+	
+</struts>
