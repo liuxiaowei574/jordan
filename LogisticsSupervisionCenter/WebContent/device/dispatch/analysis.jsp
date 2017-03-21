@@ -4,13 +4,32 @@
 <!DOCTYPE html>
 <html>
 <head>
+<jsp:include page="/include/include.jsp" />
 	<title><fmt:message key="warehouse.dispatch.title"/></title>
-	<link rel="stylesheet" href="${root}/static/css/bootstrap.css">
-	<link rel="stylesheet" href="${root}/static/css/bootbox.css">
-	<link rel="stylesheet" href="${root}/static/css/style.css">
+	<script type="text/javascript">
+	jQuery.i18n.properties({//加载资浏览器语言对应的资源文件
+        name : 'LocalizationResource_center', //资源文件名称
+        path : _getRootPath() + "/i18n/", //资源文件路径
+        mode : 'map', //用Map的方式使用资源文件中的值
+        language :language,
+        callback : function() {
+        	//alert($.i18n.prop('warehouse.dispatch.success'));
+        }
+    });
+	</script>
+	<script src="${root}/static/js/echarts/echarts.min.js"></script>
+	<script type="text/javascript" src="${root}/device/dispatch/js/analysis.js"></script>
+	<script type="text/javascript" src="${root}/gis/map.js.jsp"></script>
+	<script type="text/javascript">
+		var root = "${root}";
+		var planPortNameArr = ${planPortNameArr };
+		var planDistanceArr = ${planDistanceArr};
+	</script>
 </head>
 <body>
-<%@ include file="../../include/left.jsp" %>
+<%--行程请求推送通知页面 --%>
+<%@ include file="../../include/tripMsgModal.jsp" %>
+<%@ include file="../../include/left.jsp" %> 
 	<div class="row site">
             <div class="wrapper-content margint95 margin60">
             	<div class="col-sm-3 kalb">
@@ -55,7 +74,7 @@
             				<input type="hidden" id="applicationSensorNumber" value="${deviceApplication.sensorNumber }">
             				<input type="hidden" id="applicationLongitude" value="${applicationDepartment.longitude }">
             				<input type="hidden" id="applicationLatitude" value="${applicationDepartment.latitude }">
-            			    <label for="inputEmail3" class="col-sm-3 control-label"><fmt:message key="warehouse.dispatch.demand.port"/>：</label>
+            			    <label for="inputEmail3" class="col-sm-3 control-label"><fmt:message key="warehouse.dispatch.quantity"/>：</label>
             			    <div class="col-sm-9 kaabc">
             			    	<fmt:message key="warehouse.device.elock"/> <b>${deviceApplication.deviceNumber }</b> <fmt:message key="warehouse.device.eseal"/> <b>${deviceApplication.esealNumber }</b><fmt:message key="warehouse.device.sensor"/> <b>${deviceApplication.sensorNumber }</b>
             			    </div>
@@ -65,7 +84,7 @@
 	            		<div class="col-sm-12">
 	            			<div class="panel panel-default">
 	            			  <div class="panel-heading heading_ico04"><fmt:message key="warehouse.device.instock"/></div>
-	            			  <div class="panel-body" id="deviceInventoryCharts">
+	            			  <div class="panel-body" id="deviceInventoryCharts" style="width: 98%;height:380px;overflow-x: hidden;">
 		            			  <%--  <img src="${root }/static/images/tongji_03.png" alt=""> --%>
 	            			  </div>
 	            			</div>
@@ -84,8 +103,8 @@
 	    	            		<div class="col-sm-7">
 	    	            			<div class="panel panel-default">
 	    	            			  <div class="panel-heading heading_ico05"><fmt:message key="warehouse.dispatch.distance.analysis"/></div>
-	    	            			  <div class="panel-body ">
-	    		            			   <img src="${root }/static/images/tongji_03.png" alt="">
+	    	            			  <div class="panel-body" id="planProgramChart">
+	    		            			   <%-- <img src="${root }/static/images/tongji_03.png" alt=""> --%>
 	    	            			  </div>
 	    	            			</div>
 
@@ -97,19 +116,21 @@
 	    		            			  <table class="table table-bordered table-striped">
 		  	            			         <thead>
 		  	            			           <tr>
-		  	            			             <th>#</th>
-		  	            			             <th>First Name</th>
-		  	            			             <th>Last Name</th>
-		  	            			             <th>Username</th>
+		  	            			             <th><fmt:message key="warehouse.dispatch.port"/></th>
+		  	            			             <th><fmt:message key="warehouse.device.elock"/></th>
+		  	            			             <th><fmt:message key="warehouse.device.eseal"/></th>
+		  	            			             <th><fmt:message key="warehouse.device.sensor"/></th>
 		  	            			           </tr>
 		  	            			         </thead>
 		  	            			         <tbody>
-		  	            			           <tr>
-		  	            			             <th scope="row">1</th>
-		  	            			             <td>Mark</td>
-		  	            			             <td>Otto</td>
-		  	            			             <td>@mdo</td>
-		  	            			           </tr>
+		  	            			           <c:forEach var="plan" items="${dispatchPlanList }">
+		  	            			           	<tr>
+		  	            			           		<td>${plan.portName }</td>
+		  	            			           		<td>${plan.trackDeviceNumber }</td>
+		  	            			           		<td>${plan.esealNumber }</td>
+		  	            			           		<td>${plan.sensor }</td>
+		  	            			           	</tr>
+		  	            			           </c:forEach>
 		  	            			         </tbody>
 		  	            			       </table>
 	    	            			  </div>
@@ -120,15 +141,19 @@
 					    <!-- <div role="tabpanel" class="tab-pane" id="profile">...</div> -->
 					</div>
             	</div>
-            	 <div class="tab-content margint20">
-            	 	<div class="tab-cotent-title"><fmt:message key="warehouse.dispatch.actual.program"/></div>
-					    <div  class="tab-pane active" id="home">
+            	
+	    	       <div class="tab_box tab-content">
+					   <ul class="nav nav-tabs" role="tablist">
+					    <li role="presentation" class="tab-cotent-title"><fmt:message key="warehouse.dispatch.actual.program"/></li>
+					  </ul>
+					  <!-- Tab panes -->
+					  <div class="tab-content">
+					    <div role="tabpanel" class="tab-pane active" id="home">
 					    	<div class="row row_three margint20">
 	    	            		<div class="col-sm-7">
 	    	            			<div class="panel panel-default">
 	    	            			  <div class="panel-heading heading_ico05"><fmt:message key="warehouse.dispatch.distance.analysis"/></div>
 	    	            			  <div class="panel-body" id="actualProgramChart">
-	    		            			  <%--  <img src="${root }/static/images/tongji_03.png" alt=""> --%>
 	    	            			  </div>
 	    	            			</div>
 	    	            		</div>
@@ -165,29 +190,6 @@
             	<div class="clearfix"></div>
             </div>
 	</div>
-	<script src="${root}/static/js/jquery.min.js"></script>
 	<script src="${root}/static/js/jquery.form.js"></script>
-	<script src="${root}/static/js/jquery.i18n.properties-min-1.0.9.js"></script>
-	<script src="${root}/static/js/bootstrap.js"></script>
-	<script type="text/javascript" src="${root}/static/js/bootstrap/bootbox/bootbox.js"></script>
-	<script type="text/javascript" src="${root}/static/js/common/common.js"></script>
-	<script type="text/javascript">
-	var language='${language}';
-	var locale='${userLocale}'; 
-	jQuery.i18n.properties({//加载资浏览器语言对应的资源文件
-        name : 'LocalizationResource_center', //资源文件名称
-        path : _getRootPath() + "/i18n/", //资源文件路径
-        mode : 'map', //用Map的方式使用资源文件中的值
-        language :language,
-        callback : function() {
-        }
-    });
-	</script>
-	<script src="${root}/static/js/echarts/echarts.min.js"></script>
-	<script type="text/javascript" src="${root}/device/dispatch/js/analysis.js"></script>
-	<script type="text/javascript" src="${root}/gis/map.js.jsp"></script>
-	<script type="text/javascript">
-		var root = "${root}";
-	</script>
 </body>
 </html>

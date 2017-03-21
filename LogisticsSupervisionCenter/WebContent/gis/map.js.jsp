@@ -7,7 +7,7 @@ var webdir = pathdir == '' ? '' : pathdir.substring(0, pathdir.indexOf('/'));
 var webroot = window.location.protocol + '//' + window.location.host + '/' + webdir + '/';
 var commonMapType = "${mapType}";
 if (commonMapType == "google") {
-	document.write('<script type="text/javascript" src="http://ditu.google.cn/maps/api/js?key=AIzaSyB26TtMhWyMQ1VkqnqUZkFrZKi7qbkW4Go&sensor=false&libraries=drawing&language=ar"><' + '/script>');
+	document.write('<script type="text/javascript" src="http://ditu.google.cn/maps/api/js?key=AIzaSyB26TtMhWyMQ1VkqnqUZkFrZKi7qbkW4Go&sensor=false&libraries=drawing&language=en-US"><' + '/script>');
 	/*http://maps.google.com/maps/api/js?key=AIzaSyB26TtMhWyMQ1VkqnqUZkFrZKi7qbkW4Go&sensor=false&libraries=drawing&language=en-US*/
 	/*https://maps.googleapis.com/maps/api/js?key=AIzaSyB26TtMhWyMQ1VkqnqUZkFrZKi7qbkW4Go&sensor=false&libraries=drawing&language=en-US*/
 	document.write('<script type="text/javascript" src="' + webroot + '/gis/google/js/GoogleUtil.js"><' + '/script>');
@@ -98,6 +98,9 @@ function GisResetMap(localPoint, centerZoom) {
     resetMap(localPoint, centerZoom);
 }
 
+function GisDrawManagerVisible(flag){
+    drawManagerVisible(flag);
+}
 /**
  * 添加地图事件并返回
  */
@@ -118,16 +121,39 @@ function GisGetPointByClick(){
  * @param iconSrc
  * @returns Marker
  */
-function GisCreateMarker(localPoint, iconSrc, titleContent){
-	return createMarker(localPoint, iconSrc, titleContent);
+function GisCreateMarker(localPoint, iconSrc, titleContent, sourceContent){
+	return createMarker(localPoint, iconSrc, titleContent, sourceContent);
+}
+
+function GisCreateVehicleSVGMarker(localPoint, iconSrc, titleContent, sourceContent){
+	return createVehicleSVGMarker(localPoint, iconSrc, titleContent, sourceContent);
 }
 
 /**
- * 覆盖物显示在最前
+ * 规划线路显隐
+ */
+function GisdirectionsDisplayVisible(flag){
+    directionsDisplayVisible(flag);
+}
+
+function GisCreateVehicelMarker(localPoint, iconSrc, titleContent, sourceContent){
+	return createVehicelMarker(localPoint, iconSrc, titleContent, sourceContent);
+}
+/*
+ *  获取Marker的attribution的值
+ *  @param Marker
+ *  @returns sourceContent
+ */
+function GisGetAttribution(marker){
+	return getAttribution(marker);
+}
+
+/**
+ * 覆盖物显示顺序
  * @param overlay
  */
-function GisSetShowFront(overlay){
-	setShowFront(overlay);
+function GisSetShowFront(overlay,zindex){
+	setShowFront(overlay,zindex);
 }
 
 /**
@@ -193,14 +219,38 @@ function GisIsWithinPolygon(localPoint, pointArr) {
  * @param portSrc 图标
  * @param name label内容
  */
-function GisCreateMarkerAndLabel(localPoint, portSrc, name) {
-	return createMarkerAndLabel(localPoint, portSrc, name);
+function GisCreateMarkerAndLabel(localPoint, portSrc, name, sourceContent) {
+	return createMarkerAndLabel(localPoint, portSrc, name, sourceContent);
 }
 
 function GisCreateLabel(localPoint, name) {
 	return createLabel(localPoint, name);
 }
+/**
+ * json转点
+ */
+function GisHandlePointByJson(loction){
+	return handlePointByJson(loction);
+}
 
+/**
+ * 判断点到直线的距离
+ */
+function GisptToPolylineLength(point,polyline){
+   return ptToPolylineLength(point,polyline)
+}
+
+function GisClearPolygonLength(){
+    clearPolygonLength();
+}
+/**
+ * 创建圆元素
+ * @param position 圆心位置
+ * @param param 展示参数   radius--半径   opacity--透明度
+ */
+function GisCreateCircle(position,param,callback){
+	return createCircle(position,param,callback);
+}
 /**
  * 添加车辆信息窗口的事件
  * @param currentContent 展示内容
@@ -209,14 +259,17 @@ function GisCreateLabel(localPoint, name) {
 function GisShowInfoWindow(currentMarker, currentContent, isOpen) {
 	return showInfoWindow(currentMarker, currentContent, isOpen);
 }
+function GisCloseAllInfowindow(){
+    closeAllInfowindow();
+}
 
 /**
  * 添加车辆报警信息窗口的事件
  * @param currentContent 展示内容
  * @param currentMarker 基于覆盖物
  */
-function GisShowAlarmInfoWindow(currentMarker, currentContent, isOpen) {
-	return showAlarmInfoWindow(currentMarker, currentContent, isOpen);
+function GisShowAlarmInfoWindow(currentMarker, currentContent, isOpen, callback) {
+	return showAlarmInfoWindow(currentMarker, currentContent, isOpen, callback);
 }
 
 /**
@@ -292,7 +345,7 @@ function GisClearOverlays(overlays) {
  * @param callback 回调函数
  */
 function GisDirectSearch(oriPoint, desPoint, pointArr,panel,callback) {
-	directSearch(oriPoint, desPoint, pointArr);
+	directSearch(oriPoint, desPoint, pointArr,panel,callback);
 }
 
 
@@ -372,6 +425,14 @@ function GisCreateLineAndPlay(pointArr,vehicleSrc) {
  * 创建单车回放行驶轨迹，下面连续几个方法对车的运行暂停等都必须依托本方法画线
  * @param pointArr
  */
+function GisCreateMoreLineTrack(pointArr) {
+	createmoreLineTrack(pointArr);
+}
+
+/**
+ * 创建单车回放行驶轨迹，下面连续几个方法对车的运行暂停等都必须依托本方法画线
+ * @param pointArr
+ */
 function GisCreateLineTrack(pointArr) {
 	createLineTrack(pointArr);
 }
@@ -428,14 +489,22 @@ function GisClearLineTrack() {
 	removeLineTrack();
 }
 
+function GisClearInterValTrack(){
+	clearInterValTrackLine();
+}
+
 /*********--------------------4.画图功能的添加，注意依托性----------------------************/
 
 /**
  * 实例化画图工具，并塑造overlays，下面的生成路线以及线的编辑功能都需要在此实例化基础上操作
  * @params drawParams：direct位置方位 darwStyle样式
  */
-function GisInitDrawingManagerAndDriving(drawParams,isShow,callback){
-	initDrawingManagerAndDriving(drawParams,isShow,callback);
+function GisInitDrawingManagerAndDriving(drawParams,isShow,callback,RouteAreaType){
+	initDrawingManagerAndDriving(drawParams,isShow,callback,RouteAreaType);
+}
+
+function GisDirectSearchForPlanRoute(oriPoint, desPoint, pointsArray,panel,callback){
+	directSearchForPlanRoute(oriPoint, desPoint, pointsArray,panel,callback)
 }
 
 /**
@@ -460,6 +529,10 @@ function GisGetDrawPath(){
  */
 function GisGetDrawType(){
 	return getDrawType();
+}
+
+function GisGetEditRouteArray(overlay){
+	return getEditRouteArray(overlay);
 }
 
 /**

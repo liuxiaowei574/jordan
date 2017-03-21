@@ -21,17 +21,17 @@ import com.nuctech.ls.model.dao.MonitorElockGPSLogDao;
 @Service
 @Transactional
 public class MonitorElockGPSLogService extends LSBaseService {
-	
-	@Resource
-	public MonitorElockGPSLogDao monitorElockGPSLogDao;
-	
-	/**
-	 * 保存信息
-	 * 
-	 * @param entity
-	 */
-	public void save(LsMonitorElockGpslogBO entity){
-		monitorElockGPSLogDao.save(entity);
-	}
+
+    @Resource
+    public MonitorElockGPSLogDao monitorElockGPSLogDao;
+
+    /**
+     * 保存信息
+     * 
+     * @param entity
+     */
+    public void save(LsMonitorElockGpslogBO entity) {
+        monitorElockGPSLogDao.save(entity);
+    }
 
 }

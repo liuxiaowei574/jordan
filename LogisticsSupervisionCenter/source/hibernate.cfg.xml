@@ -4,11 +4,11 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-		<property name="hibernate.hbm2ddl.auto">update</property>
+		<property name="hibernate.hbm2ddl.auto">false</property>
 		<property name="show_sql">false</property>
 		<property name="format_sql">true</property>
 		<property name="dialect">
-			org.hibernate.dialect.SQLServerDialect
+			com.nuctech.ls.common.hibernate.NuctechDialect
 		</property>
 		<!-- 配置结果集是否可滚动 -->
 		<property name="jdbc.use_scrollable_resultset">false</property>

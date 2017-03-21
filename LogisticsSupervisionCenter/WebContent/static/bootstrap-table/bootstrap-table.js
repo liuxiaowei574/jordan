@@ -2155,6 +2155,10 @@
             this.$tableHeader.show();
             this.resetHeader();
             padding += this.$header.outerHeight();
+            //总页数大于1时，会显示页码，此处将table的div高度增大     by liushaowei
+            if(this.totalPages > 1) {
+            	padding += 23;
+            }
         } else {
             this.$tableHeader.hide();
             this.trigger('post-header');

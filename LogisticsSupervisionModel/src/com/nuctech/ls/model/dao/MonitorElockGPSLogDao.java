@@ -16,7 +16,5 @@ import com.nuctech.ls.model.bo.monitor.LsMonitorElockGpslogBO;
  */
 @Repository
 public class MonitorElockGPSLogDao extends LSBaseDao<LsMonitorElockGpslogBO, Serializable> {
-	
-	
 
 }

@@ -15,53 +15,54 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "LS_SYSTEM_ROLE")
 public class LsSystemRoleBO implements Serializable {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6600655793910680099L;
 
-	/**
-	 * 缺省的构造函数
-	 */
-	public LsSystemRoleBO() {
-		super();
-	}
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -6600655793910680099L;
 
-	/* 角色主键 */
-	private String roleId;
+    /**
+     * 缺省的构造函数
+     */
+    public LsSystemRoleBO() {
+        super();
+    }
 
-	/* 角色名称 */
-	private String roleName;
+    /* 角色主键 */
+    private String roleId;
 
-	/* 有效标记 */
-	private String isEnable;
+    /* 角色名称 */
+    private String roleName;
 
-	@Id
-	@Column(name = "ROLE_ID", nullable = false, length = 50)
-	public String getRoleId() {
-		return this.roleId;
-	}
+    /* 有效标记 */
+    private String isEnable;
 
-	public void setRoleId(String roleId) {
-		this.roleId = roleId;
-	}
+    @Id
+    @Column(name = "ROLE_ID", nullable = false, length = 50)
+    public String getRoleId() {
+        return this.roleId;
+    }
 
-	@Column(name = "ROLE_NAME", nullable = true, length = 100)
-	public String getRoleName() {
-		return this.roleName;
-	}
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
+    }
 
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
+    @Column(name = "ROLE_NAME", nullable = true, length = 100)
+    public String getRoleName() {
+        return this.roleName;
+    }
 
-	@Column(name = "IS_ENABLE", nullable = true, length = 2)
-	public String getIsEnable() {
-		return this.isEnable;
-	}
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
 
-	public void setIsEnable(String isEnable) {
-		this.isEnable = isEnable;
-	}
+    @Column(name = "IS_ENABLE", nullable = true, length = 2)
+    public String getIsEnable() {
+        return this.isEnable;
+    }
+
+    public void setIsEnable(String isEnable) {
+        this.isEnable = isEnable;
+    }
+
 }

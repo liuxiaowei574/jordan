@@ -1,6 +1,7 @@
 package com.nuctech.ls.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -19,11 +20,16 @@ import com.nuctech.ls.model.dao.VehicleTrackingDao;
  */
 @Service
 @Transactional
-public class VehicleTrackingService extends LSBaseService{
-   
-	@Resource
-	VehicleTrackingDao vehicleTrackingDao;
-	public List<LsMonitorVehicleGpsBO> findAllMonitorVehicleGpsByTripId(LsMonitorTripBO lsMonitorTripBO){
-		return vehicleTrackingDao.findMonitorVehicleGpsByTripId(lsMonitorTripBO);
-	}
+public class VehicleTrackingService extends LSBaseService {
+
+    @Resource
+    VehicleTrackingDao vehicleTrackingDao;
+
+    public Map<String, List<LsMonitorVehicleGpsBO>> findAllMonitorVehicleGpsByTripId(LsMonitorTripBO lsMonitorTripBO) {
+        return vehicleTrackingDao.findMonitorVehicleGpsByTripId(lsMonitorTripBO);
+    }
+
+    public List<LsMonitorVehicleGpsBO> findPatrolGpsByTripId(String trackUnitNumber, String startTime, String endTime) {
+        return vehicleTrackingDao.findPatrolGpsByTripId(trackUnitNumber, startTime, endTime);
+    }
 }

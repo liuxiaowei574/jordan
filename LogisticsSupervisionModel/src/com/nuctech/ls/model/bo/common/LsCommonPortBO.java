@@ -1,5 +1,7 @@
 package com.nuctech.ls.model.bo.common;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,108 +14,114 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "LS_COMMON_PORT")
-public class LsCommonPortBO {
-	/**
-	 * 缺省的构造函数
-	 */
-	public LsCommonPortBO() {
-		super();
-	}
+public class LsCommonPortBO implements Serializable {
 
-	/* PORT_ID */
-	private String portId;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1384412214936764803L;
 
-	/* 主键 */
-	private String conturyId;
+    /**
+     * 缺省的构造函数
+     */
+    public LsCommonPortBO() {
+        super();
+    }
 
-	/* 节点编号 */
-	private String portCode;
+    /* PORT_ID */
+    private String portId;
 
-	/* 节点名称 */
-	private String portName;
+    /* 主键 */
+    private String conturyId;
 
-	/* 经度 */
-	private String longitude;
+    /* 节点编号 */
+    private String portCode;
 
-	/* 纬度 */
-	private String latitude;
+    /* 节点名称 */
+    private String portName;
 
-	/* 节点类型(口岸、监管场所) */
-	private String portType;
+    /* 经度 */
+    private String longitude;
 
-	/* 节点描述 */
-	private String portDesc;
+    /* 纬度 */
+    private String latitude;
 
-	@Id
-	@Column(name = "PORT_ID", nullable = false, length = 50)
-	public String getPortId() {
-		return this.portId;
-	}
+    /* 节点类型(口岸、监管场所) */
+    private String portType;
 
-	public void setPortId(String portId) {
-		this.portId = portId;
-	}
+    /* 节点描述 */
+    private String portDesc;
 
-	@Column(name = "CONTURY_ID", nullable = true, length = 50)
-	public String getConturyId() {
-		return this.conturyId;
-	}
+    @Id
+    @Column(name = "PORT_ID", nullable = false, length = 50)
+    public String getPortId() {
+        return this.portId;
+    }
 
-	public void setConturyId(String conturyId) {
-		this.conturyId = conturyId;
-	}
+    public void setPortId(String portId) {
+        this.portId = portId;
+    }
 
-	@Column(name = "PORT_CODE", nullable = true, length = 50)
-	public String getPortCode() {
-		return this.portCode;
-	}
+    @Column(name = "CONTURY_ID", nullable = true, length = 50)
+    public String getConturyId() {
+        return this.conturyId;
+    }
 
-	public void setPortCode(String portCode) {
-		this.portCode = portCode;
-	}
+    public void setConturyId(String conturyId) {
+        this.conturyId = conturyId;
+    }
 
-	@Column(name = "PORT_NAME", nullable = true, length = 100)
-	public String getPortName() {
-		return this.portName;
-	}
+    @Column(name = "PORT_CODE", nullable = true, length = 50)
+    public String getPortCode() {
+        return this.portCode;
+    }
 
-	public void setPortName(String portName) {
-		this.portName = portName;
-	}
+    public void setPortCode(String portCode) {
+        this.portCode = portCode;
+    }
 
-	@Column(name = "LONGITUDE", nullable = true, length = 20)
-	public String getLongitude() {
-		return this.longitude;
-	}
+    @Column(name = "PORT_NAME", nullable = true, length = 100)
+    public String getPortName() {
+        return this.portName;
+    }
 
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
+    public void setPortName(String portName) {
+        this.portName = portName;
+    }
 
-	@Column(name = "LATITUDE", nullable = true, length = 20)
-	public String getLatitude() {
-		return this.latitude;
-	}
+    @Column(name = "LONGITUDE", nullable = true, length = 20)
+    public String getLongitude() {
+        return this.longitude;
+    }
 
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
 
-	@Column(name = "PORT_TYPE", nullable = true, length = 2)
-	public String getPortType() {
-		return this.portType;
-	}
+    @Column(name = "LATITUDE", nullable = true, length = 20)
+    public String getLatitude() {
+        return this.latitude;
+    }
 
-	public void setPortType(String portType) {
-		this.portType = portType;
-	}
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
 
-	@Column(name = "PORT_DESC", nullable = true, length = 200)
-	public String getPortDesc() {
-		return this.portDesc;
-	}
+    @Column(name = "PORT_TYPE", nullable = true, length = 2)
+    public String getPortType() {
+        return this.portType;
+    }
 
-	public void setPortDesc(String portDesc) {
-		this.portDesc = portDesc;
-	}
+    public void setPortType(String portType) {
+        this.portType = portType;
+    }
+
+    @Column(name = "PORT_DESC", nullable = true, length = 200)
+    public String getPortDesc() {
+        return this.portDesc;
+    }
+
+    public void setPortDesc(String portDesc) {
+        this.portDesc = portDesc;
+    }
 }

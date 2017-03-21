@@ -1,4 +1,3 @@
-
 //---------------------调度分析图表对象------
 
 function ActualProgramChart( portName, data) {
@@ -57,6 +56,8 @@ $(function() {
 	});
 	
 	initDeviceInventoryCharts(); //初始化设备库存报表
+	
+	initPlanProgramChart(planPortNameArr, planDistanceArr);
 	//提交实际方案数据
 	$("#dispatchExecuteButton").click(function() {
 		submitActualProgramTableData();
@@ -73,7 +74,9 @@ function loadPortList() {
 		type: 'post',
 		target: '#portTable',
 		success : function(data) {
-			//alert(data);
+			if(!needLogin(data)) {
+				//alert(data);
+			}
 		}
 	});
 }
@@ -116,103 +119,105 @@ function initDeviceInventoryCharts() {
 		type : "post", // 提交方式
 		dataType : "json", // 数据类型
 		success : function(data) { // 提交成功的回调函数
-			var deviceData = data.deviceInventoryList;
-			$.each(deviceData,function(key, value) {
-				portNameArray[key]=value.portName;
-				portDeviceArray[key] = value.deviceArray;
-			});
-			var deviceInventoryChartsDiv = $("#deviceInventoryCharts")[0];
-			var deviceInventoryCharts = echarts.init(deviceInventoryChartsDiv);
-			option = {
-				    tooltip : {
-				        trigger: 'axis',
-				        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-				            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-				        }
-				    },
-				    legend: {
-				        data:legendTitle
-				    },
-				    grid: {
-				        left: '3%',
-				        right: '4%',
-				        bottom: '3%',
-				        containLabel: true
-				    },
-				    xAxis : [
-				        {
-				            type : 'category',
-				            axisLabel : {  
-	                            show:true,  
-//	                            rotate:60,
-	                            interval: 0  
-	                        },
-				            data : portNameArray
-				        }
-				    ],
-				    yAxis : [
-				        {
-				            type : 'value'
-				        }
-				    ],
-				    series : [
-				        {
-				            name : availableTrackDevice,
-				            type : 'bar',
-				            stack: elock,
-				            data:getDeviceData(portDeviceArray, 0)
-				        },
-				        {
-				            name : destroyTrackDevice,
-				            type : 'bar',
-				            stack: elock,
-				            data:getDeviceData(portDeviceArray, 1)
-				        },
-				        {
-				            name : reservationTrackDevice,
-				            type : 'bar',
-				            stack: elock,
-				            data:getDeviceData(portDeviceArray, 2)
-				        },
-				        {
-				            name : availableEseal,
-				            type : 'bar',
-				            stack: eseal,
-				            data:getDeviceData(portDeviceArray, 3)
-				        },
-				        {
-				            name : destroyEseal,
-				            type : 'bar',
-				            stack: eseal,
-				            data:getDeviceData(portDeviceArray, 4)
-				        },
-				        {
-				            name : reservationEseal,
-				            type : 'bar',
-				            stack: eseal,
-				            data:getDeviceData(portDeviceArray, 5)
-				        },
-				        {
-				            name : availableSensor,
-				            type : 'bar',
-				            stack: sensor,
-				            data:getDeviceData(portDeviceArray, 6)
-				        },
-				        {
-				            name : destroySensor,
-				            type : 'bar',
-				            stack: sensor,
-				            data:getDeviceData(portDeviceArray, 7)
-				        },
-				        {
-				            name : reservationSensor,
-				            type : 'bar',
-				            stack: sensor,
-				            data:getDeviceData(portDeviceArray, 8)
-				        } 
-				    ]
+			if(!needLogin(data)) {
+				var deviceData = data.deviceInventoryList;
+				$.each(deviceData,function(key, value) {
+					portNameArray[key]=value.portName;
+					portDeviceArray[key] = value.deviceArray;
+				});
+				var deviceInventoryChartsDiv = $("#deviceInventoryCharts")[0];
+				var deviceInventoryCharts = echarts.init(deviceInventoryChartsDiv);
+				option = {
+						tooltip : {
+							trigger: 'axis',
+							axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+								type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+							}
+						},
+						legend: {
+							data:legendTitle
+						},
+						grid: {
+							left: '3%',
+							right: '4%',
+							bottom: 80,
+							containLabel: true
+						},
+						xAxis : [
+						         {
+						        	 type : 'category',
+						        	 axisLabel : {  
+						        		 show:true,  
+						        		 rotate:35,
+						        		 interval: 0  
+						        	 },
+						        	 data : portNameArray
+						         }
+						         ],
+						         yAxis : [
+						                  {
+						                	  type : 'value'
+						                  }
+						                  ],
+						                  series : [
+						                            {
+						                            	name : availableTrackDevice,
+						                            	type : 'bar',
+						                            	stack: elock,
+						                            	data:getDeviceData(portDeviceArray, 0)
+						                            },
+						                            {
+						                            	name : destroyTrackDevice,
+						                            	type : 'bar',
+						                            	stack: elock,
+						                            	data:getDeviceData(portDeviceArray, 1)
+						                            },
+						                            {
+						                            	name : reservationTrackDevice,
+						                            	type : 'bar',
+						                            	stack: elock,
+						                            	data:getDeviceData(portDeviceArray, 2)
+						                            },
+						                            {
+						                            	name : availableEseal,
+						                            	type : 'bar',
+						                            	stack: eseal,
+						                            	data:getDeviceData(portDeviceArray, 3)
+						                            },
+						                            {
+						                            	name : destroyEseal,
+						                            	type : 'bar',
+						                            	stack: eseal,
+						                            	data:getDeviceData(portDeviceArray, 4)
+						                            },
+						                            {
+						                            	name : reservationEseal,
+						                            	type : 'bar',
+						                            	stack: eseal,
+						                            	data:getDeviceData(portDeviceArray, 5)
+						                            },
+						                            {
+						                            	name : availableSensor,
+						                            	type : 'bar',
+						                            	stack: sensor,
+						                            	data:getDeviceData(portDeviceArray, 6)
+						                            },
+						                            {
+						                            	name : destroySensor,
+						                            	type : 'bar',
+						                            	stack: sensor,
+						                            	data:getDeviceData(portDeviceArray, 7)
+						                            },
+						                            {
+						                            	name : reservationSensor,
+						                            	type : 'bar',
+						                            	stack: sensor,
+						                            	data:getDeviceData(portDeviceArray, 8)
+						                            } 
+						                            ]
 				};
-			deviceInventoryCharts.setOption(option);
+				deviceInventoryCharts.setOption(option);
+			}
 		}
 	});
 }
@@ -239,38 +244,38 @@ function addActualTable(portId) {
 		data : {"portId" : portId},
 		dataType : "json", // 数据类型
 		success : function(data) {
-			var result = data.dispatchActualProgram;
-			var html;
-			html += '<tr>';
-			html +='   <td style="display: none;"><input class="input_noborder" type="text" value="'+ portId +'" /></td>';
-			html +='   <td>'+ result.portName +'</td>';
-			html +='   <td><input class="input_noborder" type="text" value="'+ result.availableTrackDevice +'" /></td>';
-			html +='   <td><input class="input_noborder" type="text" value="'+ result.availableEseal +'" /></td>';
-			html +='   <td><input class="input_noborder" type="text" value="'+ result.availableSensor +'" /></td>';
-			html +='</tr>';
-			$("#actualTable tbody").append(html);
-			//计算距离
-			var applicationLongitude = $("#applicationLongitude").val();
-			var applicationLatitude = $("#applicationLatitude").val();
-			var endPoint = {
-				lat : applicationLatitude,
-				lng : applicationLongitude
-			}
-			var oriPoint = {
-					lat : result.latitude,
-					lng : result.longitude
-			};
-			var disDuration = measurePathLength(oriPoint,endPoint);
-			setTimeout(
-				function(){
+			if(!needLogin(data)) {
+				var result = data.dispatchActualProgram;
+				var html;
+				html += '<tr>';
+				html +='   <td style="display: none;"><input class="input_noborder" type="text" value="'+ portId +'" /></td>';
+				html +='   <td>'+ result.portName +'</td>';
+				html +='   <td><input class="input_noborder" type="text" value="'+ result.availableTrackDevice +'" /></td>';
+				html +='   <td><input class="input_noborder" type="text" value="'+ result.availableEseal +'" /></td>';
+				html +='   <td><input class="input_noborder" type="text" value="'+ result.availableSensor +'" /></td>';
+				html +='</tr>';
+				$("#actualTable tbody").append(html);
+				//计算距离
+				var applicationLongitude = $("#applicationLongitude").val();
+				var applicationLatitude = $("#applicationLatitude").val();
+				var endPoint = {
+						lat : applicationLatitude,
+						lng : applicationLongitude
+				}
+				var oriPoint = {
+						lat : result.latitude,
+						lng : result.longitude
+				};
+				measurePathLength(oriPoint,endPoint, function(disDuration){
 					var dis = disDuration.distance;
-					if('undefined' != dis) {
+					if(dis != undefined) {
 						var obj = new ActualProgramChart(result.portName, dis.substring(0, dis.length - 2));
 						actualProgramChartObjArray.push(obj);
 						//报表
 						createActualProgramChartByObjArray(actualProgramChartObjArray);
 					}
-			},1000);
+				});
+			}
 		}
 	});
 }
@@ -392,13 +397,63 @@ function submitActualProgramTableData() {
 			data : {"deviceData": JSON.stringify(deviceData), "applicationId" : applicationId, "applicationPort" : applicationPort},
 			dataType : "json", // 数据类型
 			success : function(data) { // 提交成功的回调函数
-				if (data.result) {
-					bootbox.alert($.i18n.prop('warehouse.dispatch.success'));
-				} else {
-					bootbox.error($.i18n.prop('warehouse.dispatch.error'));
+				if(!needLogin(data)) {
+					if (data.result) {
+						//bootbox.alert($.i18n.prop('warehouse.dispatch.success'));
+						bootbox.success($.i18n.prop('warehouse.dispatch.success'), function() {
+							var url = root + "/warehouseDeviceApplication/index.action";
+							window.location.href=url;
+						})
+					} else {
+						bootbox.error($.i18n.prop('warehouse.dispatch.error'));
+					}
 				}
 			}
 		});
 	}
+}
+
+/**
+ * 推荐方案
+ * 
+ * @param planProgramyAxisData
+ * @param planProgramSeriesData
+ */
+function initPlanProgramChart(planProgramyAxisData, planProgramSeriesData) {
+	var planProgramChartDiv = $("#planProgramChart")[0];
+	var planProgramChart = echarts.init(planProgramChartDiv);
+	option = {
+		    tooltip: {
+		        trigger: 'axis',
+		        axisPointer: {
+		            type: 'shadow'
+		        }
+		    },
+		    legend: {
+		        data: actualProgramLegendData
+		    },
+		    grid: {
+		        left: '3%',
+		        right: '4%',
+		        bottom: '3%',
+		        containLabel: true
+		    },
+		    xAxis: {
+		        type: 'value',
+		        boundaryGap: [0, 0.01]
+		    },
+		    yAxis: {
+		        type: 'category',
+		        data: planProgramyAxisData
+		    },
+		    series: [
+		        {
+		            name: quantity,
+		            type: 'bar',
+		            data: planProgramSeriesData
+		        }
+		    ]
+		};
+	planProgramChart.setOption(option);
 }
 

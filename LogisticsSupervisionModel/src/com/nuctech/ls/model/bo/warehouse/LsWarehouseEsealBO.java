@@ -1,13 +1,12 @@
 package com.nuctech.ls.model.bo.warehouse;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-
 
 /**
  * 业务对象处理的实体-[子锁表]
@@ -16,87 +15,99 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "LS_WAREHOUSE_ESEAL")
-public class LsWarehouseEsealBO {
-	/**
-	 * 缺省的构造函数
-	 */
-	public LsWarehouseEsealBO() {
-		super();
-	}
+public class LsWarehouseEsealBO implements Serializable {
 
-	/* 子锁主键 */
-	private String esealId;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -1537332588982478691L;
 
-	/* 子锁号 */
-	private String esealNumber;
+    /**
+     * 缺省的构造函数
+     */
+    public LsWarehouseEsealBO() {
+        super();
+    }
 
-	/* 所属节点 */
-	private String belongTo;
+    /* 子锁主键 */
+    private String esealId;
 
-	/*
-	 * 关锁状态 维修、损坏、报废等
-	 */
-	private String esealStatus;
+    /* 子锁号 */
+    private String esealNumber;
 
-	/* 创建人 */
-	private String createUser;
+    /* 所属节点 */
+    private String belongTo;
 
-	/* 创建时间 */
-	private Date createTime;
+    /*
+     * 关锁状态 维修、损坏、报废等
+     */
+    private String esealStatus;
 
-	@Id
-	@Column(name = "ESEAL_ID", nullable = false, length = 50)
-	public String getEsealId() {
-		return this.esealId;
-	}
+    /* 创建人 */
+    private String createUser;
 
-	public void setEsealId(String esealId) {
-		this.esealId = esealId;
-	}
+    /* 创建时间 */
+    private Date createTime;
 
-	@Column(name = "ESEAL_NUMBER", nullable = true, length = 50)
-	public String getEsealNumber() {
-		return this.esealNumber;
-	}
+    @Id
+    @Column(name = "ESEAL_ID", nullable = false, length = 50)
+    public String getEsealId() {
+        return this.esealId;
+    }
 
-	public void setEsealNumber(String esealNumber) {
-		this.esealNumber = esealNumber;
-	}
+    public void setEsealId(String esealId) {
+        this.esealId = esealId;
+    }
 
-	@Column(name = "BELONG_TO", nullable = true, length = 50)
-	public String getBelongTo() {
-		return this.belongTo;
-	}
+    @Column(name = "ESEAL_NUMBER", nullable = true, length = 50)
+    public String getEsealNumber() {
+        return this.esealNumber;
+    }
 
-	public void setBelongTo(String belongTo) {
-		this.belongTo = belongTo;
-	}
+    public void setEsealNumber(String esealNumber) {
+        this.esealNumber = esealNumber;
+    }
 
-	@Column(name = "ESEAL_STATUS", nullable = true, length = 2)
-	public String getEsealStatus() {
-		return this.esealStatus;
-	}
+    @Column(name = "BELONG_TO", nullable = true, length = 50)
+    public String getBelongTo() {
+        return this.belongTo;
+    }
 
-	public void setEsealStatus(String esealStatus) {
-		this.esealStatus = esealStatus;
-	}
+    public void setBelongTo(String belongTo) {
+        this.belongTo = belongTo;
+    }
 
-	@Column(name = "CREATE_USER", nullable = true, length = 50)
-	public String getCreateUser() {
-		return this.createUser;
-	}
+    @Column(name = "ESEAL_STATUS", nullable = true, length = 2)
+    public String getEsealStatus() {
+        return this.esealStatus;
+    }
 
-	public void setCreateUser(String createUser) {
-		this.createUser = createUser;
-	}
+    public void setEsealStatus(String esealStatus) {
+        this.esealStatus = esealStatus;
+    }
 
-	
-	@Column(name = "CREATE_TIME", nullable = true)
-	public Date getCreateTime() {
-		return this.createTime;
-	}
+    @Column(name = "CREATE_USER", nullable = true, length = 50)
+    public String getCreateUser() {
+        return this.createUser;
+    }
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
+
+    @Column(name = "CREATE_TIME", nullable = true)
+    public Date getCreateTime() {
+        return this.createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    @Override
+    public String toString() {
+        return "LsWarehouseEsealBO [esealId=" + esealId + ", esealNumber=" + esealNumber + ", belongTo=" + belongTo
+                + ", esealStatus=" + esealStatus + ", createUser=" + createUser + ", createTime=" + createTime + "]";
+    }
+
 }

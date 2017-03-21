@@ -1,96 +1,109 @@
 var fr, gum, bootstrapValidator, deviceStatus,
-	uploadFiles = [], uploadFileNames = [], esealNumberArray = [], sensorNumberArray = [];
+	uploadFiles = [], uploadFileNames = [], esealNumberArray = [], sensorNumberArray = [], globalVehicle = {}, vehicleIndex = -1, fileIndexVehicleNumMap = {}, photoIndexVehicleNumMap = {}, refreshTimeout = {};
+ejs.open = '{{';
+ejs.close = '}}';
 $(function() {
 	$('#canvas').hide();
 
 	//本地上传按钮
-	$("#btnLocal").on("click", function() {
+	$("#myTabContent").delegate('#btnLocal', "click", function() {
 		$("input[name=tripPhotoLocal]:last").click();
 	});
 	//本地上传按钮
-	$("#photoMenu").on("change", "input[name='tripPhotoLocal']:last", function(e) {
+	$("#myTabContent").delegate("input[name='tripPhotoLocal']:last", "change", function(e) {
+		vehicleIndex = $(this).closest(".tab-pane").index();
 		var files = e.target.files || e.dataTransfer.files;
 		files = filterFiles(files);
 		if (files && files.length > 0) {
-			$('body').animate({scrollTop: $(".wrapper-content").height()}, 400);
+			//$('body').animate({scrollTop: $(".wrapper-content").height()}, 400);
 			var index = parseInt($(this).data("index"));
 			for (var i in files) { //一次只允许上传一张
+				//读取并显示图片
+				fileIndexVehicleNumMap[index] =  $(this).closest(".tab-pane").attr("id"); // 记住当前这张图片和车牌号的对应关系
+				readImageFile(files[i], index);
 				uploadFiles.push(files[i]);
 				uploadFileNames.push(files[i].name);
-				//读取并显示图片
-				readImageFile(files[i], index);
 			}
 			var clone = this.cloneNode(true);
 			clone.dataset.index = index + 1;
 			$("#btnLocal").parent("li").append(clone);
-			setSelectedStatus();
 		} else {
 			var clone = this.cloneNode(true);
 			$("#btnLocal").parent("li").append(clone);
 			$(this).remove();
 		}
 	});
-
-	//删除上传图片的按钮
-	$("#row").on("click", "a", function() {
-		var index = parseInt($(this).data("index"));
-		if (!isNaN(index)) {
-			$("input[name='tripPhotoLocal'][data-index='" + index + "']").val('').remove();
-			if(this.name) {
-				var fileIndex = uploadFileNames.indexOf(this.name);
-				if (fileIndex > -1) {
-					uploadFiles.splice(fileIndex, 1);
-					uploadFileNames.splice(fileIndex, 1);
+	
+	//删除上传图片
+	$("#myTabContent").on("click", "a.delete_image", function() {
+		var $carousel = $(this).closest(".carousel");
+		var index = $(this).closest(".item").index();
+		var name = $(this).attr("name");
+		$carousel.carousel('pause');
+		$carousel.find("li").eq(index).remove();
+		$(this).closest(".item").remove();
+		$carousel.find("li").each(function(i){
+			$(this).data("slideTo", i).attr("data-slide-to", i);
+		});
+		$carousel.find("li:eq(0), .item:eq(0)").addClass("active");
+		
+		var dataIndex = $(this).data("index");
+		if(/photo$/.test(dataIndex)) {
+			delete photoIndexVehicleNumMap[dataIndex.slice(0, -5)];
+		} else {
+			var fileInputIndex = parseInt(dataIndex);
+			if (!isNaN(fileInputIndex) && fileInputIndex > -1) {
+				$("input[name='tripPhotoLocal'][data-index='" + fileInputIndex + "']").val('').remove();
+				delete fileIndexVehicleNumMap[fileInputIndex];
+				if(name) {
+					var fileIndex = uploadFileNames.indexOf(name);
+					if (fileIndex > -1) {
+						uploadFiles.splice(fileIndex, 1);
+						uploadFileNames.splice(fileIndex, 1);
+					}
 				}
 			}
 		}
-		$(this).closest(".thumbnail").parent("div").remove();
-		setSelectedStatus();
-		setPhotoStatus();
 		validateFiles();
 	});
 
 	//打开摄像头按钮
-	$("#btnCamera").on("click", function() {
-		if ($("#main").css("display") === 'none') {
-			$("#main").show();
-			try {
-				if (!gum) {
-					gum = new GumWrapper({video: 'video'}, showSuccess, showError);
-				}
-				openCamera();
-			} catch (err) {
-				//判断是否Safari浏览器
-				ifSafiri();
-			}
-		}
-	});
-	//关闭摄像头按钮
-	$("#btnCameraClose").on("click", function() {
-		closeCamera();
+	$("#myTabContent").delegate('#btnCamera', "click", function() {
+		$('#cameraModal').removeData('bs.modal');
+		$('#cameraModal').modal({
+			remote : root + "/monitortrip/toCamera.action",
+			show : false,
+			backdrop : 'static',
+			keyboard : false
+		});
 	});
 	
-	//获取追踪终端号按钮
+	//自动读取追踪终端号按钮
 	$("#btnGetDeviceNum").on("click", function(){
-		/*
-		$.get(root + "/...", {}, function(data){
-			$("#q_tripVehicleVO\\.trackingDeviceNumber").val(data);
-		}, 'json');
-		*/
-		//以下为模拟数据
-		var data = '1';
-		$("#q_trackingDeviceNumber, #s_trackingDeviceNumber").val(data);
+		readElockNum();
+	});
+	//手动输入追踪终端号按钮
+	$("#s_trackingDeviceNumber").on("blur", function(){
+		this.value = $.trim(this.value);
+	});
+	$("#s_trackingDeviceNumber").on("change", function(){
+		$.ajax({
+			url : root + '/monitortrip/queryByDeviceNum.action',
+			type : "get",
+			dataType : "json",
+			data : {
+				's_trackingDeviceNumber' : $.trim(this.value)
+			},
+			success : function(data) {
+				data.total && data.total > 0 && $.isFunction(callback) && callback(data.rows[0]);
+			}
+		});
 	});
 	//获取报关单号按钮
 	$("#btnGetDecNum").on("click", function(){
-		/*
-		$.get(root + "/...", {}, function(data){
-			$("#q_tripVehicleVO\\.declarationNumber").val(data);
-		}, 'json');
-		*/
 		//以下为模拟数据
-		var data = '222520131250168837';
-		$("#q_declarationNumber, #s_declarationNumber").val(data);
+//		var data = '222520131250168837';
+//		$("#s_declarationNumber").val(data);
 		/*
 		showTripInfo({
 			"tripVehicleVO": {
@@ -100,62 +113,288 @@ $(function() {
 				"vehicleCountry": "Canada",
 				"driverName": "James Bond",
 				"driverCountry": "Singapore",
-				"containerNumber": "MSKU0383250",
-				"routeId": "1"
+				"containerNumber": "MSKU0383250"
 			}
 		});
 		*/
+		//扫描条码
+		$('#scanModal').removeData('bs.modal');
+		$('#scanModal').modal({
+			remote : root + "/monitortrip/toScan.action",
+			show : false,
+			backdrop : 'static',
+			keyboard : false
+		});
 	});
-	//获取车牌号按钮
-	$("#btnGetVehicleNum").on("click", function(){
-		/*
-		$.get(root + "/...", {}, function(data){
-			$("#q_tripVehicleVO\\.vehiclePlateNumber").val(data);
-		}, 'json');
-		*/
-		//以下为模拟数据
-		var data = "316A";
-		$("#q_vehiclePlateNumber, #s_vehiclePlateNumber").val(data);
+	$("#btnReset").on("click", function(){
+		$("#s_declarationNumber, #s_trackingDeviceNumber").val('');
 	});
-	//查询所有行程信息
-	$("#btnQuery").on("click", function(){
-		trimText();
-		if($("#s_trackingDeviceNumber").val() || $("#s_declarationNumber").val() || $("#s_vehiclePlateNumber").val()) {
-			//以下为模拟数据
-			getTripInfo({
-				"s_trackingDeviceNumber": $("#s_trackingDeviceNumber").val(),
-				"s_declarationNumber": $("#s_declarationNumber").val(),
-				"s_vehiclePlateNumber": $("#s_vehiclePlateNumber").val()
-			}, showTripInfo);
-		}
+	$("#btnFinishDo").on("click", function(){
+		$("#btnFinish").click();
 	});
 	//点击行程结束按钮
 	$("#btnFinish").on("click", function(){
-		//validateFiles();
+		$("#tripVehicleVO\\.specialFlag").val('0');
+		$("#tripVehicleVO\\.reason").val('');
+		setFileIndexVehicleNumMap();
+		$("#tripForm").attr("action", root +"/monitortrip/finish.action").submit();
 	});
+	
+	$("#checkinPicturesDiv, #checkoutPicturesDiv").on("click", "img", function(){
+		var html = '';
+		if($(this).closest("#checkoutPicturesDiv").length > 0) {
+			var $item = $(this).closest(".item");
+			var index = $item.index();
+			var fileName = $item.children("a").attr("name");
+			var fileindex = $item.children("a").attr("fileindex");
+			html = '<a href="javascript:void(0);" class="delete" title="' + $.i18n.prop('trip.activate.button.delete') + '" name="'+ fileName + '" data-index="' + index + '" data-fileindex="' + fileindex + '" style="position: absolute; left: 50%; bottom: 0%; z-index: 2; transform: translate(-50%, -50%);">';
+			html += '	<span class="glyphicon glyphicon-remove btn-lg" style="font-size: 23px;"></span>';
+			html += '</a>';
+		}
+		$("#imageModal .modal-content").html(html).append($(this).clone());
+		$('#imageModal').modal({
+			show : false,
+			backdrop: true, 
+			keyboard: true
+		}).modal('show');
+		
+		$('#imageModal img').on("click", function(){
+			$("#imageModal img").empty();
+			$('#imageModal').modal("hide");
+		});
+	});
+	
+	$("#route").on("click", function(){
+		var url = root + "/vehicletrack/getParamToVehicleTrack.action?routeAreaId=" + $(this).data("routeid") + "&tripId=" + $(this).data("tripid");
+		$('#routeModal').removeData('bs.modal');
+		$('#routeModal').modal({
+			remote : url,
+			show : false,
+			backdrop: 'static', 
+			keyboard: false
+		});
+	});
+	$('#routeModal').on('loaded.bs.modal', function(e) {
+		$(this).modal('show');
+	});
+	//模态框登录判断
+	$('#routeModal').on('show.bs.modal', function(e) {
+		var content = $(this).find(".modal-content").html();
+		needLogin(content);
+	});
+	//扫描条码模态框事件
+    $('#scanModal').on('loaded.bs.modal', function(e) {
+		$(this).modal('show');
+	}).on('show.bs.modal', function(e) {
+		var content = $(this).find(".modal-content").html();
+		needLogin(content);
+	});
+    //拍照模态框事件
+    $('#cameraModal').on('loaded.bs.modal', function(e) {
+		$(this).modal('show');
+		readPhoto = readPhotoFinish;
+	}).on('show.bs.modal', function(e) {
+		var content = $(this).find(".modal-content").html();
+		needLogin(content);
+	});
+	//施封
+	$("button[name=btnSetLocked]").on("click", function(){
+		var trackingDeviceNumber = $(this).parents(".form-group").find("p[name=trackingDeviceNumber]").text();
+		if(trackingDeviceNumber) {
+			//为了不让websocket通信异常影响后续操作，此处应进行try、catch
+			try{
+				elockUtil.setElockNo(trackingDeviceNumber);
+				setLocked();
+			}catch(e){}
+			elockLog('setLocked', trackingDeviceNumber);
+		}
+	});
+	//解封
+	$("button[name=btnSetUnlocked]").on("click", function(){
+		var trackingDeviceNumber = $(this).parents(".form-group").find("p[name=trackingDeviceNumber]").text();
+		if(trackingDeviceNumber) {
+			//为了不让websocket通信异常影响后续操作，此处应进行try、catch
+			try{
+				elockUtil.setElockNo(trackingDeviceNumber);
+				setUnlocked();
+			}catch(e){}
+			elockLog('setUnlocked', trackingDeviceNumber);
+		}
+	});
+	//解除报警
+	$("button[name=btnClearAlarm]").on("click", function(){
+		var trackingDeviceNumber = $(this).parents(".form-group").find("p[name=trackingDeviceNumber]").text();
+		if(trackingDeviceNumber) {
+			//为了不让websocket通信异常影响后续操作，此处应进行try、catch
+			try{
+				elockUtil.setElockNo(trackingDeviceNumber);
+				clearAlarm();
+			}catch(e){}
+			elockLog('clearAlarm', trackingDeviceNumber);
+		}
+	});
+	//关闭读取条形码
+    $("#btnCloseBarcode").on("click", function(e) {
+        e.preventDefault();
+        Quagga.stop();
+        $("#barcodeView").hide();
+    });
+    //特殊申请
+    $("#btnFinishSpecial").on("click", function(){
+    	if($("#tripVehicleVO\\.tripId").val() != '') {
+    		bootbox.confirm($.i18n.prop('trip.info.sure.finish.special'), function(result){
+    			if(result) {
+    				$('#reasonModal').removeData('bs.modal');
+    				$('#reasonModal').modal({
+    					backdrop: 'static', 
+    					keyboard: false
+    				});
+    			}
+    		});
+    	}
+    });
+	$('#reasonModal').on('loaded.bs.modal', function(e) {
+		$(this).modal('show');
+	}).on('hidden.bs.modal', function () {
+		$("#specialReason").val('');
+	});
+	$("#reasonModal").on("click", "#nopassSubmit", function(){
+		$("#tripVehicleVO\\.specialFlag").val('1');
+		$("#tripVehicleVO\\.reason").val($("#specialReason").val() || '');
+		$("#tripForm").attr("action", root +"/monitortrip/finish.action").submit();
+	});
+    $("#myTab").delegate("li", "click", function(){
+		var index = $(this).index();
+		$("#myTabContent .vehicle-img").eq(index).append($(".upload"));
+	});
+  //搜索匹配
+	$("#s_trackingDeviceNumber").bsSuggest({
+        allowNoKeyword: true,   //是否允许无关键字时请求数据。为 false 则无输入时不执行过滤请求
+        getDataMethod: "url",    //获取数据的方式，总是从 URL 获取
+        url: root + "/monitortrip/queryByDeviceNum.action?s_trackingDeviceNumber=" + $.trim(this.value),
+        effectiveFields: ["number"],
+        searchFields: [ "number"],
+        ignorecase: true,
+        listStyle: {
+            'max-height': '300px',
+        },
+        showBtn: false,     //不显示下拉按钮
+        idField: "number",
+        keyField: "number"
+    }).on('onDataRequestSuccess', function (e, result) {
+        //console.log('onDataRequestSuccess: ', result);
+    }).on('onSetSelectValue', function (e, keyword, data) {
+        //console.log('onSetSelectValue: ', keyword, data);
+    }).on('onUnsetSelectValue', function () {
+        //console.log("onUnsetSelectValue");
+    });
 
 	//查询设备状态：定位、通讯、电量等
 	getDeviceStatus();
-	//初始化Jquery i18n
-	initJqueryI18n();
+	//定时查询设备状态：定位、通讯、电量等
+	//queryElockStatus();
 	//添加表单验证
 	bootstrapValidatorForm();
+	setGlobalVehicle();
 });
+/**
+ * 刷新电量
+ */
+function refreshVoltage(voltage){
+	var value = transferVVV(voltage) || '0%';
+	if(new RegExp(/^\d+%$/).test(value)){
+		$("#myTabContent .percentage").html(value);
+		$("#myTabContent div[name=dianliang]").animate({"width": value}, 'normal');
+	}
+}
+/**
+ * 电量值设定
+ */
+function transferVVV(vvv){
+	if (null != vvv && "" != vvv&&(vvv+"").indexOf(".")<1) {
+		var v = parseInt(vvv);
+
+		if (v >= 300 && v < 345)
+			return "0%";
+		else if (v >= 345 && v < 368)
+			return "5%";
+		else if (v >= 368 && v < 374)
+			return "10%";
+		else if (v >= 374 && v < 377)
+			return "20%";
+		else if (v >= 377 && v < 379)
+			return "30%";
+		else if (v >= 379 && v < 382)
+			return "40%";
+		else if (v >= 382 && v < 387)
+			return "50%";
+		else if (v >= 387 && v < 392)
+			return "60%";
+		else if (v >= 392 && v < 398)
+			return "70%";
+		else if (v >= 398 && v < 406)
+			return "80%";
+		else if (v >= 406 && v < 420)
+			return "90%";
+		else if (v >= 420 && v < 430 )
+			return "100%";
+		else
+			return "ERROR";
+	}else{
+		return "";
+	}
+}
+/**
+ * 加载WebSocket的行程结果通知
+ * @param userId
+ */
+function loadTripResult(data) {
+	var receiveUsers = data.receiveUser;
+	var receiveUserArray = receiveUsers.split(",");
+	$.each(receiveUserArray, function(i,value){  
+	  if(typeof sessionUserId != 'undefined' && sessionUserId == value) {//接收人有自己弹出框
+		  $("#msgModal").modal("hide");
+		  parseTripResult(data);
+	  }
+	}); 
+}
+/**
+ * 解析行程结果通知
+ * @param data
+ */
+function parseTripResult(data){
+	var ids = data.content.split(",");
+	getUserInfo(ids[2], function(userInfo){
+		var html = '';
+		if(ids[1] == '1') {
+			html += $.i18n.prop('trip.info.center.pass', userInfo.userName);
+			bootbox.success(html, function() {  
+				location.href = location.href.replace(/#$/, '');
+			});
+		}else if(ids[1] == '2') {
+			html += $.i18n.prop('trip.info.center.noPass', userInfo.userName, ids[3] || '');
+			bootbox.alert(html, function() {
+				bootstrapValidator.disableSubmitButtons(false);
+			});
+		}
+	});
+}
 /**
  * 通过参数查询行程信息
  * @param {Object} params
  * @param {Object} callback
  */
 function getTripInfo(params, callback) {
-	$.get(root + "/monitortrip/findOneTripVehicle.action", params, function(data){
-		if(data && data.rows.length > 0) {
-			callback(data.rows[0]);
-		}else{
-			bootbox.alert($.i18n.prop("trip.info.trip.notFound", 
-					params.s_trackingDeviceNumber || '', 
-					params.s_declarationNumber || '', 
-					params.s_vehiclePlateNumber || ''));
-			return;
+	$.get(root + "/monitortrip/findOneTripVehicleAlarm.action", params, function(data){
+		if(!needLogin(data)) {
+			if(data && !!data.tripVehicleVO) {
+				callback(data);
+			}else{
+				bootbox.alert($.i18n.prop("trip.info.trip.notFound", 
+						params.s_trackingDeviceNumber || '', 
+						params.s_declarationNumber || ''));
+				return;
+			}
 		}
 	}, 'json');
 }
@@ -165,18 +404,43 @@ function getTripInfo(params, callback) {
  * @param {Object} data
  */
 function showTripInfo(data) {
+	//展示基本信息
 	drillProps(data, '', function(obj, objName) {
-		$('#tripVehicleVO\\.' + objName.replace(/\./g, '\\\.')).val(obj);
+		if(objName == 'tripVehicleVO.goodsType') {
+			if(!!obj && obj.length > 0) {
+				var map = obj.split(/\s*,\s*/).map(function(v, i){
+					  return $.i18n.prop('GoodsType.' + v) || '';
+				});
+				$('#tripVehicleVO\\.goodsType').text(map.join()).val(map.join());
+			}
+		} else {
+			$('#' + objName.replace(/\./g, '\\\.')).text(obj).val(obj);
+		}
 	});
-	$("#q_trackingDeviceNumber, #s_trackingDeviceNumber").val($("#tripVehicleVO\\.trackingDeviceNumber").val());
-	$("#q_declarationNumber, #s_declarationNumber").val($("#tripVehicleVO\\.declarationNumber").val());
-	$("#q_vehiclePlateNumber, #s_vehiclePlateNumber").val($("#tripVehicleVO\\.vehiclePlateNumber").val());
-	//获取子锁号
-	getEsealNum($("#tripVehicleVO\\.esealNumber").val());
-	//获取传感器编号
-	getSensorNum($("#tripVehicleVO\\.sensorNumber").val());
-	//列出检入图像
-	showCheckinPicture($("#tripVehicleVO\\.checkinPicture").val());
+	
+	var commonVehicleDriverList = data.tripVehicleVO.commonVehicleDriverList;
+	if(commonVehicleDriverList && commonVehicleDriverList.length > 0) {
+		var tabLi = $("#tabLi").html();
+		var html = ejs.render(tabLi, data.tripVehicleVO);
+		$("#myTab").html(html);
+		
+//		commonVehicleDriverList.forEach(function(value, index){
+//			value.checkinPicture = value.checkinPicture && value.checkinPicture.split(/\s*,\s*/);
+//		});
+		var vehicleInfo = $("#vehicleInfo").html();
+		html = ejs.render(vehicleInfo, data.tripVehicleVO);
+		$("#myTabContent").append(html);
+		
+		$(".vehicle-img:eq(0)").append($("#upload"));
+	}
+	
+	//展示报警信息
+	showAlarmInfo(data.alarmList);
+	//更新“查看轨迹路线”链接
+	updateRoute(data.tripVehicleVO);
+	
+	$("#tripVehicleVO\\.checkoutTime, #tripVehicleVO\\.timeCost").text('');
+	$("#tripVehicleVO\\.checkoutUserName").text(sessionUserName);
 }
 /**
  * 获取对象属性和对象值，执行指定操作
@@ -195,134 +459,76 @@ function drillProps(obj, objName, callback) {
 		}
 	}
 }
-
+/**
+ * 展示报警信息
+ * @param alarmList 报警信息列表
+ */
+function showAlarmInfo(alarmList){
+	var statusName = {
+			'0': $.i18n.prop("alarm.label.alarmStatus.notProcessed"),
+			'1': $.i18n.prop("alarm.label.alarmStatus.processing"),
+			'2': $.i18n.prop("alarm.label.alarmStatus.processed")
+	};
+	if(alarmList && alarmList.length > 0) {
+		var html = [];
+		for(var i = 0, len = alarmList.length; i < len;  i++){
+			html.push('<tr>');
+			html.push('	<td>' + (i + 1) + '</td>');
+			html.push('	<td>' + alarmList[i].alarmTime + '</td>');
+			html.push('	<td>' + alarmList[i].receiveTime + '</td>');
+			html.push('	<td>' + alarmList[i].userName + '</td>');
+			html.push('	<td>' + alarmList[i].alarmLongitude + '</td>');
+			html.push('	<td>' + alarmList[i].alarmLatitude + '</td>');
+			html.push('	<td>' + statusName[alarmList[i].alarmStatus] + '</td>');
+			html.push('	<td>' + alarmList[i].alarmLevelName + '</td>');
+			html.push('	<td>' + alarmList[i].alarmTypeName + '</td>');
+			html.push('</tr>');
+		}
+		$("#alarmTable tbody").html(html.join(''));
+	}
+}
+/**
+ * 更新“查看轨迹路线”链接
+ * @param tripVehicleVO
+ */
+function updateRoute(tripVehicleVO){
+	$("#route").data("tripid", tripVehicleVO.tripId).data("routeid", tripVehicleVO.routeId).show();
+}
 /**
  * 读取图片并显示
  * @param {Object} file 上传的图片
  * @param {Object} index 索引号
  */
 function readImageFile(file, index){
+	var slideToIndex = $("#checkoutPictures>.carousel-indicators li").length;
 	var reader = new FileReader();
 	reader.onload = (function(f) {
 		return function(e) {
-			var html = '';
-			html += '<div class="col-sm-6 col-md-3">';
-			html += '	<div class="thumbnail">';
-			html += '		<img src="' + e.target.result + '" name="localImage" />';
-			html += '		<div class="caption">';
-			html += '			<p title="' + f.name + '">';
-//			html += '				<img class="upload-delele" title="' + $.i18n.prop("trip.activate.button.delete") + '" name="' + f.name + '" data-index="' + index + '" src="' + root + '/static/images/dele.png"/>';
-			html += '				<span>' + f.name + '</span>';
-			html += '				<a href="javascript:void(0);" class="delete" title="' + $.i18n.prop("trip.activate.button.delete") +'" name="' + f.name + '" data-index="' + index + '">';
-			html += '					<span class="glyphicon glyphicon-trash"></span>';
-			html += '				</a>';
-			html += '			</p>';
-			html += '		</div>';
-			html += '	</div>';
-			html += '</div>';
-			$("#collapseTwo .row").append(html);
+			var $tabPane = $(".tab-pane.active");
+			var $carousel = $tabPane.find(".carousel").eq(0);
+			var id = $carousel.attr("id");
+			$carousel.find("li, div").removeClass("active");
+			var i = $carousel.children(".carousel-indicators").children("li").length;
+			$carousel.children(".carousel-indicators").append('<li data-target="#' + id + '" data-slide-to="' + i + '" class="active"></li>');
+			var image = {
+					src: e.target.result,
+					name: f.name,
+					index: index
+			};
+			var html = ejs.render($("#imageItem").html(), image);
+			$carousel.children(".carousel-inner").append(html);
 			$("div.file-help-block").hide();
 		};
 	})(file);
 	reader.readAsDataURL(file);
 }
-/**
- * 读取拍摄的照片
- * @param {Object} b64 照片的Base64编码
- */
-function readPhoto(b64) {
-	var html = '';
-	html += '<div class="col-sm-6 col-md-3">';
-	html += '	<div class="thumbnail">';
-	html += '		<img src="' + b64 + '" />';
-	html += '		<input type="hidden" name="tripCameraBase64" value="' + b64.substring(22) + '" />';
-	html += '		<div class="caption">';
-	html += '			<p>';
-//	html += '				<img class="upload-delele" title="' + $.i18n.prop("trip.activate.button.delete") + '" name="' + '" data-index="" src="' + root + '/static/images/dele.png"/>';
-	html += '				<a href="javascript:void(0);" class="delete" title="' + $.i18n.prop("trip.activate.button.delete") +'" name="" data-index="">';
-	html += '					<span class="glyphicon glyphicon-trash"></span>';
-	html += '				</a>';
-	html += '			</p>';
-	html += '		</div>';
-	html += '	</div>';
-	html += '</div>';
-	$("#collapseTwo .row").append(html);
-	$("div.file-help-block").hide();
-}
-/**
- * 初始化Jquery i18n
- */
-function initJqueryI18n(){
-	jQuery.i18n.properties({//加载资浏览器语言对应的资源文件
-	    name : 'LocalizationResource_center', //资源文件名称
-	    path : _getRootPath() + "/i18n/", //资源文件路径
-	    mode : 'map', //用Map的方式使用资源文件中的值
-	    language :language,
-	    callback : function() {
-//	    	alert($.i18n.prop("common.message.form.validator"))
-	    }
-	});
-}
-/**
- * 获取子锁号
- * @param data
- */
-function getEsealNum(data){
-	if(Object.prototype.toString.call(data) === '[object String]' && typeof(data) === 'string') {
-		data = $.trim(data).split(/\s*,\s*/);
-	}
-	if($.isArray(data)) {
-		$(".esealNumber-list").children("ul").empty().end().prev("div").hide();
-		for(var i = 0, len = data.length; i < len; i++){
-			appendEsealNums(data[i]);
-		}
-	}
-}
-/**
- * 获取传感器编号
- * @param data
- */
-function getSensorNum(data){
-	if(Object.prototype.toString.call(data) === '[object String]' && typeof(data) === 'string') {
-		data = $.trim(data).split(/\s*,\s*/);
-	}
-	if($.isArray(data)) {
-		$(".sensorNumber-list").children("ul").empty().end().prev("div").hide();
-		for(var i = 0, len = data.length; i < len; i++){
-			appendSensorNums(data[i]);
-		}
-	}
-}
-/**
- * 增加子锁号到显示列表
- * @param {Object} num
- */
-function appendEsealNums(num){
-	var li = '';
-	li += '<li>';
-	li += '	<span data-ori-value="' + num + '" title="' + num + '">';
-	li += num;
-	li += '	</span>';
-	li += '</li>';
-	$(".esealNumber-list").find("ul").append(li);
-	esealNumberArray.push(num);
-	$("#tripVehicleVO\\.esealNumber").val(esealNumberArray.join());
-}
-/**
- * 增加传感器编号到显示列表
- * @param {Object} num
- */
-function appendSensorNums(num){
-	var li = '';
-	li += '<li>';
-	li += '	<span data-ori-value="' + num + '" title="' + num + '">';
-	li += num;
-	li += '	</span>';
-	li += '</li>';
-	$(".sensorNumber-list").find("ul").append(li);
-	sensorNumberArray.push(num);
-	$("#tripVehicleVO\\.sensorNumber").val(sensorNumberArray.join());
-}
+//以下为获取关锁前模拟数据
+var deviceData = {
+	'elockLocation': '1',
+	'elockCommuicate': '1',
+	'elockInArea': '1'
+	//'elockInArea': '' + parseInt(Math.random() * 10) % 2
+};
 /**
  * 查询设备状态：定位、通讯、电量等
  */
@@ -331,100 +537,16 @@ function getDeviceStatus(){
 		'0': 'glyphicon-remove status-error',
 		'1': 'glyphicon-ok status-ok'
 	};
-	/*
-	$.get(root + "/...", {}, function(data){
-		if(data) {
-			if(Object.keys(status).indexOf(deviceStatus.inArea) > -1) {
-				$("#inArea").addClass(status[deviceStatus.inArea]);
-			}
-		}else{
-			console.log("查询关锁状态为空");
-		}
-	}, 'json');
-	*/
-	//以下为模拟数据
-	var data = {
-		'inArea': '' + parseInt(Math.random() * 10) % 2
-	};
-	deviceStatus = data;
-	if(Object.keys(status).indexOf(deviceStatus.inArea) > -1) {
-		$("#inArea").addClass(status[deviceStatus.inArea]);
+	deviceStatus = deviceData;
+	if(Object.keys(status).indexOf(deviceStatus.elockLocation) > -1) {
+		$("span[name=elockLocation]").addClass(status[deviceStatus.elockLocation]);
 	}
-}
-/**
- * 列出检入图像
- * @param {Object} checkinPicture
- */
-function showCheckinPicture(checkinPicture){
-	checkinPicture = checkinPicture && $.trim(checkinPicture).split(/\s*,\s*/);
-	if(checkinPicture && checkinPicture.length > 0) {
-		$(".thumbnail").each(function(value, index){
-			if($(this).find("a.delete").length < 1) {
-				$(this).parent("div").remove();
-			}
-		});
-		var html = '';
-		for(var i = 0; i < checkinPicture.length; i++) {
-			if(checkinPicture[i]) {
-				var name = checkinPicture[i].slice(checkinPicture[i].lastIndexOf('/') + 1);
-				html += '<div class="col-sm-6 col-md-3">';
-				html += '	<div class="thumbnail">';
-				html += '		<img src="' + tripPhotoPathHttp + checkinPicture[i] + '" name="localImage" />';
-				html += '		<div class="caption">';
-				html += '			<p title="' + name + '">';
-				html += '				<span>' + name + '</span>';
-				html += '			</p>';
-				html += '		</div>';
-				html += '	</div>';
-				html += '</div>';
-			}
-		}
-		$("#collapseTwo .row").append(html);
+	if(Object.keys(status).indexOf(deviceStatus.elockCommuicate) > -1) {
+		$("span[name=elockCommuicate]").addClass(status[deviceStatus.elockCommuicate]);
 	}
-}
-/**
- * 设置选择文件的信息
- */
-function setSelectedStatus() {
-	var size = 0;
-	var num = uploadFiles.length;
-	$.each(uploadFiles, function(index, element) {
-		// 计算得到文件总大小
-		size += element.size;
-	});
-	// 转换为KB或MB
-	size = formatSize(size);
-	// 设置内容
-	$("#collapseTwo span[name='info-upload']").html($.i18n.prop("trip.activate.info.selectFiles", num, size));
-}
-
-/**
- * 设置拍摄照片的信息
- */
-function setPhotoStatus() {
-	var size = 0,
-		$cameras = $("input[name=tripCameraBase64]");
-	var num = $cameras.length;
-	$cameras.each(function(index, element) {
-		// 计算得到Base64总长度
-		size += element.value.length;
-	});
-	// 转换为KB或MB
-	size = formatSize(size);
-	// 设置内容
-	$("#collapseTwo span[name='info-camera']").html($.i18n.prop("trip.activate.info.cameraPhotos", num, size));
-}
-/**
- * 将文件容量转换为KB或MB
- * @param {Object} size
- */
-function formatSize(size) {
-	if (size > 1024 * 1024) {
-		size = (Math.round(size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
-	} else {
-		size = (Math.round(size * 100 / 1024) / 100).toString() + 'KB';
+	if(Object.keys(status).indexOf(deviceStatus.elockInArea) > -1) {
+		$("span[name=elockInArea]").addClass(status[deviceStatus.elockInArea]);
 	}
-	return size;
 }
 /**
  * 过滤选择的文件
@@ -444,61 +566,6 @@ function getFileNames(files) {
 		return element.name;
 	});
 }
-
-/**
- * 打开摄像头
- */
-function openCamera() {
-	gum.play();
-}
-
-/**
- * 关闭摄像头
- */
-function closeCamera() {
-	$("#main").hide();
-	$("#btnSnap").off();
-	gum.stop();
-}
-
-/**
- * Safiri
- */
-function ifSafiri() {
-	try {
-		var userAgent = navigator.userAgent;
-		if (userAgent.indexOf("Safari") > -1 && userAgent.indexOf("Oupeng") === -1 && userAgent.indexOf("360 Aphone") === -1) {
-			var sel = document.getElementById('fileselect'); // get reference to file select input element
-			window.addEventListener("DOMContentLoaded", function() {
-				var errBack = function(error) {
-					if (error.PERMISSION_DENIED) {
-						bootbox.alert('用户拒绝了浏览器请求媒体的权限');
-					} else if (error.NOT_SUPPORTED_ERROR) {
-						bootbox.alert('对不起，您的浏览器不支持拍照功能，请使用其他浏览器');
-					} else if (error.MANDATORY_UNSATISFIED_ERROR) {
-						bootbox.alert('指定的媒体类型未接收到媒体流');
-					} else {
-						bootbox.alert('系统未能获取到摄像头，请确保摄像头已正确安装。或尝试刷新页面，重试');
-					}
-				};
-				// Put video listeners into place
-				sel.addEventListener('change', function(e) {
-					var f = sel.files[0]; // get selected file (camera capture)
-					fr = new FileReader();
-					fr.onload = receivedData; // add onload event
-					fr.readAsDataURL(f); // get captured image as data URI
-				});
-				$('#imgtag').show();
-				$('.div_video').hide();
-				$('#btnSnap').click(function() {
-					sel.click();
-				});
-			}, false);
-		}
-	} catch (e) {
-
-	}
-}
 /**
  * 过滤文本框首尾空白
  */
@@ -508,72 +575,24 @@ function trimText() {
 	});
 }
 /**
- * 摄像头调用成功回调
- * @param {Object} video
- */
-function showSuccess(video) {
-	/*
-	video.addEventListener('loadeddata', function() {
-		$('body').animate({scrollTop: $("body").height()}, 800);
-	}, false);
-	*/
-	$('body').animate({scrollTop: $(".wrapper-content").height()}, 600);
-	$("#btnSnap").off().on('click', function() {
-		var canvas = document.getElementById("canvas"), context = canvas.getContext("2d");
-		$('#cream_loading').toggle();
-		context.drawImage(video, 0, 0, 640, 480);
-		convertCanvasToImage(canvas);
-		setPhotoStatus();
-	});
-}
-/**
- * 摄像头调用失败回调
- * @param {Object} error
- */
-function showError(error) {
-	bootbox.alert('Error: ' + error.message, function() {  
-        closeCamera();
-    });
-}
-/**
- * for iOS 
- * create file reader
- */
-function receivedData() {
-	// readAsDataURL is finished - add URI to IMG tag src
-	var imgtag = document.getElementById('imgtag'); // get reference to img tag
-	imgtag.src = fr.result;
-	$('#cream_loading').toggle();
-	try {
-		setTimeout(function() {
-			var canvas = document.getElementById("canvas"), context = canvas.getContext("2d");
-			context.drawImage(imgtag, 0, 0, 640, 480);
-			convertCanvasToImage(canvas);
-		}, 500);
-	} catch (err) {
-		bootbox.alert(err);
-	}
-}
-/**
- * 帆布转换成图像并保存图片
- * @param {Object} canvas
- */
-function convertCanvasToImage(canvas) {
-	var image = new Image();
-	image.src = canvas.toDataURL("image/png");
-	//字符串前有22位提示信息“data:image/png;base64”
-	//var b64 = image.src.substring(22);
-	var b64 = image.src;
-	//读取拍摄的照片
-	readPhoto(b64);
-	$('#cream_loading').toggle();
-	return image;
-}
-/**
  * 校验设备状态
  */
 function validateDeviceStatus(){
-	if(deviceStatus.inArea != '1') {
+	/*
+	if(deviceStatus.elockLocation != '1') {
+		bootbox.alert($.i18n.prop("trip.info.location.invalid"), function(){
+			bootstrapValidator.disableSubmitButtons(false);
+		});
+		return false;
+	}
+	if(deviceStatus.elockCommuicate != '1') {
+		bootbox.alert($.i18n.prop("trip.info.communication.invalid"), function(){
+			bootstrapValidator.disableSubmitButtons(false);
+		});
+		return false;
+	}
+	*/
+	if(deviceStatus.elockInArea != '1') {
 		bootbox.alert($.i18n.prop("trip.info.inArea.not"), function(){
 			bootstrapValidator.disableSubmitButtons(false);
 		});
@@ -585,12 +604,14 @@ function validateDeviceStatus(){
  * 校验文件
  */
 function validateFiles(){
+	/*
 	if(uploadFiles.length < 1 && $("input[name=tripCameraBase64]").length < 1) {
 		$("div.file-help-block").show();
 		bootstrapValidator.disableSubmitButtons(false);
 		$('body').animate({scrollTop: $(".wrapper-content").height()}, 400);
 		return false;
 	}
+	*/
 	return true;
 }
 /**
@@ -611,34 +632,180 @@ function bootstrapValidatorForm() {
         var bv = $form.data('bootstrapValidator');
 
         // Use Ajax to submit form data
-        if(validateDeviceStatus()) {
-        	if(validateFiles()) {
-        		var formData = new FormData($form[0]);
-        		$.ajax({
-        			url: $form[0].action,
-        			type: 'POST',
-        			contentType: false,
-        			data: formData,
-        			dataType: 'JSON',
-        			processData: false,
-        			success: function(result) {
+        var specialFlag = $("#tripVehicleVO\\.specialFlag").val();
+        var validateFlag = false;
+        if(specialFlag == '1') {
+        	validateFlag = true;
+        }else{
+        	validateFlag = validateDeviceStatus() && validateFiles();
+        }
+        setFileIndexVehicleNumMap();
+    	if(validateFlag && $("#tripVehicleVO\\.tripId").val() != '') {
+    		var formData = new FormData($form[0]);
+    		
+    		if(systemModules.isApprovalOn) {
+				//弹出等待审批的模态框
+				$("#msgModal").modal({
+					backdrop: 'static', 
+					keyboard: false
+				}).modal('show');
+			}
+    		
+    		$.ajax({
+    			url: $form[0].action,
+    			type: 'POST',
+    			contentType: false,
+    			data: formData,
+    			dataType: 'JSON',
+    			processData: false,
+    			success: function(result) {
+    				if(!needLogin(result)) {
         				try {
         					if (result && result.result) {
-        						bootbox.success($.i18n.prop("trip.finish.success"), function() {  
-        							location.href = location.href.replace(/#$/, '');
-        						});
+        						if(!systemModules.isApprovalOn) {
+        							bootbox.success($.i18n.prop("trip.finish.success"), function() {  
+        								location.href = location.href.replace(/#$/, '');
+        							});
+        						}
         					} else if (result.message) {
         						bootbox.alert($.i18n.prop("trip.finish.failed") + ":" + result.message);
+        						bootstrapValidator.disableSubmitButtons(false);
         					}
         				} catch (e) {}
-        			},
-        			error: function (XMLHttpRequest, textStatus, errorThrown) {
-        				//this; // 调用本次AJAX请求时传递的options参数
-        				console.error(textStatus || errorThrown);
-        			}
-        		});
-        	}
-		}
+    				}
+    			},
+    			error: function (XMLHttpRequest, textStatus, errorThrown) {
+    				//this; // 调用本次AJAX请求时传递的options参数
+    				console.error(textStatus || errorThrown);
+    			}
+    		});
+    	}
     });
 	bootstrapValidator = $('#tripForm').data('bootstrapValidator');
+}
+
+/**
+ * 查询关锁是否已经生成status表数据
+ */
+function queryElockStatus(){
+ 	refreshDeviceInfo();
+    function refreshDeviceInfo(){
+    	var trackingDeviceNumber = $("#s_trackingDeviceNumber").val();
+    	if(typeof(trackingDeviceNumber)!=undefined && trackingDeviceNumber!=null && trackingDeviceNumber!=""){
+    		var portUrl = _getRootPath() + "/vehiclestatus/findDeviceNumber.action?trackingDeviceNumber="+trackingDeviceNumber;
+    		$.ajax({
+    			type : "POST",
+    			url : portUrl,
+    			dataType : "json",
+    			cache : false,
+    			async : true,
+    			error : function(e, message, response) {
+    				console.log("Status: " + e.status + " message: " + message);
+    			},
+    			success : function(obj) {
+    				obj.success = true; //演示
+    				if(obj.success){
+    					deviceData = {
+							'elockLocation': '1',
+							'elockCommuicate': '1',
+							'elockInArea': '1'
+							//'elockInArea': '' + parseInt(Math.random() * 10) % 2
+						};
+    					deviceStatus = deviceData;
+						$("#myTabContent span[name=elockInArea]").removeClass('glyphicon-remove status-error').addClass('glyphicon-ok status-ok');
+						if(obj.lsMonitorVehicleStatusBO && !!parseInt(obj.lsMonitorVehicleStatusBO.electricityValue)){
+							refreshVoltage(parseInt(obj.lsMonitorVehicleStatusBO.electricityValue));
+						}
+    				}else{
+    					deviceData = {
+							'elockLocation': '1',
+							'elockCommuicate': '1',
+							'elockInArea': '0'
+						};
+    					deviceStatus = deviceData;
+    					$("#myTabContent span[name=elockInArea]").removeClass('glyphicon-ok status-ok').addClass('glyphicon-remove status-error');
+						
+    					refreshVoltage(0);
+    				}
+    			}
+    		});
+    	}
+    	refreshTimeoutValue = setTimeout(function(){
+			refreshDeviceInfo();
+		},8000);
+	}
+}
+/**
+ * 关锁操作日志记录
+ * @param type 操作类型
+ * @param trackingDeviceNumber 关锁号
+ */
+function elockLog(type, trackingDeviceNumber) {
+	$.get(root + "/monitortrip/elockLog.action", {"type": type, "trackingDeviceNumber": trackingDeviceNumber}, function(data){
+		if(!needLogin(data)) {
+			if(data) {
+				console.log(type, trackingDeviceNumber);
+			}
+		}
+	}, 'json');
+}
+function setFileIndexVehicleNumMap(){
+	if(Object.keys(fileIndexVehicleNumMap).length > 0) {
+		$("#fileIndexVehicleNumMap").val(JSON.stringify(fileIndexVehicleNumMap));
+	}
+	if(Object.keys(photoIndexVehicleNumMap).length > 0) {
+		$("#photoIndexVehicleNumMap").val(JSON.stringify(photoIndexVehicleNumMap));
+	}
+}
+/**
+ * 取消所有定时
+ */
+function clearAllTimeout() {
+	for (var i in refreshTimeout) {
+		clearTimeout(refreshTimeout[i]);
+		delete refreshTimeout[i];
+	}
+}
+/**
+ * 查询所有关锁号实时状态信息
+ */
+function queryAllElockStatus(){
+	for(var i in globalVehicle) {
+		if(i != 'editingId') {
+			queryElockStatus(globalVehicle[i].trackingDeviceNumber);
+		}
+	}
+}
+function setGlobalVehicle(){
+	$("#myTabContent>.tab-pane").each(function(){
+		var id = $(this).attr("id");
+		globalVehicle[String(id)] = {
+				trackingDeviceNumber: $(this).find("[name=trackingDeviceNumber]").text(),
+				vehiclePlateNumber: id
+		};
+	});
+}
+/**
+ * 读取拍摄的照片
+ * @param {Object} b64 照片的Base64编码
+ */
+function readPhotoFinish(b64) {
+	var $tabPane = $(".tab-pane.active");
+	var $carousel = $tabPane.find(".carousel").eq(0);
+	var id = $carousel.attr("id");
+	$carousel.find("li, div").removeClass("active");
+	var i = $carousel.children(".carousel-indicators").children("li").length;
+	var liHtml = '';
+	liHtml += '<li data-target="#' + id + '" data-slide-to="' + i + '" class="active">';
+	liHtml += '<input type="hidden" name="tripCameraBase64" value="' + b64.substring(22) + '" />';
+	liHtml += '</li>';
+	$carousel.children(".carousel-indicators").append(liHtml);
+	var image = {
+			src: b64,
+			name: uuid(),
+			index: Object.keys(photoIndexVehicleNumMap).length + 'photo'
+	};
+	var html = ejs.render($("#imageItem").html(), image);
+	$carousel.children(".carousel-inner").append(html);
+	$("div.file-help-block").hide();
 }

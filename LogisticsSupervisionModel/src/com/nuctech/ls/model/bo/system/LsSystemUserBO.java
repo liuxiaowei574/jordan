@@ -11,8 +11,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
-
 import com.nuctech.util.LoginSystem;
 
 /**
@@ -23,195 +21,237 @@ import com.nuctech.util.LoginSystem;
 @Entity
 @Table(name = "LS_SYSTEM_USER")
 public class LsSystemUserBO implements Serializable {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8680511095014414878L;
 
-	/**
-	 * 默认密码
-	 */
-	public static final String DEFAULT_PASSWORD = "123456";
-	/**
-	 * 缺省的构造函数
-	 */
-	public LsSystemUserBO() {
-		super();
-		userId = UUID.randomUUID().toString();
-	}
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 8680511095014414878L;
 
-	/* 用户主键 */
-	private String userId;
+    /**
+     * 默认密码
+     */
+    public static final String DEFAULT_PASSWORD = "123456";
 
-	/* 用户名 */
-	private String userAccount;
+    /**
+     * 缺省的构造函数
+     */
+    public LsSystemUserBO() {
+        super();
+        userId = UUID.randomUUID().toString();
+    }
 
-	/* 密码 */
-	private String userPassword;
+    /* 用户主键 */
+    private String userId;
 
-	/* 姓名 */
-	private String userName;
+    /* 用户名 */
+    private String userAccount;
 
-	/* 电话 */
-	private String userPhone;
+    /* 密码 */
+    private String userPassword;
 
-	/* 邮箱 */
-	private String userEmail;
+    /* 姓名 */
+    private String userName;
 
-	/* 地址 */
-	private String userAddress;
+    /* 电话 */
+    private String userPhone;
 
-	/* 登录系统 */
-	private LoginSystem logonSystem;
+    /* 邮箱 */
+    private String userEmail;
 
-	/* 登录时间 */
-	private Date logonTime;
+    /* 地址 */
+    private String userAddress;
 
-	/* 登出时间 */
-	private Date logoutTime;
+    /* 登录系统 */
+    private LoginSystem logonSystem;
 
-	/* IP_ADDRESS */
-	private String ipAddress;
+    /* 登录时间 */
+    private Date logonTime;
 
-	/* TOKEN */
-	private String token;
+    /* 登出时间 */
+    private Date logoutTime;
 
-    /* 有效标记  1:有效; 0:无效*/
+    /* IP_ADDRESS */
+    private String ipAddress;
+
+    /* TOKEN */
+    private String token;
+
+    /* 有效标记 1:有效; 0:无效 */
     private String isEnable;
 
+    /* 级别 */
+    private String level;
 
-	@Id
-	@Column(name = "USER_ID", nullable = false, length = 50)
-	public String getUserId() {
-		return this.userId;
-	}
+    /* 职位 */
+    private String position;
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+    /** 登录地点 */
+    private String logLocation;
 
-	@Column(name = "USER_ACCOUNT", nullable = true, length = 100 , unique = true)
-	public String getUserAccount() {
-		return userAccount;
-	}
+    /** 是否可以处理报警 */
+    private String canDealAlarm;
 
-	public void setUserAccount(String userAccount) {
-		this.userAccount = userAccount;
-	}
+    @Id
+    @Column(name = "USER_ID", nullable = false, length = 50)
+    public String getUserId() {
+        return this.userId;
+    }
 
-	@Column(name = "USER_PASSWORD", nullable = true, length = 50)
-	public String getUserPassword() {
-		return this.userPassword;
-	}
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
-	}
+    @Column(name = "USER_ACCOUNT", nullable = true, length = 100, unique = true)
+    public String getUserAccount() {
+        return userAccount;
+    }
 
-	@Column(name = "USER_NAME", nullable = true, length = 100)
-	public String getUserName() {
-		return this.userName;
-	}
+    public void setUserAccount(String userAccount) {
+        this.userAccount = userAccount;
+    }
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    @Column(name = "USER_PASSWORD", nullable = true, length = 50)
+    public String getUserPassword() {
+        return this.userPassword;
+    }
 
-	@Column(name = "USER_PHONE", nullable = true, length = 20)
-	public String getUserPhone() {
-		return this.userPhone;
-	}
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
 
-	public void setUserPhone(String userPhone) {
-		this.userPhone = userPhone;
-	}
+    @Column(name = "USER_NAME", nullable = true, length = 100)
+    public String getUserName() {
+        return this.userName;
+    }
 
-	@Column(name = "USER_EMAIL", nullable = true, length = 100)
-	public String getUserEmail() {
-		return this.userEmail;
-	}
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
-	}
+    @Column(name = "USER_PHONE", nullable = true, length = 20)
+    public String getUserPhone() {
+        return this.userPhone;
+    }
 
-	@Column(name = "USER_ADDRESS", nullable = true, length = 200)
-	public String getUserAddress() {
-		return this.userAddress;
-	}
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
+    }
 
-	public void setUserAddress(String userAddress) {
-		this.userAddress = userAddress;
-	}
+    @Column(name = "USER_EMAIL", nullable = true, length = 100)
+    public String getUserEmail() {
+        return this.userEmail;
+    }
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "LOGON_SYSTEM", nullable = true, length = 100)
-	public LoginSystem getLogonSystem() {
-		return this.logonSystem;
-	}
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
 
-	public void setLogonSystem(LoginSystem logonSystem) {
-		this.logonSystem = logonSystem;
-	}
+    @Column(name = "USER_ADDRESS", nullable = true, length = 200)
+    public String getUserAddress() {
+        return this.userAddress;
+    }
 
-	
-	@Column(name = "LOGON_TIME", nullable = true)
-	public Date getLogonTime() {
-		return this.logonTime;
-	}
+    public void setUserAddress(String userAddress) {
+        this.userAddress = userAddress;
+    }
 
-	public void setLogonTime(Date logonTime) {
-		this.logonTime = logonTime;
-	}
+    @Enumerated(EnumType.STRING)
+    @Column(name = "LOGON_SYSTEM", nullable = true, length = 100)
+    public LoginSystem getLogonSystem() {
+        return this.logonSystem;
+    }
 
-	
-	@Column(name = "LOGOUT_TIME", nullable = true)
-	public Date getLogoutTime() {
-		return this.logoutTime;
-	}
+    public void setLogonSystem(LoginSystem logonSystem) {
+        this.logonSystem = logonSystem;
+    }
 
-	public void setLogoutTime(Date logoutTime) {
-		this.logoutTime = logoutTime;
-	}
+    @Column(name = "LOGON_TIME", nullable = true)
+    public Date getLogonTime() {
+        return this.logonTime;
+    }
 
-	@Column(name = "IP_ADDRESS", nullable = true, length = 20)
-	public String getIpAddress() {
-		return this.ipAddress;
-	}
+    public void setLogonTime(Date logonTime) {
+        this.logonTime = logonTime;
+    }
 
-	public void setIpAddress(String ipAddress) {
-		this.ipAddress = ipAddress;
-	}
+    @Column(name = "LOGOUT_TIME", nullable = true)
+    public Date getLogoutTime() {
+        return this.logoutTime;
+    }
 
-	@Column(name = "TOKEN", nullable = true, length = 255)
-	public String getToken() {
-		return this.token;
-	}
+    public void setLogoutTime(Date logoutTime) {
+        this.logoutTime = logoutTime;
+    }
 
-	public void setToken(String token) {
-		this.token = token;
-	}
+    @Column(name = "IP_ADDRESS", nullable = true, length = 20)
+    public String getIpAddress() {
+        return this.ipAddress;
+    }
 
-	@Column(name = "IS_ENABLE", nullable = true, length = 2)
-	public String getIsEnable() {
-		return this.isEnable;
-	}
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
 
-	public void setIsEnable(String isEnable) {
-		this.isEnable = isEnable;
-	}
+    @Column(name = "TOKEN", nullable = true, length = 255)
+    public String getToken() {
+        return this.token;
+    }
 
-	@Override
-	public String toString() {
-		return "LsSystemUserBO [userId=" + userId + ", userAccount="
-				+ userAccount + ", userPassword=" + userPassword
-				+ ", userName=" + userName + ", userPhone=" + userPhone
-				+ ", userEmail=" + userEmail + ", userAddress=" + userAddress
-				+ ", logonSystem=" + logonSystem + ", logonTime=" + logonTime
-				+ ", logoutTime=" + logoutTime + ", ipAddress=" + ipAddress
-				+ ", token=" + token + ", isEnable=" + isEnable + "]";
-	}
-	
-	
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    @Column(name = "IS_ENABLE", nullable = true, length = 2)
+    public String getIsEnable() {
+        return this.isEnable;
+    }
+
+    public void setIsEnable(String isEnable) {
+        this.isEnable = isEnable;
+    }
+
+    @Column(name = "LEVEL", nullable = true, length = 100)
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    @Column(name = "POSITION", nullable = true, length = 100)
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    @Column(name = "LOG_LOCATION", nullable = true, length = 200)
+    public String getLogLocation() {
+        return logLocation;
+    }
+
+    public void setLogLocation(String logLocation) {
+        this.logLocation = logLocation;
+    }
+
+    @Column(name = "CAN_DEAL_ALARM", nullable = true, length = 1)
+    public String getCanDealAlarm() {
+        return canDealAlarm;
+    }
+
+    public void setCanDealAlarm(String canDealAlarm) {
+        this.canDealAlarm = canDealAlarm;
+    }
+
+    @Override
+    public String toString() {
+        return "LsSystemUserBO [userId=" + userId + ", userAccount=" + userAccount + ", userPassword=" + userPassword
+                + ", userName=" + userName + ", userPhone=" + userPhone + ", userEmail=" + userEmail + ", userAddress="
+                + userAddress + ", logonSystem=" + logonSystem + ", logonTime=" + logonTime + ", logoutTime="
+                + logoutTime + ", ipAddress=" + ipAddress + ", token=" + token + ", isEnable=" + isEnable + "]";
+    }
+
 }

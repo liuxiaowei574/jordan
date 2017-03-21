@@ -39,6 +39,7 @@ public class MonitorRaPointAction extends LSBaseAction {
 	@Resource
 	private MonitorRouteAreaService monitorRouteAreaService;
 
+	private LsMonitorRouteAreaBO lsMonitorRouteAreaBO;
 	/**
 	 * 根据绘制图形添加点坐标
 	 * 
@@ -55,7 +56,7 @@ public class MonitorRaPointAction extends LSBaseAction {
 		    LsMonitorRaPointBO bo = new LsMonitorRaPointBO();
 		    bo.setLatitude(job.get("lat").toString());
 		    bo.setLongitude(job.get("lng").toString());
-		    bo.setGpsSeq(i);
+		    bo.setGpsSeq(Long.valueOf(i));
 		    bo.setPointId(generatePrimaryKey());
 		    bo.setRouteAreaId(generatePrimaryKey());
 		    monitorRaPointService.addMonitorRaPoint(bo);
@@ -81,28 +82,26 @@ public class MonitorRaPointAction extends LSBaseAction {
 	@Action(value = "getPointsByRouteAreaId", results = { @Result(name = "success", type = "json"),
 			@Result(name = "error", type = "json") })
 	public String getPointsByRouteAreaId() {
-
 		try {
-			if (routeAreaId == null || routeAreaId == "")
-				return null;
-			LsMonitorRouteAreaBO lsMonitorRouteAreaBO = this.monitorRouteAreaService
+			if (routeAreaId == null || routeAreaId == "") return ERROR;
+			this.lsMonitorRouteAreaBO = this.monitorRouteAreaService
 					.findMonitorRouteAreaById(routeAreaId);
 			this.lsMonitorRaPointBOs = this.monitorRaPointService.findAllMonitorRaPointByRouteAreaId(routeAreaId);
-			JsonConfig jsonConfig = new JsonConfig();
-			jsonConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT); // 排除关联死循环
-			jsonConfig.registerJsonValueProcessor(java.util.Date.class,
-					new DateJsonValueProcessor("yyyy-MM-dd HH:mm:ss"));// 鏃堕棿瑙ｆ瀽
-			JSONArray lineitemArray = JSONArray.fromObject(this.lsMonitorRaPointBOs, jsonConfig);
-			String result = JSONArray.fromObject(lineitemArray).toString();
-			String strResult = "{\"routeType\":\"" + lsMonitorRouteAreaBO.getRouteAreaType()
-					+ "\",\"routeAreaStatus\":\"" + lsMonitorRouteAreaBO.getRouteAreaStatus() + "\",\"jsonData\":"
-					+ result + "}";
-			this.response.getWriter().println(strResult);
+//			JsonConfig jsonConfig = new JsonConfig();
+//			jsonConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT); // 排除关联死循环
+//			jsonConfig.registerJsonValueProcessor(java.util.Date.class,
+//					new DateJsonValueProcessor("yyyy-MM-dd HH:mm:ss"));// 鏃堕棿瑙ｆ瀽
+//			JSONArray lineitemArray = JSONArray.fromObject(this.lsMonitorRaPointBOs, jsonConfig);
+//			String result = JSONArray.fromObject(lineitemArray).toString();
+//			String strResult = "{\"routeType\":\"" + (null == this.lsMonitorRouteAreaBO ? "" : this.lsMonitorRouteAreaBO.getRouteAreaType())
+//					+ "\",\"routeAreaStatus\":\"" + (null == this.lsMonitorRouteAreaBO ? "" : this.lsMonitorRouteAreaBO.getRouteAreaStatus()) + "\",\"jsonData\":"
+//					+ result + "}";
+			return SUCCESS;
 		} catch (Exception e1) {
 			message = e1.getMessage();
 			logger.error(message);
 		}
-		return null;
+        return ERROR;
 	}
 
 	/**
@@ -129,7 +128,19 @@ public class MonitorRaPointAction extends LSBaseAction {
 	public void setLsMonitorRaPointBO(LsMonitorRaPointBO lsMonitorRaPointBO) {
 		this.lsMonitorRaPointBO = lsMonitorRaPointBO;
 	}
-	/**
+	
+	
+	
+    public List<LsMonitorRaPointBO> getLsMonitorRaPointBOs() {
+        return lsMonitorRaPointBOs;
+    }
+
+    
+    public void setLsMonitorRaPointBOs(List<LsMonitorRaPointBO> lsMonitorRaPointBOs) {
+        this.lsMonitorRaPointBOs = lsMonitorRaPointBOs;
+    }
+
+    /**
 	 * 传递点json值
 	 */
 	private String pointJson;
@@ -141,6 +152,16 @@ public class MonitorRaPointAction extends LSBaseAction {
 	public void setPointJson(String pointJson) {
 		this.pointJson = pointJson;
 	}
+
+    
+    public LsMonitorRouteAreaBO getLsMonitorRouteAreaBO() {
+        return lsMonitorRouteAreaBO;
+    }
+
+    
+    public void setLsMonitorRouteAreaBO(LsMonitorRouteAreaBO lsMonitorRouteAreaBO) {
+        this.lsMonitorRouteAreaBO = lsMonitorRouteAreaBO;
+    }
 	
 	
 }

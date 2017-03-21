@@ -88,7 +88,7 @@
 			//每次关闭摄像头，解绑vide元素的加载事件
 			video.removeEventListener('loadeddata', videoLoadeddata, false);
 			if(self.video && self.video.pause) {
-				self.video.pause();//html5未提供摄像头关闭API
+				self.video.pause();
 			}
 			if(self.stream && self.stream.stop) {
 				self.stream.stop();//Chrome47+不支持了。

@@ -1,33 +1,46 @@
 package com.nuctech.ls.model.util;
 
+import com.nuctech.util.MessageResourceUtil;
+
 /**
  * 
  * 作者： 徐楠
  *
- * 描述：<p>关锁状态 枚举类</p>
+ * 描述：
+ * <p>
+ * 关锁状态 枚举类
+ * </p>
  * 创建时间：2016年6月3日
  */
 public enum DeviceStatus {
 
-	Scrap("0"), //报废
-	Normal("1"), //正常
-	Inway("2"), //在途
-	Destory("3"), //损坏
-	Maintain("4"); //维修
+    Scrap("0"), // 报废
+    Normal("1"), // 正常
+    Inway("2"), // 在途
+    Destory("3"), // 损坏
+    Maintain("4"); // 维修
 
-	private String text;
-	
-	private DeviceStatus(String text){
-		this.text = text;
-	}
+    private String text;
 
-	public String getText() {
-		return text;
-	}
+    private DeviceStatus(String text) {
+        this.text = text;
+    }
 
-	public void setText(String text) {
-		this.text = text;
-	}
+    public String getText() {
+        return text;
+    }
 
-	
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    /**
+     * 从资源文件读取国际化值
+     * 
+     * @return
+     */
+    public String getKey() {
+        return MessageResourceUtil.getMessageInfo(this.getClass().getSimpleName() + "." + this.name());
+    }
+
 }

@@ -1,0 +1,44 @@
+静止速度参数未设置 =Have not set STATIONARY_SPEED
+长时间滞留报警判定时间未设置 = Have not set STAY_TIME alarm determines time
+开锁报警: = OPEN_LOCK alarm:
+开锁又关闭报警: = CLOSED_LOCK alarm:
+强拆报警: = DEVICE_BROKEN alarm:
+子锁失联报警: = ESEAL_LOSS alarm:
+子锁破坏报警: = TAMPERING_WITH_ESEAL alarm:
+传感器失联报警: = SENSOR_LOSS alarm:
+传感器破坏报警: = TAMPERING_WITH_SENSOR alarm:
+低电量报警: = LOW_BATTERY alarm:
+行程超时报警: = EXCEEDING_TRIP_ALLOWED_TIME alarm:
+车载台报警: = TRACK_UNIT_ALARM alarm:
+卫星信号丢失: = SATELLITE_LOSS alarm:
+GPRS信号丢失: = GSM_LOSS alarm:
+发生长时间停留报警，报警终端为: = Occured STAY_TIME alarm,alarm terminal is:
+发生路线偏移报警，报警终端为:= Occured ROUTE_DEVIATION alarm,alarm terminal is:
+定位无效，将忽略某些报警判断 = location fail,will ignore some alarm judgement
+危险区域报警: = ENTER_DANGEROUS_AREA alarm:
+收到消息# 消息ID未获取 = receive message# receive message ID failed
+消息#%s不是映射型消息，忽略 = message#%s is not mapping type message ,ignore
+接收到消息: = receive message
+消息处理失败 = handle message failed
+消息反馈完成 = feedback message success
+消息反馈完成 : = feedback message fail:
+保存原始GPS数据信息： = save raw GPS data:
+终端位置信息： = terminal location information:
+接收数据下发返回消息： = receive data and send back message:
+接收到数据开始执行存储： = receive data and start execute  storage:
+接收掉线消息：= receive dropped message:
+返回消息 = feedback message 
+处理消息：= handle message:
+GPS定位时间为null，将忽略此条记录 = GPS location time is null,will ignore this record
+GIS提供真实测试测量时间大于当前系统时间十分钟以上，坐标作废， = GIS provide the actual test time is more than ten minutes,coordinate invalid,
+GPS上传坐标的经(纬)度为 = the coordinate of longitude(latitude) from GPS is
+行程信息：行程编号 = the trip information : the trip number
+设备编号 = device number
+出发口岸 = departure port
+出发时间 = departure time
+到达口岸 = arrive port
+未找到 = did not found
+对应行程信息 = correspond trip information
+
+
+

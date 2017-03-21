@@ -12,7 +12,7 @@
     <h4 class="modal-title" id="receiveUserListModalTitle"><fmt:message key="system.notice.log.list.title"/></h4>
 </div>
 <div class="modal-body">
-<form id="searchForm">
+<form id="searchForm1">
     <input type="hidden" id="receiveNoticeId" name="receiveNoticeId" value="${notice.noticeId }">
 </form>
 

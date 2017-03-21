@@ -47,6 +47,10 @@ public class GlobalConstants {
      * 不需要权限判断的路径 若当前登录用户的角色与其所访问的模块不一致，则跳转到此页面提示
      */
     public static final String _NOPERMISSION = "/noPermission.jsp";
+    /**
+     * 不需要session过期过滤的路径---4.session过期提示页面 不需要权限判断的路径
+     */
+    public static final String _SESSION_TIMEOUT = "/sessionTimeOut.jsp";
    
     /**
      * 没有登录的情况下直接跳转到登录页面而不是提示页面的路径集合
@@ -68,5 +72,6 @@ public class GlobalConstants {
 		_noCheckPathSet.add(_LOGIN_URL);
 		_noCheckPathSet.add(_NEED_LOGIN);
 		_noCheckPathSet.add(_NOPERMISSION);
+		_noCheckPathSet.add(_SESSION_TIMEOUT);
 	}
 }

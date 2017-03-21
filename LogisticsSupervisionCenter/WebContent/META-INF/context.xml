@@ -9,8 +9,45 @@
             global="jms/connectionFactory"
             type="org.apache.activemq.ActiveMQConnectionFactory" /> -->
 	
-	<!-- 行程相关照片存储路径 -->
+	<!-- 系统存储根目录 -->
+	<ResourceLink name="param/rootPath" global="param/LS/rootPath" type="java.lang.String" />
+	<!-- 系统存储根目录访问路径 -->
+	<ResourceLink name="param/rootPathHttp" global="param/LS/rootPathHttp" type="java.lang.String" />
+	<!-- 行程相关照片存储目录名 -->
 	<ResourceLink name="param/tripPhotoPath" global="param/LS/tripPhotoPath" type="java.lang.String" />
-	<!-- 行程相关照片访问路径 -->
-	<ResourceLink name="param/tripPhotoPathHttp" global="param/LS/tripPhotoPathHttp" type="java.lang.String" />
+	<!-- 车载台安装相关照片存储目录名 -->
+	<ResourceLink name="param/trackUnitPhotoPath" global="param/LS/trackUnitPhotoPath" type="java.lang.String" />
+	<!-- 车辆推送websocket访问地址 -->
+	<ResourceLink name="param/wsGpsUrl" global="param/LS/wsGpsUrl" type="java.lang.String" />
+	<!-- 通知推送websocket访问地址 -->
+	<ResourceLink name="param/wsNoticeUrl" global="param/LS/wsNoticeUrl" type="java.lang.String" />
+	<!-- 文件传输方式。0：本地/网络共享路径，1：FTP协议。 -->
+	<ResourceLink name="param/fileTransferType" global="param/LS/fileTransferType" type="java.lang.String" />
+	<!-- FTP主机名 -->
+	<ResourceLink name="param/ftpHostName" global="param/LS/ftpHostName" type="java.lang.String" />
+	<!-- FTP端口 -->
+	<ResourceLink name="param/ftpPort" global="param/LS/ftpPort" type="java.lang.String" />
+	<!-- FTP登录用户名 -->
+	<ResourceLink name="param/ftpUserName" global="param/LS/ftpUserName" type="java.lang.String" />
+	<!-- FTP登录密码 -->
+	<ResourceLink name="param/ftpPassword" global="param/LS/ftpPassword" type="java.lang.String" />
+	
+	<!-- 车载台和巡逻队模块 -->
+	<ResourceLink name="param/patrolModule" global="param/LS/patrolModule" type="java.lang.String" />
+	<!-- 审批模块 -->
+	<ResourceLink name="param/approvalModule" global="param/LS/approvalModule" type="java.lang.String" />
+	<!-- 风险分析模块 -->
+	<ResourceLink name="param/riskModule" global="param/LS/riskModule" type="java.lang.String" />
+	<!-- 调度模块 -->
+	<ResourceLink name="param/dispatchModule" global="param/LS/dispatchModule" type="java.lang.String" />
+	<!-- 待办任务模块 -->
+	<ResourceLink name="param/taskModule" global="param/LS/taskModule" type="java.lang.String" />
+	<!-- 报警推送模块 -->
+	<ResourceLink name="param/alarmPushModule" global="param/LS/alarmPushModule" type="java.lang.String" />
+	<!-- 区域场地模块 -->
+	<ResourceLink name="param/areaModule" global="param/LS/areaModule" type="java.lang.String" />
+	
+	<!-- Redis地址 -->
+	<ResourceLink name="param/redisUrl" global="param/LS/redisUrl" type="java.lang.String" />
+	
 </Context>

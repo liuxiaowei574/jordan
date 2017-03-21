@@ -22,109 +22,97 @@ import com.nuctech.util.DateUtils;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-
 @Namespace("/analysis")
-public class PerformanceAnalysisAction extends LSBaseAction{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1785639145635362459L;
-	protected static final String DEFAULT_SORT_COLUMNS = "userId ASC";
-	Logger logger = Logger.getLogger(this.getClass());
-	
-	@Resource
-	private SystemUserService userService;
-	@Resource
-	private PerformanceAnalysisService performanceAnalysisService;
-	public List<LsSystemUserBO> userList = null;
-	public JSONArray userArr = new JSONArray();
-	public JSONArray useronlineArr = new JSONArray();
-	public JSONArray userDealAlarmArr = new JSONArray();
-	
-	@Action(value="list", results = {
-			@Result(name = "success", location = "/analysis/PerformanceAnalysis.jsp")
-	})
-	public String list(){
-		pageQuery = this.newPageQuery(DEFAULT_SORT_COLUMNS);
-		userList = userService.findUsers(pageQuery);
-		userArr.clear();
-		if(userList!=null){
-			userArr.addAll(userList);
-		}
-		return SUCCESS;
-	}
-	@Action(value="echarts", results = {
-			@Result(name = "success", location = "/analysis/echarts.jsp")
-	})
-	public String echarts(){				
-		pageQuery = this.newPageQuery(DEFAULT_SORT_COLUMNS);
-		pageQuery = dealDateParam(pageQuery);
-		userList = userService.findUsers(pageQuery);
-		userArr.clear();
-		if(userList!=null){
-			userArr.addAll(userList);
-		}
-		
-		List<PerformanceAnalysisVo> pageList = performanceAnalysisService.findPerformanceAnalysis(pageQuery);
-		//List<PerformanceAnalysisVo> 
-		if(pageList!=null){
-			useronlineArr.addAll(pageList);
-		}
-		return SUCCESS;
-	}
-	
-	
-	@Action(value="queryEcharts")
-	public void queryEcharts(){				
-		pageQuery = this.newPageQuery(DEFAULT_SORT_COLUMNS);
-		pageQuery = dealDateParam(pageQuery);
-		userList = userService.findUsers(pageQuery);
-		userArr.clear();
-		if(userList!=null){
-			userArr.addAll(userList);
-		}
-		
-		List<PerformanceAnalysisVo> pageList = performanceAnalysisService.findPerformanceAnalysis(pageQuery);
-		//List<PerformanceAnalysisVo> 
-		if(pageList!=null){
-			useronlineArr.addAll(pageList);
-		}
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("data", useronlineArr);
-		try {
-			response.getWriter().write(jsonObject.toString());
-		} catch (IOException e) {
-		}
-	}
+public class PerformanceAnalysisAction extends LSBaseAction {
 
-	private PageQuery<Map> dealDateParam(PageQuery<Map> pageQuery) {
-		String startDate = (String) pageQuery.getFilters().get("timeStart");
-		String endDate = (String) pageQuery.getFilters().get("timeEnd");
-		String timeFormat = (String) pageQuery.getFilters().get("timeFormat");
-		
-		if(startDate!=null){
-			pageQuery.getFilters().put("dateStart", DateUtils.toStdString(startDate,timeFormat));
-		}
-		if(endDate!=null){
-			pageQuery.getFilters().put("dateEnd", DateUtils.toStdString(endDate,timeFormat));
-		}
-		
-		return pageQuery;
-	}
-	public List<LsSystemUserBO> getUserList() {
-		return userList;
-	}
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1785639145635362459L;
+    protected static final String DEFAULT_SORT_COLUMNS = "userId ASC";
+    Logger logger = Logger.getLogger(this.getClass());
 
-	public void setUserList(List<LsSystemUserBO> userList) {
-		this.userList = userList;
-	}
+    @Resource
+    private SystemUserService userService;
+    @Resource
+    private PerformanceAnalysisService performanceAnalysisService;
+    public List<LsSystemUserBO> userList = null;
+    public JSONArray userArr = new JSONArray();
+    public JSONArray useronlineArr = new JSONArray();
+    public JSONArray userDealAlarmArr = new JSONArray();
 
-	public JSONArray getUserArr() {
-		return userArr;
-	}
+    @Action(value = "performanceAnalysis",
+            results = { @Result(name = "success", location = "/analysis/PerformanceAnalysis.jsp") })
+    public String performanceAnalysis() {
+        pageQuery = this.newPageQuery(DEFAULT_SORT_COLUMNS);
+        pageQuery = dealDateParam(pageQuery);
+        userList = userService.findUsers(pageQuery);
+        userArr.clear();
+        if (userList != null) {
+            userArr.addAll(userList);
+        }
 
-	public void setUserArr(JSONArray userArr) {
-		this.userArr = userArr;
-	}
-	
+        List<PerformanceAnalysisVo> pageList = performanceAnalysisService.findPerformanceAnalysis(pageQuery);
+        // List<PerformanceAnalysisVo>
+        if (pageList != null) {
+            useronlineArr.addAll(pageList);
+        }
+        return SUCCESS;
+    }
+
+    @Action(value = "queryEcharts")
+    public void queryEcharts() {
+        pageQuery = this.newPageQuery(DEFAULT_SORT_COLUMNS);
+        pageQuery = dealDateParam(pageQuery);
+        userList = userService.findUsers(pageQuery);
+        userArr.clear();
+        if (userList != null) {
+            userArr.addAll(userList);
+        }
+
+        List<PerformanceAnalysisVo> pageList = performanceAnalysisService.findPerformanceAnalysis(pageQuery);
+        // List<PerformanceAnalysisVo>
+        if (pageList != null) {
+            useronlineArr.addAll(pageList);
+        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("data", useronlineArr);
+        try {
+            response.getWriter().write(jsonObject.toString());
+        } catch (IOException e) {
+        }
+    }
+
+    private PageQuery<Map> dealDateParam(PageQuery<Map> pageQuery) {
+        String startDate = (String) pageQuery.getFilters().get("timeStart");
+        String endDate = (String) pageQuery.getFilters().get("timeEnd");
+        String timeFormat = (String) pageQuery.getFilters().get("timeFormat");
+
+        if (startDate != null) {
+            pageQuery.getFilters().put("dateStart", DateUtils.toStdString(startDate, timeFormat));
+        }
+        if (endDate != null) {
+            String dateEnd = DateUtils.toStdString(endDate, timeFormat);
+            pageQuery.getFilters().put("dateEnd", DateUtils.toStdString(endDate, timeFormat));
+        }
+
+        return pageQuery;
+    }
+
+    public List<LsSystemUserBO> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<LsSystemUserBO> userList) {
+        this.userList = userList;
+    }
+
+    public JSONArray getUserArr() {
+        return userArr;
+    }
+
+    public void setUserArr(JSONArray userArr) {
+        this.userArr = userArr;
+    }
+
 }

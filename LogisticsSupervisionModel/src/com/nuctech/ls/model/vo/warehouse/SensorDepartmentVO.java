@@ -3,158 +3,159 @@ package com.nuctech.ls.model.vo.warehouse;
 import java.util.Date;
 
 public class SensorDepartmentVO {
-	/* 关锁主键 */
-	private String sensorId;
 
-	public String getSensorId() {
-		return sensorId;
-	}
+    /* 关锁主键 */
+    private String sensorId;
 
-	public void setSensorId(String sensorId) {
-		this.sensorId = sensorId;
-	}
+    public String getSensorId() {
+        return sensorId;
+    }
 
-	public String getSensorNumber() {
-		return sensorNumber;
-	}
+    public void setSensorId(String sensorId) {
+        this.sensorId = sensorId;
+    }
 
-	public void setSensorNumber(String sensorNumber) {
-		this.sensorNumber = sensorNumber;
-	}
+    public String getSensorNumber() {
+        return sensorNumber;
+    }
 
-	public String getBelongTo() {
-		return belongTo;
-	}
+    public void setSensorNumber(String sensorNumber) {
+        this.sensorNumber = sensorNumber;
+    }
 
-	public void setBelongTo(String belongTo) {
-		this.belongTo = belongTo;
-	}
+    public String getBelongTo() {
+        return belongTo;
+    }
 
-	public String getSensorStatus() {
-		return sensorStatus;
-	}
+    public void setBelongTo(String belongTo) {
+        this.belongTo = belongTo;
+    }
 
-	public void setSensorStatus(String sensorStatus) {
-		this.sensorStatus = sensorStatus;
-	}
+    public String getSensorStatus() {
+        return sensorStatus;
+    }
 
-	public String getSensorType() {
-		return sensorType;
-	}
+    public void setSensorStatus(String sensorStatus) {
+        this.sensorStatus = sensorStatus;
+    }
 
-	public void setSensorType(String sensorType) {
-		this.sensorType = sensorType;
-	}
+    public String getSensorType() {
+        return sensorType;
+    }
 
-	public String getCreateUser() {
-		return createUser;
-	}
+    public void setSensorType(String sensorType) {
+        this.sensorType = sensorType;
+    }
 
-	public void setCreateUser(String createUser) {
-		this.createUser = createUser;
-	}
+    public String getCreateUser() {
+        return createUser;
+    }
 
-	public Date getCreateTime() {
-		return createTime;
-	}
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
+    public Date getCreateTime() {
+        return createTime;
+    }
 
-	public String getOrganizationId() {
-		return organizationId;
-	}
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
-	public void setOrganizationId(String organizationId) {
-		this.organizationId = organizationId;
-	}
+    public String getOrganizationId() {
+        return organizationId;
+    }
 
-	public String getOrganizationName() {
-		return organizationName;
-	}
+    public void setOrganizationId(String organizationId) {
+        this.organizationId = organizationId;
+    }
 
-	public void setOrganizationName(String organizationName) {
-		this.organizationName = organizationName;
-	}
+    public String getOrganizationName() {
+        return organizationName;
+    }
 
-	public String getParentId() {
-		return parentId;
-	}
+    public void setOrganizationName(String organizationName) {
+        this.organizationName = organizationName;
+    }
 
-	public void setParentId(String parentId) {
-		this.parentId = parentId;
-	}
+    public String getParentId() {
+        return parentId;
+    }
 
-	public String getOrganizationType() {
-		return organizationType;
-	}
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
 
-	public void setOrganizationType(String organizationType) {
-		this.organizationType = organizationType;
-	}
+    public String getOrganizationType() {
+        return organizationType;
+    }
 
-	public String getLevelCode() {
-		return levelCode;
-	}
+    public void setOrganizationType(String organizationType) {
+        this.organizationType = organizationType;
+    }
 
-	public void setLevelCode(String levelCode) {
-		this.levelCode = levelCode;
-	}
+    public String getLevelCode() {
+        return levelCode;
+    }
 
-	public String getLongitude() {
-		return longitude;
-	}
+    public void setLevelCode(String levelCode) {
+        this.levelCode = levelCode;
+    }
 
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
+    public String getLongitude() {
+        return longitude;
+    }
 
-	public String getLatitude() {
-		return latitude;
-	}
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
 
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
+    public String getLatitude() {
+        return latitude;
+    }
 
-	public String getIsEnable() {
-		return isEnable;
-	}
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
 
-	public void setIsEnable(String isEnable) {
-		this.isEnable = isEnable;
-	}
+    public String getIsEnable() {
+        return isEnable;
+    }
 
-	public String getOrganizationDesc() {
-		return organizationDesc;
-	}
+    public void setIsEnable(String isEnable) {
+        this.isEnable = isEnable;
+    }
 
-	public void setOrganizationDesc(String organizationDesc) {
-		this.organizationDesc = organizationDesc;
-	}
+    public String getOrganizationDesc() {
+        return organizationDesc;
+    }
 
-	/* 传感器编号 */
-	private String sensorNumber;
+    public void setOrganizationDesc(String organizationDesc) {
+        this.organizationDesc = organizationDesc;
+    }
 
-	/* 所属节点 */
-	private String belongTo;
+    /* 传感器编号 */
+    private String sensorNumber;
 
-	/*
-	 * 传感器状态 维修、损坏、报废等
-	 */
-	private String sensorStatus;
+    /* 所属节点 */
+    private String belongTo;
 
-	/* 传感器类型 */
-	private String sensorType;
+    /*
+     * 传感器状态 维修、损坏、报废等
+     */
+    private String sensorStatus;
 
-	/* 创建人 */
-	private String createUser;
+    /* 传感器类型 */
+    private String sensorType;
 
-	/* 创建时间 */
-	private Date createTime;
-	
-	/* 机构主键 */
+    /* 创建人 */
+    private String createUser;
+
+    /* 创建时间 */
+    private Date createTime;
+
+    /* 机构主键 */
     private String organizationId;
 
     /* 机构名称 */
@@ -163,10 +164,12 @@ public class SensorDepartmentVO {
     /* 上级机构 */
     private String parentId;
 
-    /* 1、国家
-    2、口岸
-    3、监管场所
-    4、建管中心 */
+    /*
+     * 1、国家
+     * 2、口岸
+     * 3、监管场所
+     * 4、建管中心
+     */
     private String organizationType;
 
     /* 层次码 */

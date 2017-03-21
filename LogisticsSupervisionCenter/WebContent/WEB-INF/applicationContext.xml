@@ -35,8 +35,31 @@
     <tx:annotation-driven />    
 	<!-- 数据源 -->
     <jee:jndi-lookup id="dataSource" jndi-name="jdbc/lsdb" />
+    <jee:jndi-lookup id="rootPath" jndi-name="param/rootPath" />
+    <jee:jndi-lookup id="rootPathHttp" jndi-name="param/rootPathHttp" />
     <jee:jndi-lookup id="tripPhotoPath" jndi-name="param/tripPhotoPath" />
-    <jee:jndi-lookup id="tripPhotoPathHttp" jndi-name="param/tripPhotoPathHttp" />
+    <jee:jndi-lookup id="trackUnitPhotoPath" jndi-name="param/trackUnitPhotoPath" />
+    <jee:jndi-lookup id="wsGpsUrl" jndi-name="param/wsGpsUrl" />
+    <jee:jndi-lookup id="wsNoticeUrl" jndi-name="param/wsNoticeUrl" />
+    <jee:jndi-lookup id="fileTransferType" jndi-name="param/fileTransferType" />
+    <jee:jndi-lookup id="ftpHostName" jndi-name="param/ftpHostName" />
+    <jee:jndi-lookup id="ftpPort" jndi-name="param/ftpPort" />
+    <jee:jndi-lookup id="ftpUserName" jndi-name="param/ftpUserName" />
+    <jee:jndi-lookup id="ftpPassword" jndi-name="param/ftpPassword" />
+    
+    <!-- 功能模块配置。0：未开启；1：开启 -->
+    <jee:jndi-lookup id="patrolModule" jndi-name="param/patrolModule" />
+    <jee:jndi-lookup id="approvalModule" jndi-name="param/approvalModule" />
+    <jee:jndi-lookup id="riskModule" jndi-name="param/riskModule" />
+    <jee:jndi-lookup id="dispatchModule" jndi-name="param/dispatchModule" />
+    <jee:jndi-lookup id="taskModule" jndi-name="param/taskModule" />
+    <jee:jndi-lookup id="alarmPushModule" jndi-name="param/alarmPushModule" />
+    <jee:jndi-lookup id="areaModule" jndi-name="param/areaModule" />
+    
+    <!-- Redis地址 -->
+    <jee:jndi-lookup id="redisUrl" jndi-name="param/redisUrl" />
+    
+    
 	<!-- 数据库ORM -->
     <bean id="sessionFactory"
         class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -65,4 +88,7 @@
     	<property name="deliveryMode" value="1" /> 发送模式  DeliveryMode.NON_PERSISTENT=1:非持久 ; DeliveryMode.PERSISTENT=2:持久
     	<property name="timeToLive" value="60000" />
     </bean> -->
+    
+    <import resource="spring-redis.xml" />
+    
  </beans>

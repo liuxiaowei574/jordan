@@ -19,23 +19,23 @@ import com.nuctech.ls.model.bo.system.LsSystemOrganizationUserBO;
 @Repository
 public class SystemOrganizationUserDao extends LSBaseDao<LsSystemOrganizationUserBO, Serializable> {
 
-	private Logger logger = Logger.getLogger(this.getClass().getName());
+    private Logger logger = Logger.getLogger(this.getClass().getName());
 
-	/**
-	 * 根据用户Id查询组织机构Id
-	 * 
-	 * @param userId
-	 * @return
-	 */
-	public LsSystemOrganizationUserBO findDepartIdByUserId(String userId) {
-		Criteria criteria = getSession().createCriteria(LsSystemOrganizationUserBO.class);
-		criteria.add(Restrictions.eq("userId", userId));
-		LsSystemOrganizationUserBO orgUser = (LsSystemOrganizationUserBO) criteria.uniqueResult();
-		if (orgUser == null) {
-			return null;
-		}
-		logger.info(String.format("根据用户Id查询组织机构信息， userId: %s", userId));
-		return orgUser;
-	}
+    /**
+     * 根据用户Id查询组织机构Id
+     * 
+     * @param userId
+     * @return
+     */
+    public LsSystemOrganizationUserBO findDepartIdByUserId(String userId) {
+        Criteria criteria = getSession().createCriteria(LsSystemOrganizationUserBO.class);
+        criteria.add(Restrictions.eq("userId", userId));
+        LsSystemOrganizationUserBO orgUser = (LsSystemOrganizationUserBO) criteria.uniqueResult();
+        if (orgUser == null) {
+            return null;
+        }
+        logger.info(String.format("根据用户Id查询组织机构信息， userId: %s", userId));
+        return orgUser;
+    }
 
 }

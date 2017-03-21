@@ -14,40 +14,91 @@
 <form class="form-horizontal row" id="esealEditForm" method="post">
 	<input type="hidden" class="form-control input-sm" id="warehouseEsealBO.esealId" 
 	   	      name="warehouseEsealBO.esealId" value="${warehouseEsealBO.esealId}">
+	   	      
+	<input type="hidden" class="form-control input-sm" id="warehouseEsealBO.createTime" 
+	   	      name="warehouseEsealBO.createTime" value="${warehouseEsealBO.createTime }">
+	   	      
+ 	<input type="hidden" class="form-control input-sm" id="warehouseEsealBO.createUser" 
+   	      name="warehouseEsealBO.createUser" value="${warehouseEsealBO.createUser }">  	      
+	   	      
+	<input type="hidden" class="form-control input-sm" id="warehouseEsealBO.belongTo" 
+   	      name="warehouseEsealBO.belongTo" value="${warehouseEsealBO.belongTo }">  	  
+   	      	      
 	<div class="modal-body">
 	  	<div class="col-md-6">
 	   	  <div class="form-group ">
-	   	    <label class="col-sm-4 control-label" for="warehouseEsealBO.esealNumber"><fmt:message key="warehouseEsealBO.esealNumber"/></label>
+	   	    <label class="col-sm-4 control-label" for="warehouseEsealBO.esealNumber"><em>*</em><fmt:message key="warehouseEsealBO.esealNumber"/></label>
 	   	    <div class="col-sm-8">
 	   	      <input type="text" class="form-control input-sm" id="warehouseEsealBO.esealNumber" 
-	   	      name="warehouseEsealBO.esealNumber" value="${warehouseEsealBO.esealNumber}">
+	   	      name="warehouseEsealBO.esealNumber" readonly="true"value="${warehouseEsealBO.esealNumber}">
 	   	    </div>
 	   	  </div>
 	   	  <div class="form-group">
-				<label class="col-sm-4 control-label"><fmt:message key="warehouseEsealBO.belongTo"/></label>
+				<label class="col-sm-4 control-label"><em>*</em><fmt:message key="warehouseEsealBO.belongTo"/></label>
 				<div class="col-sm-8">
-					<select id="warehouseEsealBO.belongTo"
+					<%-- <select id="warehouseEsealBO.belongTo"
 						name="warehouseEsealBO.belongTo" class="form-control">
-						<option  value="${warehouseEsealBO.belongTo}">${warehouseEsealBO.belongTo}</option>
+						<option  value="${systemDepartmentBO.organizationId}">${systemDepartmentBO.organizationName}</option>
 						
 						<c:forEach var="SystemDepartmentBO" items="${esealEditList}">
 							<option value=${SystemDepartmentBO.organizationId}>${SystemDepartmentBO.organizationName}</option>
 						</c:forEach>
-					</select>
+					</select> --%>
+					<input type="text" class="form-control input-sm" id="warehouseEsealBO_belongTo" 
+	   	            name="warehouseEsealBO_belongTo" readonly="true" value="${systemDepartmentBO.organizationName}">
 				</div>
 			</div>
-	   	  <div class="form-group ">
+	   	 <%--  <div class="form-group ">
 	   	    <label class="col-sm-4 control-label" for="warehouseElockBO.esealStatus"><fmt:message key="warehouseEsealBO.esealStatus"/></label>
-	   	    <div class="col-sm-8">
-	   	      <input type="text" class="form-control input-sm" id="warehouseEsealBO.esealStatus" 
-	   	      name="warehouseEsealBO.esealStatus" value="${warehouseEsealBO.esealStatus}">
-	   	    </div>
+				<div class="col-sm-8">
+					<select id="warehouseEsealBO.esealStatus"name="warehouseEsealBO.esealStatus" class="form-control">
+						<option value=${warehouseEsealBO.esealStatus}>${warehouseEsealBO.esealStatus}</option>
+						<option value="0">报废</option>
+						<option value="1">正常</option>	
+						<option value="2">在途</option>
+						<option value="3">损坏</option>
+						<option value="4">维修</option>
+					</select>
+				</div>
+			</div>  --%>
+			
+			<div class="form-group ">
+				<label class="col-sm-4 control-label"><em>*</em><fmt:message key="warehouseEsealBO.esealStatus"/></label>
+					<c:choose>
+		   	    		<c:when test="${warehouseEsealBO.esealStatus == '2' }">
+			   	    		  <div class="col-sm-8">
+									<s:select name="warehouseEsealBO.esealStatus" 
+									emptyOption="true"
+									cssClass="form-control" theme="simple"
+									list="@com.nuctech.ls.model.util.DeviceStatus@values()"
+									listKey="text"
+									listValue="key" 
+									disabled="true"
+									id="onWay"
+									>
+									</s:select>
+							</div>
+		   	    		</c:when>
+		   	    		<c:when test="${warehouseEsealBO.esealStatus != '2' }">
+			   	    		  <div class="col-sm-8">
+								<s:select name="warehouseEsealBO.esealStatus" 
+								emptyOption="false"
+								cssClass="form-control" theme="simple"
+								list="@com.nuctech.ls.model.util.DeviceStatusExceptOnway@values()"
+								listKey="text"
+								listValue="key" 
+								>
+							    </s:select>
+						      </div>
+		   	    		</c:when>
+	   	    	    </c:choose>				
+				</div>
+			</div> 
 	   	  </div>
 	  	</div>
-	</div>
 	<div class="clearfix"></div>
 	<div class="modal-footer margin15">
-	  <button type="submit" class="btn btn-danger" id="modifyButton" ><fmt:message key="common.button.save"/></button>
+	  <button type="submit" class="btn btn-danger" id="modifyButton" ><fmt:message key="common.button.modify"/></button>
 	  <button type="button" class="btn btn-darch" data-dismiss="modal"><fmt:message key="common.button.cancle"/></button>
 	</div>
 </form>
@@ -66,10 +117,13 @@ function buildEsealEditForm() {
 		  fields : {
 				'warehouseEsealBO.esealNumber' : {
 					validators : {
-						notEmpty : {}
+						notEmpty : {},
+						stringLength: {
+							max: 50
+						}
 					}
 				},
-				'warehouseEsealBO.belongTo' : {
+				'warehouseEsealBO_belongTo' : {
 					validators : {
 						notEmpty : {}
 					}
@@ -92,20 +146,24 @@ function buildEsealEditForm() {
 	      }  */
 	  }).on('success.form.bv', function(e) {//bootstrapvalidator 0.5.2用法
 	      e.preventDefault();
-	      var $form = $(e.target);
+	     // var $form = $(e.target);
+	      $("#onWay").removeAttr("disabled");//提交前让下拉列表可用
+	      var $form = $('#esealEditForm');
 	      var bv = $form.data('bootstrapValidator');
 	      var serialize = $form.serialize();
 	      var url = '${root }/esealMgmt/editEseal.action'
 		  $.post(url, serialize, function(data) {
-			if(data) {
-				bootbox.success($.i18n.prop("eseal.modifyEseal.success"));
-	  			$('#updateEsealModal').modal('hide');
-	  			$table.bootstrapTable('refresh', {});
-			} else {
-				bootbox.error($.i18n.prop("eseal.modifyEseal.fail"));
-				$('#updateEsealModal').modal('hide');
-				$table.bootstrapTable('refresh', {});
-			}
+			  if(!needLogin(data)) {
+				if(data) {
+					bootbox.success($.i18n.prop("eseal.modifyEseal.success"));
+		  			$('#updateEsealModal').modal('hide');
+		  			$table.bootstrapTable('refresh', {});
+				} else {
+					bootbox.error($.i18n.prop("eseal.modifyEseal.fail"));
+					$('#updateEsealModal').modal('hide');
+					$table.bootstrapTable('refresh', {});
+				}
+			  }
 		 }, "json");
 	  });
 	}

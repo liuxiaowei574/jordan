@@ -1,0 +1,9 @@
+工程依赖工程情况：
+https://172.16.254.103/svn/2016_LogisticsSurveillance/02%E6%BA%90%E7%A0%81/Trunk/LogisticsSupervisionCommon    版本号：263
+https://172.16.254.103/svn/2016_LogisticsSurveillance/02%E6%BA%90%E7%A0%81/Trunk/LogisticsSupervisionModel    版本号：326
+
+source文件夹：
+/source
+
+依赖lib库：
+http://172.16.254.102/svn/2016_LogisticsSurveillance/06版本发布/通用配置/Environment/apache-tomcat-8.0/lib  版本号：72

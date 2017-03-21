@@ -1,6 +1,7 @@
 package com.nuctech.ls.model.bo.monitor;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,124 +15,166 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "LS_MONITOR_ALARM_DEAL")
-public class LsMonitorAlarmDealBO {
-	/**
-	 * 缺省的构造函数
-	 */
-	public LsMonitorAlarmDealBO() {
-		super();
-	}
+public class LsMonitorAlarmDealBO implements Serializable {
 
-	/* 报警处理主键 */
-	private String dealId;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -1235012173658075163L;
 
-	/* 报警主键 */
-	private String alarmId;
+    /**
+     * 缺省的构造函数
+     */
+    public LsMonitorAlarmDealBO() {
+        super();
+    }
 
-	/* 接收人 */
-	private String recipientsUser;
+    /* 报警处理主键 */
+    private String dealId;
 
-	/*
-	 * 接收时间 只记录最新人员的接收时间
-	 */
-	private Date receiveTime;
+    /* 报警主键 */
+    private String alarmId;
 
-	/* 处理人 */
-	private String dealUser;
+    /* 车辆罚款主键 */
+    private String vpunishId;
 
-	/*
-	 * 处理方式 0-转发 1-处理
-	 */
-	private String dealMethod;
+    /* 接收人 */
+    private String recipientsUser;
 
-	/* 处理时间 */
-	private Date dealTime;
+    /*
+     * 接收时间 只记录最新人员的接收时间
+     */
+    private Date receiveTime;
 
-	/* 处理结果 */
-	private String dealResult;
+    /* 处理人 */
+    private String dealUser;
 
-	/* 备注 */
-	private String dealDesc;
+    /**
+     * 处理方式。0：误报警，1：处理，2：转发，3：撤回
+     */
+    private String dealMethod;
 
-	@Id
-	@Column(name = "DEAL_ID", nullable = false, length = 50)
-	public String getDealId() {
-		return this.dealId;
-	}
+    /* 处理时间 */
+    private Date dealTime;
 
-	public void setDealId(String dealId) {
-		this.dealId = dealId;
-	}
+    /* 处理结果 */
+    private String dealResult;
 
-	@Column(name = "ALARM_ID", nullable = true, length = 50)
-	public String getAlarmId() {
-		return this.alarmId;
-	}
+    /* 是否罚款 */
+    private String isPunish;
 
-	public void setAlarmId(String alarmId) {
-		this.alarmId = alarmId;
-	}
+    /* 罚款内容 */
+    private String punishContent;
 
-	@Column(name = "RECIPIENTS_USER", nullable = true, length = 50)
-	public String getRecipientsUser() {
-		return this.recipientsUser;
-	}
+    /* 备注 */
+    private String dealDesc;
 
-	public void setRecipientsUser(String recipientsUser) {
-		this.recipientsUser = recipientsUser;
-	}
+    @Id
+    @Column(name = "DEAL_ID", nullable = false, length = 50)
+    public String getDealId() {
+        return this.dealId;
+    }
 
-	@Column(name = "RECEIVE_TIME", nullable = true)
-	public Date getReceiveTime() {
-		return this.receiveTime;
-	}
+    public void setDealId(String dealId) {
+        this.dealId = dealId;
+    }
 
-	public void setReceiveTime(Date receiveTime) {
-		this.receiveTime = receiveTime;
-	}
+    @Column(name = "ALARM_ID", nullable = true, length = 50)
+    public String getAlarmId() {
+        return this.alarmId;
+    }
 
-	@Column(name = "DEAL_USER", nullable = true, length = 50)
-	public String getDealUser() {
-		return this.dealUser;
-	}
+    public void setAlarmId(String alarmId) {
+        this.alarmId = alarmId;
+    }
 
-	public void setDealUser(String dealUser) {
-		this.dealUser = dealUser;
-	}
+    @Column(name = "VPUNISH_ID", length = 50)
+    public String getVpunishId() {
+        return vpunishId;
+    }
 
-	@Column(name = "DEAL_METHOD", nullable = true, length = 2)
-	public String getDealMethod() {
-		return this.dealMethod;
-	}
+    public void setVpunishId(String vpunishId) {
+        this.vpunishId = vpunishId;
+    }
 
-	public void setDealMethod(String dealMethod) {
-		this.dealMethod = dealMethod;
-	}
+    @Column(name = "RECIPIENTS_USER", nullable = true, length = 50)
+    public String getRecipientsUser() {
+        return this.recipientsUser;
+    }
 
-	@Column(name = "DEAL_TIME", nullable = true)
-	public Date getDealTime() {
-		return this.dealTime;
-	}
+    public void setRecipientsUser(String recipientsUser) {
+        this.recipientsUser = recipientsUser;
+    }
 
-	public void setDealTime(Date dealTime) {
-		this.dealTime = dealTime;
-	}
+    @Column(name = "RECEIVE_TIME", nullable = true)
+    public Date getReceiveTime() {
+        return this.receiveTime;
+    }
 
-	@Column(name = "DEAL_RESULT", nullable = true, length = 2)
-	public String getDealResult() {
-		return this.dealResult;
-	}
+    public void setReceiveTime(Date receiveTime) {
+        this.receiveTime = receiveTime;
+    }
 
-	public void setDealResult(String dealResult) {
-		this.dealResult = dealResult;
-	}
+    @Column(name = "DEAL_USER", nullable = true, length = 50)
+    public String getDealUser() {
+        return this.dealUser;
+    }
 
-	@Column(name = "DEAL_DESC", nullable = true, length = 200)
-	public String getDealDesc() {
-		return this.dealDesc;
-	}
+    public void setDealUser(String dealUser) {
+        this.dealUser = dealUser;
+    }
 
-	public void setDealDesc(String dealDesc) {
-		this.dealDesc = dealDesc;
-	}
+    @Column(name = "DEAL_METHOD", nullable = true, length = 2)
+    public String getDealMethod() {
+        return this.dealMethod;
+    }
+
+    public void setDealMethod(String dealMethod) {
+        this.dealMethod = dealMethod;
+    }
+
+    @Column(name = "DEAL_TIME", nullable = true)
+    public Date getDealTime() {
+        return this.dealTime;
+    }
+
+    public void setDealTime(Date dealTime) {
+        this.dealTime = dealTime;
+    }
+
+    @Column(name = "DEAL_RESULT", nullable = true, length = 2)
+    public String getDealResult() {
+        return this.dealResult;
+    }
+
+    public void setDealResult(String dealResult) {
+        this.dealResult = dealResult;
+    }
+
+    @Column(name = "IS_PUNISH", nullable = true, length = 2)
+    public String getIsPunish() {
+        return this.isPunish;
+    }
+
+    public void setIsPunish(String isPunish) {
+        this.isPunish = isPunish;
+    }
+
+    @Column(name = "PUNISH_CONTENT", nullable = true, length = 2000)
+    public String getPunishContent() {
+        return this.punishContent;
+    }
+
+    public void setPunishContent(String punishContent) {
+        this.punishContent = punishContent;
+    }
+
+    @Column(name = "DEAL_DESC", nullable = true, length = 200)
+    public String getDealDesc() {
+        return this.dealDesc;
+    }
+
+    public void setDealDesc(String dealDesc) {
+        this.dealDesc = dealDesc;
+    }
 }

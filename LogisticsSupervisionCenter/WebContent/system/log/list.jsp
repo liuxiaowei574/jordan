@@ -181,6 +181,11 @@ $(function() {
 	$('#userAddModal').on('loaded.bs.modal', function(e) {
 		$('#userAddModal').modal('show');
 	});
+	//模态框登录判断
+	$('#userAddModal').on('show.bs.modal', function(e) {
+		var content = $(this).find(".modal-content").html();
+		needLogin(content);
+	});
 	
 	//编辑Modal调用方法
 	$("#editBtn").click(function() {
@@ -215,10 +220,12 @@ $(function() {
 						dataType : "json", // 数据类型
 						data : {"ids" : ids},
 						success : function(data) { // 提交成功的回调函数
-							if (data) {
-								bootbox.alert($.i18n.prop("user.enable.success"));
-								resetQuery();
-							} else {
+							if(!needLogin(data)) {
+								if (data) {
+									bootbox.alert($.i18n.prop("user.enable.success"));
+									resetQuery();
+								} else {
+								}
 							}
 						}
 					});
@@ -241,10 +248,12 @@ $(function() {
 						dataType : "json", // 数据类型
 						data : {"ids" : ids},
 						success : function(data) { // 提交成功的回调函数
-							if (data) {
-								bootbox.alert($.i18n.prop("user.disable.success"));
-								resetQuery();
-							} else {
+							if(!needLogin(data)) {
+								if (data) {
+									bootbox.alert($.i18n.prop("user.disable.success"));
+									resetQuery();
+								} else {
+								}
 							}
 						}
 					});
@@ -267,10 +276,12 @@ $(function() {
 						dataType : "json", // 数据类型
 						data : {"ids" : ids},
 						success : function(data) { // 提交成功的回调函数
-							if (data) {
-								bootbox.alert($.i18n.prop("user.resetPassword.success"));
-								resetQuery();
-							} else {
+							if(!needLogin(data)) {
+								if (data) {
+									bootbox.alert($.i18n.prop("user.resetPassword.success"));
+									resetQuery();
+								} else {
+								}
 							}
 						}
 					});
@@ -281,6 +292,11 @@ $(function() {
 	
 	$('#userEditModal').on('loaded.bs.modal', function(e) {
 		$('#userEditModal').modal('show');
+	});
+	//模态框登录判断
+	$('#userEditModal').on('show.bs.modal', function(e) {
+		var content = $(this).find(".modal-content").html();
+		needLogin(content);
 	});
 });
 

@@ -3,147 +3,148 @@ package com.nuctech.ls.model.vo.warehouse;
 import java.util.Date;
 
 public class EsealDepartementVO {
-	/* 子锁主键 */
-	private String esealId;
 
-	public String getEsealId() {
-		return esealId;
-	}
+    /* 子锁主键 */
+    private String esealId;
 
-	public void setEsealId(String esealId) {
-		this.esealId = esealId;
-	}
+    public String getEsealId() {
+        return esealId;
+    }
 
-	public String getEsealNumber() {
-		return esealNumber;
-	}
+    public void setEsealId(String esealId) {
+        this.esealId = esealId;
+    }
 
-	public void setEsealNumber(String esealNumber) {
-		this.esealNumber = esealNumber;
-	}
+    public String getEsealNumber() {
+        return esealNumber;
+    }
 
-	public String getBelongTo() {
-		return belongTo;
-	}
+    public void setEsealNumber(String esealNumber) {
+        this.esealNumber = esealNumber;
+    }
 
-	public void setBelongTo(String belongTo) {
-		this.belongTo = belongTo;
-	}
+    public String getBelongTo() {
+        return belongTo;
+    }
 
-	public String getEsealStatus() {
-		return esealStatus;
-	}
+    public void setBelongTo(String belongTo) {
+        this.belongTo = belongTo;
+    }
 
-	public void setEsealStatus(String esealStatus) {
-		this.esealStatus = esealStatus;
-	}
+    public String getEsealStatus() {
+        return esealStatus;
+    }
 
-	public String getCreateUser() {
-		return createUser;
-	}
+    public void setEsealStatus(String esealStatus) {
+        this.esealStatus = esealStatus;
+    }
 
-	public void setCreateUser(String createUser) {
-		this.createUser = createUser;
-	}
+    public String getCreateUser() {
+        return createUser;
+    }
 
-	public Date getCreateTime() {
-		return createTime;
-	}
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
+    public Date getCreateTime() {
+        return createTime;
+    }
 
-	public String getOrganizationId() {
-		return organizationId;
-	}
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
-	public void setOrganizationId(String organizationId) {
-		this.organizationId = organizationId;
-	}
+    public String getOrganizationId() {
+        return organizationId;
+    }
 
-	public String getOrganizationName() {
-		return organizationName;
-	}
+    public void setOrganizationId(String organizationId) {
+        this.organizationId = organizationId;
+    }
 
-	public void setOrganizationName(String organizationName) {
-		this.organizationName = organizationName;
-	}
+    public String getOrganizationName() {
+        return organizationName;
+    }
 
-	public String getParentId() {
-		return parentId;
-	}
+    public void setOrganizationName(String organizationName) {
+        this.organizationName = organizationName;
+    }
 
-	public void setParentId(String parentId) {
-		this.parentId = parentId;
-	}
+    public String getParentId() {
+        return parentId;
+    }
 
-	public String getOrganizationType() {
-		return organizationType;
-	}
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
 
-	public void setOrganizationType(String organizationType) {
-		this.organizationType = organizationType;
-	}
+    public String getOrganizationType() {
+        return organizationType;
+    }
 
-	public String getLevelCode() {
-		return levelCode;
-	}
+    public void setOrganizationType(String organizationType) {
+        this.organizationType = organizationType;
+    }
 
-	public void setLevelCode(String levelCode) {
-		this.levelCode = levelCode;
-	}
+    public String getLevelCode() {
+        return levelCode;
+    }
 
-	public String getLongitude() {
-		return longitude;
-	}
+    public void setLevelCode(String levelCode) {
+        this.levelCode = levelCode;
+    }
 
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
+    public String getLongitude() {
+        return longitude;
+    }
 
-	public String getLatitude() {
-		return latitude;
-	}
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
 
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
+    public String getLatitude() {
+        return latitude;
+    }
 
-	public String getIsEnable() {
-		return isEnable;
-	}
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
 
-	public void setIsEnable(String isEnable) {
-		this.isEnable = isEnable;
-	}
+    public String getIsEnable() {
+        return isEnable;
+    }
 
-	public String getOrganizationDesc() {
-		return organizationDesc;
-	}
+    public void setIsEnable(String isEnable) {
+        this.isEnable = isEnable;
+    }
 
-	public void setOrganizationDesc(String organizationDesc) {
-		this.organizationDesc = organizationDesc;
-	}
+    public String getOrganizationDesc() {
+        return organizationDesc;
+    }
 
-	/* 子锁号 */
-	private String esealNumber;
+    public void setOrganizationDesc(String organizationDesc) {
+        this.organizationDesc = organizationDesc;
+    }
 
-	/* 所属节点 */
-	private String belongTo;
+    /* 子锁号 */
+    private String esealNumber;
 
-	/*
-	 * 关锁状态 维修、损坏、报废等
-	 */
-	private String esealStatus;
+    /* 所属节点 */
+    private String belongTo;
 
-	/* 创建人 */
-	private String createUser;
+    /*
+     * 关锁状态 维修、损坏、报废等
+     */
+    private String esealStatus;
 
-	/* 创建时间 */
-	private Date createTime;
+    /* 创建人 */
+    private String createUser;
 
-	/* 机构主键 */
+    /* 创建时间 */
+    private Date createTime;
+
+    /* 机构主键 */
     private String organizationId;
 
     /* 机构名称 */
@@ -152,10 +153,12 @@ public class EsealDepartementVO {
     /* 上级机构 */
     private String parentId;
 
-    /* 1、国家
-    2、口岸
-    3、监管场所
-    4、建管中心 */
+    /*
+     * 1、国家
+     * 2、口岸
+     * 3、监管场所
+     * 4、建管中心
+     */
     private String organizationType;
 
     /* 层次码 */
@@ -172,6 +175,5 @@ public class EsealDepartementVO {
 
     /* 机构描述 */
     private String organizationDesc;
-	
-	
+
 }

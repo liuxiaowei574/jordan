@@ -1,13 +1,12 @@
 package com.nuctech.ls.model.bo.system;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-
 
 /**
  * 业务对象处理的实体-[通知接收记录]
@@ -16,73 +15,78 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "LS_SYSTEM_NOTICE_LOG")
-public class LsSystemNoticeLogBO {
-	/**
-	 * 缺省的构造函数
-	 */
-	public LsSystemNoticeLogBO() {
-		super();
-	}
+public class LsSystemNoticeLogBO implements Serializable {
 
-	/* 通知接收主键 */
-	private String noticeRevId;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -3550009399347373572L;
 
-	/* 通知编号 */
-	private String noticeId;
+    /**
+     * 缺省的构造函数
+     */
+    public LsSystemNoticeLogBO() {
+        super();
+    }
 
-	/* 接收人 */
-	private String receiveUser;
+    /* 通知接收主键 */
+    private String noticeRevId;
 
-	/* 接收时间 */
-	private Date receiveTime;
+    /* 通知编号 */
+    private String noticeId;
 
-	/* 处理方式  0:未处理；1：已处理*/
-	private String dealType;
+    /* 接收人 */
+    private String receiveUser;
 
-	@Id
-	@Column(name = "NOTICE_REV_ID", nullable = false, length = 50)
-	public String getNoticeRevId() {
-		return this.noticeRevId;
-	}
+    /* 接收时间 */
+    private Date receiveTime;
 
-	public void setNoticeRevId(String noticeRevId) {
-		this.noticeRevId = noticeRevId;
-	}
+    /* 处理方式 0:未处理；1：已处理 */
+    private String dealType;
 
-	@Column(name = "NOTICE_ID", nullable = true, length = 50)
-	public String getNoticeId() {
-		return this.noticeId;
-	}
+    @Id
+    @Column(name = "NOTICE_REV_ID", nullable = false, length = 50)
+    public String getNoticeRevId() {
+        return this.noticeRevId;
+    }
 
-	public void setNoticeId(String noticeId) {
-		this.noticeId = noticeId;
-	}
+    public void setNoticeRevId(String noticeRevId) {
+        this.noticeRevId = noticeRevId;
+    }
 
-	@Column(name = "RECEIVE_USER", nullable = true, length = 50)
-	public String getReceiveUser() {
-		return this.receiveUser;
-	}
+    @Column(name = "NOTICE_ID", nullable = true, length = 50)
+    public String getNoticeId() {
+        return this.noticeId;
+    }
 
-	public void setReceiveUser(String receiveUser) {
-		this.receiveUser = receiveUser;
-	}
+    public void setNoticeId(String noticeId) {
+        this.noticeId = noticeId;
+    }
 
-	
-	@Column(name = "RECEIVE_TIME", nullable = true)
-	public Date getReceiveTime() {
-		return this.receiveTime;
-	}
+    @Column(name = "RECEIVE_USER", nullable = true, length = 50)
+    public String getReceiveUser() {
+        return this.receiveUser;
+    }
 
-	public void setReceiveTime(Date receiveTime) {
-		this.receiveTime = receiveTime;
-	}
+    public void setReceiveUser(String receiveUser) {
+        this.receiveUser = receiveUser;
+    }
 
-	@Column(name = "DEAL_TYPE", nullable = true, length = 2)
-	public String getDealType() {
-		return this.dealType;
-	}
+    @Column(name = "RECEIVE_TIME", nullable = true)
+    public Date getReceiveTime() {
+        return this.receiveTime;
+    }
 
-	public void setDealType(String dealType) {
-		this.dealType = dealType;
-	}
+    public void setReceiveTime(Date receiveTime) {
+        this.receiveTime = receiveTime;
+    }
+
+    @Column(name = "DEAL_TYPE", nullable = true, length = 2)
+    public String getDealType() {
+        return this.dealType;
+    }
+
+    public void setDealType(String dealType) {
+        this.dealType = dealType;
+    }
 }

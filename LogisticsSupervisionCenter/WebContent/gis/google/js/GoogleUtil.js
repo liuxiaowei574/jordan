@@ -387,19 +387,54 @@ startImageUrk,endImageUrk,lineStyle){
                      var lineSymbol = {
                                path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
                                //scale: 2,
-                               strokeColor: 'green'
+                               strokeColor: '#1800ff'
+                               
                      };
                      if(null!=lineFeature){
                     	 lineFeature.setMap(null);
                      }
                      lineFeature = new google.maps.Polyline({
                            path: lineCoordinates,
-                           strokeColor: '#00ff00',
-                           strokeWeight : 3,
+                           strokeColor: '#1800ff',
+                           strokeWeight : 4,
+                           strokeOpacity : 1,
+                           zIndex: 2,
+                           /*icons: [{
+                              icon: lineSymbol,
+                              offset: '0%'
+                                }],*/
+                           
+                           map: map
+                    });
+                    lineFeature.id="track_line";
+                 }
+             },
+             /**
+              * 添加轨迹线条
+              */
+             addmoreLineTrack:function(points,roadPath){
+                 if(points){
+                	 trackRoadPath = roadPath;
+                     var lineCoordinates=[];
+                     for ( var i = 0; i < points.length; i++) {
+                          var point=points[i];
+                          if(point){
+                              lineCoordinates.push(point);
+                          }
+                     }
+                     var lineSymbol = {
+                               path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
+                               //scale: 2,
+                               strokeColor: '#ff0000'
+                     };
+                     lineFeature = new google.maps.Polyline({
+                           path: lineCoordinates,
+                           strokeColor: '#ff0000',
+                           strokeWeight : 2,
                            strokeOpacity : 1,
                            icons: [{
                               icon: lineSymbol,
-                              offset: '0%'
+                              offset: '100%'
                                 }],
                            
                            map: map
@@ -466,28 +501,63 @@ startImageUrk,endImageUrk,lineStyle){
 	                            		if(vehicleMarker.getVisible()==false){
 	                            			 vehicleMarker.setVisible(true);
 	                            		};
-	                            		vehicleMarker.setPosition(lineFeature.getPath().getAt(scount-1));
+	                            		var point = lineFeature.getPath().getAt(scount-1);
+	                            		var ptObj = {};
+	                            		if(typeof(point)=="undefined"||point==null)
+	                            		{
+	                            			
+	                            		}else{
+	                            			ptObj.lng = point.lng();
+		                            		ptObj.lat = point.lat();
+		                            		setHomeCenter(ptObj);
+		                            		vehicleMarker.setPosition(lineFeature.getPath().getAt(scount-1));
+	                            		}
 	                            	}else{
 	                            		vehicleMarker = new google.maps.Marker({position:lineFeature.getPath().getAt(scount-1),icon:moveIcon,map:map});
 	                            	}
-	                            	callback(trackRoadPath[scount-1]);
+                                   if(typeof(trackRoadPath)=="undefined"){
+	                            		
+	                            	}else{
+	                            		callback(trackRoadPath[scount-1]);
+	                            	}
 		                            //终点停车
 		                            if(scount>=(lineFeature.getPath().length)){
+		                            	scount = 1;
 		                                 clearInterval(this);
+		                                 if(this.object)clearInterval(this.object);
 		                            }
+		                          
                         		}else if(playStatus==3){
                     				if(scount!=0){
-                						scount = scount + 1;
+                						scount = scount+1 ;
 		                            	if(vehicleMarker){
-		                            		vehicleMarker.setPosition(lineFeature.getPath().getAt(scount-1));
+		                            		var point = lineFeature.getPath().getAt(scount-1);
+		                            		var ptObj = {};
+		                            		if(typeof(point)=="undefined"||point==null)
+		                            		{
+		                            			
+		                            		}else{
+		                            			ptObj.lng = point.lng();
+			                            		ptObj.lat = point.lat();
+			                            		setHomeCenter(ptObj);
+			                            		vehicleMarker.setPosition(lineFeature.getPath().getAt(scount-1));
+		                            		}
+		                            		
 		                            	}else{
 		                            		vehicleMarker = new google.maps.Marker({position:lineFeature.getPath().getAt(scount-1),icon:moveIcon,map:map});
 		                            	}
 			                            //终点停车
 			                            if(scount>=(lineFeature.getPath().length)){
+			                            	scount = 1;
 			                                 clearInterval(this);
+			                                 if(this.object)clearInterval(this.object);
 			                            }
-			                            callback(trackRoadPath[scount-1]);
+			                            if(typeof(trackRoadPath)=="undefined"){
+		                            		
+		                            	}else{
+		                            		callback(trackRoadPath[scount-1]);
+		                            	}
+			                           
                     				}
                         		}else if(playStatus==4){
                         			if(this.object)clearInterval(this.object);
@@ -497,53 +567,110 @@ startImageUrk,endImageUrk,lineStyle){
 	                            		if(vehicleMarker.getVisible()==false){
 	                            			 vehicleMarker.setVisible(true);
 	                            		};
-	                            		vehicleMarker.setPosition(lineFeature.getPath().getAt(scount-1));
+	                            		var point = lineFeature.getPath().getAt(scount);
+	                            		var ptObj = {};
+	                            		ptObj.lng = point.lng();
+	                            		ptObj.lat = point.lat();
+	                            		setHomeCenter(ptObj);
+	                            		vehicleMarker.setPosition(lineFeature.getPath().getAt(scount));
+	                            		
 	                            	}else{
 	                            		vehicleMarker = new google.maps.Marker({position:lineFeature.getPath().getAt(scount-1),icon:moveIcon,map:map});
 	                            	}
-	                            	callback(null);
+	                            	if(typeof(callback)=="undefined"){
+	                            		
+	                            	}else{
+	                            		callback(null);
+	                            	}
+	                            	
 		                            //终点停车
 		                            if(scount>=(lineFeature.getPath().length)){
+		                            	scount = 1;
 		                                 clearInterval(this);
+		                                 if(this.object)clearInterval(this.object);
 		                            }
                         		}else if(playStatus==5){
-                        			scount = scount + 1;
+                        			scount = scount+1 ;
 	                            	if(vehicleMarker){
 	                            		if(vehicleMarker.getVisible()==false){
 	                            			 vehicleMarker.setVisible(true);
 	                            		};
-	                            		vehicleMarker.setPosition(lineFeature.getPath().getAt(scount-1));
+	                            		var point = lineFeature.getPath().getAt(scount-1);
+	                            		var ptObj = {};
+	                            		if(typeof(point)=="undefined"||point==null)
+	                            		{
+	                            			
+	                            		}else{
+	                            			ptObj.lng = point.lng();
+		                            		ptObj.lat = point.lat();
+		                            		setHomeCenter(ptObj);
+		                            		vehicleMarker.setPosition(lineFeature.getPath().getAt(scount-1));
+	                            		}
 	                            	}else{
 	                            		vehicleMarker = new google.maps.Marker({position:lineFeature.getPath().getAt(scount-1),icon:moveIcon,map:map});
 	                            	}
-	                            	callback(trackRoadPath[scount-1]);
+	                            	if(typeof(trackRoadPath)=="undefined"){
+	                            		
+	                            	}else{
+	                            		callback(trackRoadPath[scount-1]);
+	                            	}
+	                            	
 		                            //终点停车
 		                            if(scount>=(lineFeature.getPath().length)){
+		                            	scount = 1;
 		                                 clearInterval(this);
 		                            }
                         		}
                              else if(playStatus==6){
-                        			scount = scount + 1;
+                        			scount = scount +1;
 	                            	if(vehicleMarker){
 	                            		if(vehicleMarker.getVisible()==false){
 	                            			 vehicleMarker.setVisible(true);
 	                            		};
-	                            		vehicleMarker.setPosition(lineFeature.getPath().getAt(scount-1));
+	                            		var point = lineFeature.getPath().getAt(scount-1);
+	                            		var ptObj = {};
+	                            		if(typeof(point)=="undefined"||point==null)
+	                            		{
+	                            			
+	                            		}else{
+	                            			ptObj.lng = point.lng();
+		                            		ptObj.lat = point.lat();
+		                            		setHomeCenter(ptObj);
+		                            		vehicleMarker.setPosition(lineFeature.getPath().getAt(scount-1));
+	                            		}
 	                            	}else{
 	                            		vehicleMarker = new google.maps.Marker({position:lineFeature.getPath().getAt(scount-1),icon:moveIcon,map:map});
 	                            	}
-	                            	callback(trackRoadPath[scount-1]);
+                                    if(typeof(trackRoadPath)=="undefined"){
+	                            		
+	                            	}else{
+	                            		callback(trackRoadPath[scount-1]);
+	                            	}
+	                            	//callback(trackRoadPath[scount-1]);
 		                            //终点停车
 		                            if(scount>=(lineFeature.getPath().length)){
-		                                 clearInterval(this);
+		                            	scount = 1;
+		                                 clearInterval(this.object);
 		                            }
 		                          
                         		} 
+                             else if(playStatus==7){
+		                               clearInterval(this);
+		                               if(this.object)clearInterval(this.object);
+                     		} 
                             }else{
 	                            alert('No path!');
 	                            clearInterval(this.object);
 	                            return;
                             }
+                           // vehicleMarkers.push(vehicleMarker);
+                              var count = (scount/(lineFeature.getPath().length))*100+"";
+	                           var percent = count.substring(0,4);
+	                           vehicleMarkers.push(vehicleMarker);
+	                           if(parseFloat(percent)>100){
+	                        	   percent = 0 ;
+	                           }
+	                            $(".play-slider-range").css("width",percent+'%');
                       }, 1000/this.multiple);
                       this.object=animate; 
                  },
@@ -593,7 +720,7 @@ startImageUrk,endImageUrk,lineStyle){
                      scount = scount+1;
                      this.addListener(moveIcon,this.multiple,callback);
                 },
-                decelerate:function(moveIcon,time){
+                decelerate:function(moveIcon,time,callback){
                 	if(scount==-1||scount==0)return;
                 	this.multiple = time;
                     playStatus=6;
@@ -604,6 +731,18 @@ startImageUrk,endImageUrk,lineStyle){
                     this.addListener(moveIcon,this.multiple,callback);
                    
                },
+               clearInterValTrack:function(){
+               //	if(scount==-1||scount==0)return;
+               //	this.multiple = time;
+                   playStatus=7;
+                   if(null==lineFeature||typeof(lineFeature.playStatus)=='undefined')return;
+              	    lineFeature.playStatus=playStatus;
+                   if(this.object==null)return;
+                   if(this.object)clearInterval(this.object);
+                   //scount = scount+1;
+                  // this.addListener(moveIcon,this.multiple,callback);
+                  
+              },
                  Rad:function(d){
                 	 return d * Math.PI / 180.0;
                  },

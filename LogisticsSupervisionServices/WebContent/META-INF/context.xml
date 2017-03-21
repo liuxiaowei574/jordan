@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	 <!-- 主数据源 -->
+	<ResourceLink name="jdbc/lsdb"
+            global="jdbc/lsdb"
+            type="javax.sql.DataSource" />
+
+	<!-- JMS连接工厂 -->
+     <ResourceLink name="jms/connectionFactory" global="jms/connectionFactory" type="org.apache.activemq.ActiveMQConnectionFactory"/>        
+ 	<!-- JMS事件主题 --> 
+	<ResourceLink name="jms/gpsSeventTopic" global="jms/gpsSeventTopic" type="org.apache.activemq.command.ActiveMQTopic"/> 
+	<!-- JMS事件主题  关锁读取数据-->
+	<ResourceLink name="jms/elockReaderReqTopic" global="jms/elockReaderReqTopic" type="org.apache.activemq.command.ActiveMQTopic"/>
+	<ResourceLink name="jms/elockReaderResTopic" global="jms/elockReaderResTopic" type="org.apache.activemq.command.ActiveMQTopic"/>
+	<!-- JMS事件主题 -->
+	<ResourceLink name="jms/eventTopic" global="jms/eventTopic" type="org.apache.activemq.command.ActiveMQTopic"/>
+	<!-- JMS指令主题 -->
+	<ResourceLink name="jms/commandTopic" global="jms/commandTopic" type="org.apache.activemq.command.ActiveMQTopic"/>
+	<!-- 车载台和巡逻队模块 -->
+	<ResourceLink name="param/patrolModule" global="param/LS/patrolModule" type="java.lang.String" />
+	<!-- 审批模块 -->
+	<ResourceLink name="param/approvalModule" global="param/LS/approvalModule" type="java.lang.String" />
+	<!-- 风险分析模块 -->
+	<ResourceLink name="param/riskModule" global="param/LS/riskModule" type="java.lang.String" />
+	<!-- 调度模块 -->
+	<ResourceLink name="param/dispatchModule" global="param/LS/dispatchModule" type="java.lang.String" />
+	<!-- 待办任务模块 -->
+	<ResourceLink name="param/taskModule" global="param/LS/taskModule" type="java.lang.String" />
+	<!-- 报警推送模块 -->
+	<ResourceLink name="param/alarmPushModule" global="param/LS/alarmPushModule" type="java.lang.String" />
+	<!-- 区域场地模块 -->
+	<ResourceLink name="param/areaModule" global="param/LS/areaModule" type="java.lang.String" />
+	
+	<!-- Redis地址 -->
+	<ResourceLink name="param/redisUrl" global="param/LS/redisUrl" type="java.lang.String" />
+	
+</Context>

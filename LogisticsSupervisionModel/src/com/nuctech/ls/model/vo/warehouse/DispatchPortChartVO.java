@@ -6,131 +6,134 @@ import java.io.Serializable;
  * 
  * 作者： 徐楠
  *
- * 描述：<p>TODO</p>
+ * 描述：
+ * <p>
+ * TODO
+ * </p>
  * 创建时间：2016年6月3日
  */
 public class DispatchPortChartVO implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1306672752010950431L;
-	
-	/**
-	 * 可用关锁
-	 */
-	private Integer availableTrackDevice;
+    /** 
+     * 
+     */
+    private static final long serialVersionUID = 1306672752010950431L;
 
-	/**
-	 * 损坏关锁
-	 */
-	private Integer destroyTrackDevice;
-	
-	/**
-	 * 预留关锁
-	 */
-	private Integer reservationTrackDevice;
-	
-	/**
-	 * 可用子锁
-	 */
-	private Integer availableEseal;
+    /**
+     * 可用关锁
+     */
+    private Integer availableTrackDevice;
 
-	/**
-	 * 损坏子锁
-	 */
-	private Integer destroyEseal;
-	
-	/**
-	 * 预留子锁
-	 */
-	private Integer reservationEseal;
-	
-	/**
-	 * 可用传感器
-	 */
-	private Integer availableSensor;
+    /**
+     * 损坏关锁
+     */
+    private Integer destroyTrackDevice;
 
-	/**
-	 * 损坏传感器
-	 */
-	private Integer destroySensor;
-	
-	/**
-	 * 预留传感器
-	 */
-	private Integer reservationSensor;
+    /**
+     * 预留关锁
+     */
+    private Integer reservationTrackDevice;
 
-	public Integer getAvailableTrackDevice() {
-		return availableTrackDevice;
-	}
+    /**
+     * 可用子锁
+     */
+    private Integer availableEseal;
 
-	public void setAvailableTrackDevice(Integer availableTrackDevice) {
-		this.availableTrackDevice = availableTrackDevice;
-	}
+    /**
+     * 损坏子锁
+     */
+    private Integer destroyEseal;
 
-	public Integer getDestroyTrackDevice() {
-		return destroyTrackDevice;
-	}
+    /**
+     * 预留子锁
+     */
+    private Integer reservationEseal;
 
-	public void setDestroyTrackDevice(Integer destroyTrackDevice) {
-		this.destroyTrackDevice = destroyTrackDevice;
-	}
+    /**
+     * 可用传感器
+     */
+    private Integer availableSensor;
 
-	public Integer getReservationTrackDevice() {
-		return reservationTrackDevice;
-	}
+    /**
+     * 损坏传感器
+     */
+    private Integer destroySensor;
 
-	public void setReservationTrackDevice(Integer reservationTrackDevice) {
-		this.reservationTrackDevice = reservationTrackDevice;
-	}
+    /**
+     * 预留传感器
+     */
+    private Integer reservationSensor;
 
-	public Integer getAvailableEseal() {
-		return availableEseal;
-	}
+    public Integer getAvailableTrackDevice() {
+        return availableTrackDevice;
+    }
 
-	public void setAvailableEseal(Integer availableEseal) {
-		this.availableEseal = availableEseal;
-	}
+    public void setAvailableTrackDevice(Integer availableTrackDevice) {
+        this.availableTrackDevice = availableTrackDevice;
+    }
 
-	public Integer getDestroyEseal() {
-		return destroyEseal;
-	}
+    public Integer getDestroyTrackDevice() {
+        return destroyTrackDevice;
+    }
 
-	public void setDestroyEseal(Integer destroyEseal) {
-		this.destroyEseal = destroyEseal;
-	}
+    public void setDestroyTrackDevice(Integer destroyTrackDevice) {
+        this.destroyTrackDevice = destroyTrackDevice;
+    }
 
-	public Integer getReservationEseal() {
-		return reservationEseal;
-	}
+    public Integer getReservationTrackDevice() {
+        return reservationTrackDevice;
+    }
 
-	public void setReservationEseal(Integer reservationEseal) {
-		this.reservationEseal = reservationEseal;
-	}
+    public void setReservationTrackDevice(Integer reservationTrackDevice) {
+        this.reservationTrackDevice = reservationTrackDevice;
+    }
 
-	public Integer getAvailableSensor() {
-		return availableSensor;
-	}
+    public Integer getAvailableEseal() {
+        return availableEseal;
+    }
 
-	public void setAvailableSensor(Integer availableSensor) {
-		this.availableSensor = availableSensor;
-	}
+    public void setAvailableEseal(Integer availableEseal) {
+        this.availableEseal = availableEseal;
+    }
 
-	public Integer getDestroySensor() {
-		return destroySensor;
-	}
+    public Integer getDestroyEseal() {
+        return destroyEseal;
+    }
 
-	public void setDestroySensor(Integer destroySensor) {
-		this.destroySensor = destroySensor;
-	}
+    public void setDestroyEseal(Integer destroyEseal) {
+        this.destroyEseal = destroyEseal;
+    }
 
-	public Integer getReservationSensor() {
-		return reservationSensor;
-	}
+    public Integer getReservationEseal() {
+        return reservationEseal;
+    }
 
-	public void setReservationSensor(Integer reservationSensor) {
-		this.reservationSensor = reservationSensor;
-	}
-	
+    public void setReservationEseal(Integer reservationEseal) {
+        this.reservationEseal = reservationEseal;
+    }
+
+    public Integer getAvailableSensor() {
+        return availableSensor;
+    }
+
+    public void setAvailableSensor(Integer availableSensor) {
+        this.availableSensor = availableSensor;
+    }
+
+    public Integer getDestroySensor() {
+        return destroySensor;
+    }
+
+    public void setDestroySensor(Integer destroySensor) {
+        this.destroySensor = destroySensor;
+    }
+
+    public Integer getReservationSensor() {
+        return reservationSensor;
+    }
+
+    public void setReservationSensor(Integer reservationSensor) {
+        this.reservationSensor = reservationSensor;
+    }
+
 }

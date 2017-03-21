@@ -10,168 +10,247 @@ import com.nuctech.util.LoginSystem;
 /**
  * 作者： 徐楠
  *
- * 描述：<p>系统用户登录相关Session信息</p>
+ * 描述：
+ * <p>
+ * 系统用户登录相关Session信息
+ * </p>
  * 创建时间：2016年5月18日
  */
 public class SessionUser implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7654166294200237250L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -7654166294200237250L;
 
-	/* 用户主键 */
-	private String userId;
+    /* 用户主键 */
+    private String userId;
 
-	/* 用户名 */
-	private String userAccount;
+    /* 用户名 */
+    private String userAccount;
 
-	/* 姓名 */
-	private String userName;
+    /* 姓名 */
+    private String userName;
 
-	/* 电话 */
-	private String userPhone;
+    /* 电话 */
+    private String userPhone;
 
-	/* 邮箱 */
-	private String userEmail;
+    /* 邮箱 */
+    private String userEmail;
 
-	/* 地址 */
-	private String userAddress;
+    /* 地址 */
+    private String userAddress;
 
-	/* 登录系统 */
-	private LoginSystem logonSystem;
+    /* 有效标记 1:有效; 0:无效 */
+    private String isEnable;
 
-	/* 登录时间 */
-	private Date logonTime;
+    /* 级别 */
+    private String level;
 
-	/* 登出时间 */
-	private Date logoutTime;
+    /* 职位 */
+    private String position;
 
-	/* IP_ADDRESS */
-	private String ipAddress;
+    /* 登录系统 */
+    private LoginSystem logonSystem;
 
-	/* TOKEN */
-	private String token;
-	
-	/* 角色ID */
-	private String roleId;
-	
-	/* 菜单List */
-	private List<LsSystemFunctionsBO> systemFunctionList;
-	
-	/* 机构编码 */
-	private String organizationId;
+    /* 登录时间 */
+    private Date logonTime;
 
-	public String getUserId() {
-		return userId;
-	}
+    /* 登出时间 */
+    private Date logoutTime;
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+    /* IP_ADDRESS */
+    private String ipAddress;
 
-	public String getUserAccount() {
-		return userAccount;
-	}
+    /* TOKEN */
+    private String token;
 
-	public void setUserAccount(String userAccount) {
-		this.userAccount = userAccount;
-	}
+    /* 角色ID */
+    private String roleId;
 
-	public String getUserName() {
-		return userName;
-	}
+    /* 角色名称 */
+    private String roleName;
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    /* 菜单List */
+    private List<LsSystemFunctionsBO> systemFunctionList;
 
-	public String getUserPhone() {
-		return userPhone;
-	}
+    /* 机构编码 */
+    private String organizationId;
+    /* 机构名称 */
+    private String organizationName;
 
-	public void setUserPhone(String userPhone) {
-		this.userPhone = userPhone;
-	}
+    /** 登录地点 */
+    private String logLocation;
 
-	public String getUserEmail() {
-		return userEmail;
-	}
+    /** 是否可以处理报警 */
+    private String canDealAlarm;
 
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
-	}
+    public String getUserId() {
+        return userId;
+    }
 
-	public String getUserAddress() {
-		return userAddress;
-	}
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-	public void setUserAddress(String userAddress) {
-		this.userAddress = userAddress;
-	}
+    public String getUserAccount() {
+        return userAccount;
+    }
 
-	public LoginSystem getLogonSystem() {
-		return logonSystem;
-	}
+    public void setUserAccount(String userAccount) {
+        this.userAccount = userAccount;
+    }
 
-	public void setLogonSystem(LoginSystem logonSystem) {
-		this.logonSystem = logonSystem;
-	}
+    public String getUserName() {
+        return userName;
+    }
 
-	public Date getLogonTime() {
-		return logonTime;
-	}
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-	public void setLogonTime(Date logonTime) {
-		this.logonTime = logonTime;
-	}
+    public String getUserPhone() {
+        return userPhone;
+    }
 
-	public Date getLogoutTime() {
-		return logoutTime;
-	}
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
+    }
 
-	public void setLogoutTime(Date logoutTime) {
-		this.logoutTime = logoutTime;
-	}
+    public String getUserEmail() {
+        return userEmail;
+    }
 
-	public String getIpAddress() {
-		return ipAddress;
-	}
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
 
-	public void setIpAddress(String ipAddress) {
-		this.ipAddress = ipAddress;
-	}
+    public String getUserAddress() {
+        return userAddress;
+    }
 
-	public String getToken() {
-		return token;
-	}
+    public void setUserAddress(String userAddress) {
+        this.userAddress = userAddress;
+    }
 
-	public void setToken(String token) {
-		this.token = token;
-	}
+    public LoginSystem getLogonSystem() {
+        return logonSystem;
+    }
 
-	public String getRoleId() {
-		return roleId;
-	}
+    public void setLogonSystem(LoginSystem logonSystem) {
+        this.logonSystem = logonSystem;
+    }
 
-	public void setRoleId(String roleId) {
-		this.roleId = roleId;
-	}
+    public Date getLogonTime() {
+        return logonTime;
+    }
 
-	public List<LsSystemFunctionsBO> getSystemFunctionList() {
-		return systemFunctionList;
-	}
+    public void setLogonTime(Date logonTime) {
+        this.logonTime = logonTime;
+    }
 
-	public void setSystemFunctionList(List<LsSystemFunctionsBO> systemFunctionList) {
-		this.systemFunctionList = systemFunctionList;
-	}
+    public Date getLogoutTime() {
+        return logoutTime;
+    }
 
-	public String getOrganizationId() {
-		return organizationId;
-	}
+    public void setLogoutTime(Date logoutTime) {
+        this.logoutTime = logoutTime;
+    }
 
-	public void setOrganizationId(String organizationId) {
-		this.organizationId = organizationId;
-	}
-	
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
+    }
+
+    public List<LsSystemFunctionsBO> getSystemFunctionList() {
+        return systemFunctionList;
+    }
+
+    public void setSystemFunctionList(List<LsSystemFunctionsBO> systemFunctionList) {
+        this.systemFunctionList = systemFunctionList;
+    }
+
+    public String getOrganizationId() {
+        return organizationId;
+    }
+
+    public void setOrganizationId(String organizationId) {
+        this.organizationId = organizationId;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public String getOrganizationName() {
+        return organizationName;
+    }
+
+    public void setOrganizationName(String organizationName) {
+        this.organizationName = organizationName;
+    }
+
+    public String getLogLocation() {
+        return logLocation;
+    }
+
+    public void setLogLocation(String logLocation) {
+        this.logLocation = logLocation;
+    }
+
+    public String getIsEnable() {
+        return isEnable;
+    }
+
+    public void setIsEnable(String isEnable) {
+        this.isEnable = isEnable;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getCanDealAlarm() {
+        return canDealAlarm;
+    }
+
+    public void setCanDealAlarm(String canDealAlarm) {
+        this.canDealAlarm = canDealAlarm;
+    }
+
 }

@@ -222,6 +222,9 @@
         notEmpty: {
             'default': '请填写必填项目'
         },
+        between:{
+			'default':'罚款金额为浮点型且其范围在0~999999之间'
+		},
         numeric: {
             'default': '请输入有效的数值，允许小数'
         },

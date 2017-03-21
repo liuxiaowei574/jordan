@@ -7,15 +7,19 @@ import java.util.Map;
 /**
  * 作者： 徐楠
  *
- * 描述：<p>树形结构对象</p>
+ * 描述：
+ * <p>
+ * 树形结构对象
+ * </p>
  * 创建时间：2016年3月17日
  */
 public class TreeNode implements Serializable {
-	 /**
-	 * 
-	 */
-	private static final long serialVersionUID = 996071717692225315L;
-	/**
+
+    /**
+    * 
+    */
+    private static final long serialVersionUID = 996071717692225315L;
+    /**
      * 唯一标识
      */
     private String id;
@@ -65,10 +69,10 @@ public class TreeNode implements Serializable {
      * 是否初始展开此结点
      */
     private boolean nocheck;
-   /**
-    * 初始化的数据设置 是否勾选状态
-    */
-    private boolean checked ;
+    /**
+     * 初始化的数据设置 是否勾选状态
+     */
+    private boolean checked;
     /**
      * 附加属性
      */
@@ -103,25 +107,25 @@ public class TreeNode implements Serializable {
     }
 
     /**
-	 * 返回checked
-	 *
-	 * @return the checked
-	 */
-	public boolean isChecked() {
-		return checked;
-	}
+     * 返回checked
+     *
+     * @return the checked
+     */
+    public boolean isChecked() {
+        return checked;
+    }
 
-	/**
-	 * 设置checked
-	 *
-	 * @param checked 
-	 *		  the checked to set
-	 */
-	public void setChecked(boolean checked) {
-		this.checked = checked;
-	}
+    /**
+     * 设置checked
+     *
+     * @param checked
+     *        the checked to set
+     */
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
 
-	/**
+    /**
      * 设置pId
      *
      * @param pId
@@ -263,5 +267,5 @@ public class TreeNode implements Serializable {
     public void setNocheck(boolean nocheck) {
         this.nocheck = nocheck;
     }
-	
+
 }

@@ -8,26 +8,33 @@ package com.nuctech.ls.model.util;
  *
  */
 public enum AlarmManualType {
-	Manual("0"),Unmanual("1");
-	
-	
-	private String alarmType;
-	
-	private AlarmManualType(String alarmType){
-		this.alarmType = alarmType;
-	}
+    /**
+     * 非手动，0
+     */
+    Unmanual("0"),
+    /**
+     * 手动，1
+     */
+    Manual("1");
 
-	/**
-	 * @return the alarmType
-	 */
-	public String getAlarmType() {
-		return alarmType;
-	}
+    private String alarmType;
 
-	/**
-	 * @param alarmType the alarmType to set
-	 */
-	public void setAlarmType(String alarmType) {
-		this.alarmType = alarmType;
-	}
+    private AlarmManualType(String alarmType) {
+        this.alarmType = alarmType;
+    }
+
+    /**
+     * @return the alarmType
+     */
+    public String getAlarmType() {
+        return alarmType;
+    }
+
+    /**
+     * @param alarmType
+     *        the alarmType to set
+     */
+    public void setAlarmType(String alarmType) {
+        this.alarmType = alarmType;
+    }
 }

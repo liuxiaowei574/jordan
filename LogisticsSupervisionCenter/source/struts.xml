@@ -13,6 +13,7 @@
 	<constant name="struts.convention.result.path" value="/" />
 	<!-- 设置允许struts2标签访问静态成员 -->
 	<constant name="struts.ognl.allowStaticMethodAccess" value="true" />
+	<constant name="struts.action.excludePattern" value="ws://*"></constant>
 	<!-- <constant name="struts.action.excludePattern" value="/conn/*,/conn/.*" /> -->
 	<constant name="struts.custom.i18n.resources" value="LocalizationResource_dc"/>
 	<!-- 设置最大上传文件 大小为100M -->

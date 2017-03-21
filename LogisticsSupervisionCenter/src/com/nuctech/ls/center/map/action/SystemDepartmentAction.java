@@ -2,6 +2,7 @@ package com.nuctech.ls.center.map.action;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -14,14 +15,17 @@ import org.apache.struts2.convention.annotation.Result;
 
 import com.nuctech.ls.center.utils.BeansToJson;
 import com.nuctech.ls.common.base.LSBaseAction;
+import com.nuctech.ls.model.bo.monitor.LsMonitorRaPointBO;
 import com.nuctech.ls.model.bo.monitor.LsMonitorRouteAreaBO;
 import com.nuctech.ls.model.bo.system.LsSystemDepartmentBO;
+import com.nuctech.ls.model.service.MonitorRaPointService;
 import com.nuctech.ls.model.service.MonitorRouteAreaService;
 import com.nuctech.ls.model.service.SystemDepartmentTestService;
 import com.nuctech.ls.model.vo.system.SessionUser;
 import com.nuctech.util.Constant;
 import com.nuctech.util.NuctechUtil;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
@@ -37,6 +41,9 @@ public class SystemDepartmentAction extends LSBaseAction {
 	@Resource
 	private MonitorRouteAreaService monitorRouteAreaService;
 
+	@Resource
+	private MonitorRaPointService monitorRaPointService; 
+	
 	List<LsSystemDepartmentBO> lsSystemDepartmentBOTests;
 
 	@Action(value = "findAllSystemDepartmentBOTest", results = { @Result(name = "success", type = "json") })
@@ -60,49 +67,67 @@ public class SystemDepartmentAction extends LSBaseAction {
 			@Result(name = "error", type = "json") })
 	public void beforPlanRouteArea() throws IOException {
 		String aceeptData1 = request.getParameter("aceeptData");
-		System.out.println(aceeptData1);
 		if(NuctechUtil.isNotNull(aceeptData)){
 			try {
 				JSONObject object = JSONObject.fromObject(aceeptData);
-				LsMonitorRouteAreaBO passport = (LsMonitorRouteAreaBO)JSONObject.toBean(object,
-						LsMonitorRouteAreaBO.class);
-				passport.setRouteAreaId(generatePrimaryKey());
-			    SessionUser sessionUser = (SessionUser) request.getSession().getAttribute(Constant.SESSION_USER);
-				if (sessionUser != null) {
-					passport.setCreateUser(sessionUser.getUserName());
-				}
-				passport.setCreateUser(aceeptData1);
-				passport.setCreateTime(new Date());
-//				 LsMonitorRouteAreaBO monitorRouteAreaBO = new LsMonitorRouteAreaBO();
-//				 monitorRouteAreaBO.setRouteAreaId(generatePrimaryKey());
-//				    monitorRouteAreaBO.setRouteAreaName(object.get("routeAreaName").toString());
-//				    monitorRouteAreaBO.setBelongToPort(object.get("belongToPort").toString());
-//				    SessionUser sessionUser = (SessionUser) request.getSession().getAttribute(Constant.SESSION_USER);
-//					if (sessionUser != null) {
-//						monitorRouteAreaBO.setCreateUser(sessionUser.getUserName());
-//					}
-//					monitorRouteAreaBO.setCreateTime(new Date());
-//					monitorRouteAreaBO.setRouteAreaType(object.get("routeAreaType").toString());
-//					monitorRouteAreaBO.setRouteAreaStatus(object.get("routeAreaStatus").toString());
-//					monitorRouteAreaBO.setRouteAreaBuffer(object.get("routeAreaBuffer").toString());
-//					monitorRouteAreaBO.setRouteCost(object.get("routeCost").toString());
-//					monitorRouteAreaBO.setRouteDistance(object.get("routeDistance").toString());
-//					monitorRouteAreaBO.setStartId(object.get("startId").toString());
-//					monitorRouteAreaBO.setStartName(object.get("startName").toString());
-//					monitorRouteAreaBO.setStartLatitude(object.get("startLatitude").toString());
-//					monitorRouteAreaBO.setStartLongtitude(object.get("startLongtitude").toString());
-//					monitorRouteAreaBO.setEndId(object.get("endId").toString());
-//					monitorRouteAreaBO.setEndName(object.get("endName").toString());
-//					monitorRouteAreaBO.setEndLatitude(object.get("endLatitude").toString());
-//					monitorRouteAreaBO.setEndLongtitude(object.get("endLongtitude").toString());
-				    try {
-				    monitorRouteAreaService.addMonitorRouteArea(passport);
-				    this.response.getWriter().println(SUCCESS);
-					} catch (Exception e) {
-						message = e.getMessage();
-						logger.error(message);
+//				LsMonitorRouteAreaBO passport = (LsMonitorRouteAreaBO)JSONObject.toBean(object,
+//						LsMonitorRouteAreaBO.class);
+//				passport.setRouteAreaId(generatePrimaryKey());
+//			    SessionUser sessionUser = (SessionUser) request.getSession().getAttribute(Constant.SESSION_USER);
+//				if (sessionUser != null) {
+//					passport.setCreateUser(sessionUser.getUserId());
+//				}
+//				passport.setCreateTime(new Date());
+				 LsMonitorRouteAreaBO monitorRouteAreaBO = new LsMonitorRouteAreaBO();
+				 monitorRouteAreaBO.setRouteAreaId(generatePrimaryKey());
+				    monitorRouteAreaBO.setRouteAreaName(object.get("routeAreaName").toString());
+				    monitorRouteAreaBO.setBelongToPort(object.get("belongToPort").toString());
+				    SessionUser sessionUser = (SessionUser) request.getSession().getAttribute(Constant.SESSION_USER);
+					if (sessionUser != null) {
+						monitorRouteAreaBO.setCreateUser(sessionUser.getUserId());
 					}
-				    logger.info(String.format("add routeArea,初始化规划线路编号：%s", passport.getRouteAreaId()));
+					monitorRouteAreaBO.setCreateTime(new Date());
+					monitorRouteAreaBO.setRouteAreaType(object.get("routeAreaType").toString());
+					monitorRouteAreaBO.setRouteAreaStatus(object.get("routeAreaStatus").toString());
+					monitorRouteAreaBO.setRouteAreaBuffer(object.get("routeAreaBuffer").toString());
+					monitorRouteAreaBO.setRouteCost(object.get("routeCost").toString());
+					monitorRouteAreaBO.setRouteDistance(BigDecimal.valueOf(Double.parseDouble(object.get("routeDistance").toString())));
+					monitorRouteAreaBO.setStartId(object.get("startId").toString());
+					monitorRouteAreaBO.setStartName(object.get("startName").toString());
+					monitorRouteAreaBO.setStartLatitude(object.get("startLatitude").toString());
+					monitorRouteAreaBO.setStartLongtitude(object.get("startLongtitude").toString());
+					monitorRouteAreaBO.setEndId(object.get("endId").toString());
+					monitorRouteAreaBO.setEndName(object.get("endName").toString());
+					monitorRouteAreaBO.setEndLatitude(object.get("endLatitude").toString());
+					monitorRouteAreaBO.setEndLongtitude(object.get("endLongtitude").toString());
+				    try {
+						monitorRouteAreaService.addMonitorRouteArea(monitorRouteAreaBO);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				   /// routeAreaPtCol = data.
+				   	if(NuctechUtil.isNotNull(routeAreaPtCol)){
+				   		JSONArray json = JSONArray.fromObject(routeAreaPtCol); // 首先把字符串转成 JSONArray  对象
+						if(json.size()>0){
+						  for(int i=0;i<json.size();i++){
+						    JSONObject job = json.getJSONObject(i);  // 遍历 jsonarray 数组，把每一个对象转成 json 对象
+						    LsMonitorRaPointBO bo = new LsMonitorRaPointBO();
+						    bo.setPointId(generatePrimaryKey());
+						    bo.setRouteAreaId(monitorRouteAreaBO.getRouteAreaId());
+						    bo.setGpsSeq(Long.valueOf(i));
+						    bo.setLatitude(job.get("lat").toString());
+						    bo.setLongitude(job.getString("lng"));
+						    try {
+								monitorRaPointService.addMonitorRaPoint(bo);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						  }
+					  }
+					}
+				    logger.info(String.format("add routeArea,初始化规划线路编号：%s", monitorRouteAreaBO.getRouteAreaId()));
 				  //}
 			} catch (JSONException e1) {
 				// TODO Auto-generated catch block
@@ -110,9 +135,17 @@ public class SystemDepartmentAction extends LSBaseAction {
 			}     
 			   
 		}
-		this.response.getWriter().println(ERROR);
 	}
 
+private String routeAreaPtCol;
+
+public String getRouteAreaPtCol() {
+	return routeAreaPtCol;
+}
+
+public void setRouteAreaPtCol(String routeAreaPtCol) {
+	this.routeAreaPtCol = routeAreaPtCol;
+}
 	/* 路线区域主键 */
 	private String routeAreaId;
 

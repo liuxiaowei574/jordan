@@ -1,5 +1,7 @@
 package com.nuctech.ls.model.bo.system;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,48 +14,54 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "LS_SYSTEM_ORGANIZATION_USER")
-public class LsSystemOrganizationUserBO {
-	/**
-	 * 缺省的构造函数
-	 */
-	public LsSystemOrganizationUserBO() {
-		super();
-	}
+public class LsSystemOrganizationUserBO implements Serializable {
 
-	/* 机构用户主键 */
-	private String orgUserId;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 5081560139315611148L;
 
-	/* 机构编码 */
-	private String organizationId;
+    /**
+     * 缺省的构造函数
+     */
+    public LsSystemOrganizationUserBO() {
+        super();
+    }
 
-	/* 用户编码 */
-	private String userId;
+    /* 机构用户主键 */
+    private String orgUserId;
 
-	@Id
-	@Column(name = "ORG_USER_ID", nullable = false, length = 50)
-	public String getOrgUserId() {
-		return this.orgUserId;
-	}
+    /* 机构编码 */
+    private String organizationId;
 
-	public void setOrgUserId(String orgUserId) {
-		this.orgUserId = orgUserId;
-	}
+    /* 用户编码 */
+    private String userId;
 
-	@Column(name = "ORGANIZATION_ID", nullable = true, length = 50)
-	public String getOrganizationId() {
-		return this.organizationId;
-	}
+    @Id
+    @Column(name = "ORG_USER_ID", nullable = false, length = 50)
+    public String getOrgUserId() {
+        return this.orgUserId;
+    }
 
-	public void setOrganizationId(String organizationId) {
-		this.organizationId = organizationId;
-	}
+    public void setOrgUserId(String orgUserId) {
+        this.orgUserId = orgUserId;
+    }
 
-	@Column(name = "USER_ID", nullable = true, length = 50)
-	public String getUserId() {
-		return this.userId;
-	}
+    @Column(name = "ORGANIZATION_ID", nullable = true, length = 50)
+    public String getOrganizationId() {
+        return this.organizationId;
+    }
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+    public void setOrganizationId(String organizationId) {
+        this.organizationId = organizationId;
+    }
+
+    @Column(name = "USER_ID", nullable = true, length = 50)
+    public String getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }

@@ -13,19 +13,16 @@ import org.hibernate.type.StandardBasicTypes;
  */
 public class NuctechDialect extends SQLServerDialect {
 
-	public NuctechDialect() {
-		super();
-		registerHibernateType(1, "string");
-		registerHibernateType(-9, "string");
-		registerHibernateType(-16, "string");
-		registerHibernateType(3, "double");
+    public NuctechDialect() {
+        super();
+        registerHibernateType(1, "string");
+        registerHibernateType(-9, "string");
+        registerHibernateType(-16, "string");
+        registerHibernateType(3, "double");
 
-		registerHibernateType(Types.CHAR, StandardBasicTypes.STRING.getName());
-		registerHibernateType(Types.NVARCHAR,
-				StandardBasicTypes.STRING.getName());
-		registerHibernateType(Types.LONGNVARCHAR,
-				StandardBasicTypes.STRING.getName());
-		registerHibernateType(Types.DECIMAL,
-				StandardBasicTypes.DOUBLE.getName());
-	}
+        registerHibernateType(Types.CHAR, StandardBasicTypes.STRING.getName());
+        registerHibernateType(Types.NVARCHAR, StandardBasicTypes.STRING.getName());
+        registerHibernateType(Types.LONGNVARCHAR, StandardBasicTypes.STRING.getName());
+        registerHibernateType(Types.DECIMAL, StandardBasicTypes.DOUBLE.getName());
+    }
 }

@@ -13,14 +13,14 @@ import com.nuctech.ls.model.dao.SystemDepartmentTestDao;
 
 @Service
 @Transactional
-public class SystemDepartmentTestService extends LSBaseService{
+public class SystemDepartmentTestService extends LSBaseService {
 
-	@Resource
-	SystemDepartmentTestDao departmentTestDao;
-	
-	List<LsSystemDepartmentBO> departmentBOTests;
-	
-	public List<LsSystemDepartmentBO> findAllSysDepartment(){
-		return departmentTestDao.findAll();
-	}
+    @Resource
+    SystemDepartmentTestDao departmentTestDao;
+
+    List<LsSystemDepartmentBO> departmentBOTests;
+
+    public List<LsSystemDepartmentBO> findAllSysDepartment() {
+        return departmentTestDao.findAll();
+    }
 }

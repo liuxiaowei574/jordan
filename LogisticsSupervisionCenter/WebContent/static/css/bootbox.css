@@ -295,6 +295,21 @@
     -ms-transition: all 0.3s ease;
     transition: all 0.3s ease;
 }
+
+.btn-confirm{
+	padding: 5px 24px;
+ 	 color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+    text-shadow: none;
+    box-shadow: none;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;       
+}
+
 .btn-danger:hover {
     color: #fff;
     background-color: #c9302c;

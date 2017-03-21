@@ -1,13 +1,12 @@
 package com.nuctech.ls.model.bo.monitor;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-
 
 /**
  * 业务对象处理的实体-[监控组信息]
@@ -16,61 +15,66 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "LS_MONITOR_GROUP")
-public class LsMonitorGroupBO {
-	/**
-	 * 缺省的构造函数
-	 */
-	public LsMonitorGroupBO() {
-		super();
-	}
+public class LsMonitorGroupBO implements Serializable {
 
-	/* 监控组主键 */
-	private String groupId;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -7281958723580882862L;
 
-	/* 监控组名称 */
-	private String groupName;
+    /**
+     * 缺省的构造函数
+     */
+    public LsMonitorGroupBO() {
+        super();
+    }
 
-	/* 创建人员 */
-	private String createUser;
+    /* 监控组主键 */
+    private String groupId;
 
-	/* 创建时间 */
-	private Date createTime;
+    /* 监控组名称 */
+    private String groupName;
 
-	@Id
-	@Column(name = "GROUP_ID", nullable = false, length = 50)
-	public String getGroupId() {
-		return this.groupId;
-	}
+    /* 创建人员 */
+    private String createUser;
 
-	public void setGroupId(String groupId) {
-		this.groupId = groupId;
-	}
+    /* 创建时间 */
+    private Date createTime;
 
-	@Column(name = "GROUP_NAME", nullable = true, length = 100)
-	public String getGroupName() {
-		return this.groupName;
-	}
+    @Id
+    @Column(name = "GROUP_ID", nullable = false, length = 50)
+    public String getGroupId() {
+        return this.groupId;
+    }
 
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
-	}
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
 
-	@Column(name = "CREATE_USER", nullable = true, length = 50)
-	public String getCreateUser() {
-		return this.createUser;
-	}
+    @Column(name = "GROUP_NAME", nullable = true, length = 100)
+    public String getGroupName() {
+        return this.groupName;
+    }
 
-	public void setCreateUser(String createUser) {
-		this.createUser = createUser;
-	}
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
 
-	
-	@Column(name = "CREATE_TIME", nullable = true)
-	public Date getCreateTime() {
-		return this.createTime;
-	}
+    @Column(name = "CREATE_USER", nullable = true, length = 50)
+    public String getCreateUser() {
+        return this.createUser;
+    }
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
+
+    @Column(name = "CREATE_TIME", nullable = true)
+    public Date getCreateTime() {
+        return this.createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 }

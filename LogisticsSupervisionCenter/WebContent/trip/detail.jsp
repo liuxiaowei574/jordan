@@ -9,6 +9,8 @@
 <link rel="stylesheet" href="${root }/static/css/trip.css" />
 </head>
 <body>
+<%--行程请求推送通知页面 --%>
+<%@ include file="../include/tripMsgModal.jsp" %>
 <%@ include file="../include/left.jsp" %>
 <div class="row site">
 	<div class="wrapper-content margint95 margin60">
@@ -34,7 +36,7 @@
 						      <th><div class="th-inner"><fmt:message key="alarm.label.alarmTypeName"/></div></th>
 					        </thead>
 					        <tbody>
-								<c:forEach var="alarm" items="${alarmDealList }" varStatus="status">
+								<c:forEach var="alarm" items="${alarmList }" varStatus="status">
 								<tr>
 									<td>${status.count }</td>
 							      	<td>${alarm.receiveTime }</td>
@@ -131,7 +133,7 @@
 								         <fmt:message key="trip.label.routeId"/>
 								      </label>
 									<div class="col-sm-3 control-label">&nbsp;
-										<a id="route" style="cursor: pointer;" data-routeId="${tripVehicleVO.routeId }" data-tripId="${tripVehicleVO.tripId }">点击查看</a>
+										<a id="route" style="cursor: pointer;" data-routeid="${tripVehicleVO.routeId }" data-tripid="${tripVehicleVO.tripId }">点击查看</a>
 									</div>
 								</div>
 							</div>
@@ -220,7 +222,7 @@
 					        				<c:set var="imageName" value="${paths[index] }" />
 											<div class="item ${(status.index == 0) ? 'active' : '' }">
 												<a href="javascript:void(0);">
-													<img src="${tripPhotoPathHttp }${checkinPicture }" alt="${imageName }">
+													<img src="${rootPathHttp + tripPhotoPath + '/' }${checkinPicture }" alt="${imageName }">
 												</a>
 											</div>
 											</c:forEach>
@@ -293,7 +295,7 @@
 					        				<c:set var="imageName" value="${paths[index] }" />
 											<div class="item ${(status.index == 0) ? 'active' : '' }">
 												<a href="javascript:void(0);">
-													<img src="${tripPhotoPathHttp }${checkoutPicture }" alt="${imageName }">
+													<img src="${rootPathHttp + tripPhotoPath + '/' }${checkoutPicture }" alt="${imageName }">
 												</a>
 											</div>
 											</c:forEach>
@@ -327,7 +329,6 @@
 	var root = "${root}";
 	var language='${language}';
 	var locale='${userLocale}';
-	var tripPhotoPathHttp='${tripPhotoPathHttp}';
 </script>
 <script src="${root}/trip/js/detail.js"></script>
 </body>

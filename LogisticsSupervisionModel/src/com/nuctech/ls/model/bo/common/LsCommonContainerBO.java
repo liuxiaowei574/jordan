@@ -1,5 +1,7 @@
 package com.nuctech.ls.model.bo.common;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,49 +14,54 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "LS_COMMON_CONTAINER")
-public class LsCommonContainerBO {
+public class LsCommonContainerBO implements Serializable {
 
-	/**
-	 * 缺省的构造函数
-	 */
-	public LsCommonContainerBO() {
-		super();
-	}
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 7564183539671492367L;
 
-	/* 集装箱主键 */
-	private String containerId;
+    /**
+     * 缺省的构造函数
+     */
+    public LsCommonContainerBO() {
+        super();
+    }
 
-	/* 主键 */
-	private String vehicleId;
+    /* 集装箱主键 */
+    private String containerId;
 
-	/* 集装箱号 */
-	private String containerNumber;
+    /* 主键 */
+    private String vehicleId;
 
-	@Id
-	@Column(name = "CONTAINER_ID", nullable = false, length = 50)
-	public String getContainerId() {
-		return this.containerId;
-	}
+    /* 集装箱号 */
+    private String containerNumber;
 
-	public void setContainerId(String containerId) {
-		this.containerId = containerId;
-	}
+    @Id
+    @Column(name = "CONTAINER_ID", nullable = false, length = 50)
+    public String getContainerId() {
+        return this.containerId;
+    }
 
-	@Column(name = "VEHICLE_ID", nullable = true, length = 50)
-	public String getVehicleId() {
-		return this.vehicleId;
-	}
+    public void setContainerId(String containerId) {
+        this.containerId = containerId;
+    }
 
-	public void setVehicleId(String vehicleId) {
-		this.vehicleId = vehicleId;
-	}
+    @Column(name = "VEHICLE_ID", nullable = true, length = 50)
+    public String getVehicleId() {
+        return this.vehicleId;
+    }
 
-	@Column(name = "CONTAINER_NUMBER", nullable = true, length = 50)
-	public String getContainerNumber() {
-		return this.containerNumber;
-	}
+    public void setVehicleId(String vehicleId) {
+        this.vehicleId = vehicleId;
+    }
 
-	public void setContainerNumber(String containerNumber) {
-		this.containerNumber = containerNumber;
-	}
+    @Column(name = "CONTAINER_NUMBER", nullable = true, length = 50)
+    public String getContainerNumber() {
+        return this.containerNumber;
+    }
+
+    public void setContainerNumber(String containerNumber) {
+        this.containerNumber = containerNumber;
+    }
 }

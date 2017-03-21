@@ -43,15 +43,17 @@ function bindNoticeEditForm(){
       var serialize = $form.serialize();
       var url = root+'/notice/editNotice.action'
 	  $.post(url, serialize, function(data) {
-		if(data) {
-			bootbox.success($.i18n.prop('system.notice.edit.success'));
-  			$('#noticeEditModal').modal('hide');
-  			$table.bootstrapTable('refresh', {});
-		} else {
-			bootbox.error($.i18n.prop('system.notice.edit.error'));
-			$('#noticeEditModal').modal('hide');
-			$table.bootstrapTable('refresh', {});
-		}
+		  if(!needLogin(data)) {
+			  if(data) {
+				  bootbox.success($.i18n.prop('system.notice.edit.success'));
+				  $('#noticeEditModal').modal('hide');
+				  $table.bootstrapTable('refresh', {});
+			  } else {
+				  bootbox.error($.i18n.prop('system.notice.edit.error'));
+				  $('#noticeEditModal').modal('hide');
+				  $table.bootstrapTable('refresh', {});
+			  }
+		  }
 	 }, "json");
   });
 }

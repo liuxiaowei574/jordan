@@ -109,7 +109,7 @@ $(function() {
 		queryParams: queryParams,
 		//minimunCountColumns: 2,
 		//responseHandler: responseHandler,
-		pageList: [10,20],
+		pageList : [ 10, 20, 30 ],
 		// search: true, //显示搜索框
 		//sidePagination: "server", //服务端处理分页
 		//pageSize: 3,

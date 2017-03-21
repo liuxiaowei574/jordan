@@ -25,20 +25,19 @@ public class CreateAdminListener implements ServletContextListener {
 
         try {
         	SystemUserService systemUserService = ContextLoader.getCurrentWebApplicationContext().getBean(SystemUserService.class);
-        	if(systemUserService.isUserAccountExist("admin")) {
-        		logger.info("超级管理员用户已经存在不需创建");
-        		return ;
+        	if(!systemUserService.isUserAccountExist("admin")) {
+        		String validFlag = ConstantConfig.readValue(Constant.VALID_FLAG);
+            	LsSystemUserBO admin = new LsSystemUserBO();
+            	admin.setUserAccount("admin");
+            	admin.setUserName("admin");
+            	admin.setIsEnable(validFlag);
+            	admin.setLogonSystem(LoginSystem.TRACKING);
+            	//systemUser.setIpAddress(SystemUtil.getIpAddr(ServletActionContext.getRequest()));
+            	systemUserService.save(admin);
+                logger.info("创建超级管理员用户");
         	}
-        	String validFlag = ConstantConfig.readValue(Constant.VALID_FLAG);
-        	LsSystemUserBO admin = new LsSystemUserBO();
-        	admin.setUserAccount("admin");
-        	admin.setUserName("admin");
-        	admin.setIsEnable(validFlag);
-        	admin.setLogonSystem(LoginSystem.TRACKING);
-        	//systemUser.setIpAddress(SystemUtil.getIpAddr(ServletActionContext.getRequest()));
-        	systemUserService.save(admin);
-            logger.info("创建超级管理员用户");
-
+//        	logger.info("超级管理员用户已经存在不需创建");
+//    		return ;
         } catch (Exception e) {
         	e.printStackTrace();
             logger.warn("创建超级管理员用户异常", e);

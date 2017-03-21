@@ -5,127 +5,165 @@ import java.util.Date;
 
 public class DeviceInventoryDetail implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -459508865085215937L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -459508865085215937L;
 
-	/**
-	 * 关锁号
-	 */
-	private String trackDeviceNumber;
-	
-	/**
-	 * 子锁号
-	 */
-	private String esealNumber;
-	
-	/**
-	 * 传感器号
-	 */
-	private String sensorNumber;
-	
-	/**
-	 * 流入时间
-	 */
-	private Date checkInDate;
-	
-	/**
-	 * 流出时间
-	 */
-	private Date checkOutDate;
-	
-	/**
-	 * 来源口岸ID
-	 */
-	private String form;
-	
-	/**
-	 * 目的口岸ID
-	 */
-	private String to;
-	
-	/**
-	 * 来源口岸名字
-	 */
-	private String formName;
-	
-	/**
-	 * 目的口岸名字
-	 */
-	private String toName;
+    /**
+     * 关锁号
+     */
+    private String trackDeviceNumber;
 
-	public String getTrackDeviceNumber() {
-		return trackDeviceNumber;
-	}
+    /**
+     * 子锁号
+     */
+    private String esealNumber;
 
-	public void setTrackDeviceNumber(String trackDeviceNumber) {
-		this.trackDeviceNumber = trackDeviceNumber;
-	}
+    /**
+     * 传感器号
+     */
+    private String sensorNumber;
 
-	public String getEsealNumber() {
-		return esealNumber;
-	}
+    /**
+     * 流入时间
+     */
+    private Date checkInDate;
 
-	public void setEsealNumber(String esealNumber) {
-		this.esealNumber = esealNumber;
-	}
+    /**
+     * 流出时间
+     */
+    private Date checkOutDate;
 
-	public String getSensorNumber() {
-		return sensorNumber;
-	}
+    /**
+     * 来源口岸ID
+     */
+    private String form;
 
-	public void setSensorNumber(String sensorNumber) {
-		this.sensorNumber = sensorNumber;
-	}
+    /**
+     * 目的口岸ID
+     */
+    private String to;
 
-	public Date getCheckInDate() {
-		return checkInDate;
-	}
+    /**
+     * 来源口岸名字
+     */
+    private String formName;
 
-	public void setCheckInDate(Date checkInDate) {
-		this.checkInDate = checkInDate;
-	}
+    /**
+     * 目的口岸名字
+     */
+    private String toName;
+    /**
+     * 关锁状态
+     */
 
-	public Date getCheckOutDate() {
-		return checkOutDate;
-	}
+    private String trackDeviceStatus;
+    /**
+     * 传感器状态
+     */
 
-	public void setCheckOutDate(Date checkOutDate) {
-		this.checkOutDate = checkOutDate;
-	}
+    private String sensorStatus;
+    /**
+     * 子锁状态
+     */
 
-	public String getForm() {
-		return form;
-	}
+    private String esealStatus;
 
-	public void setForm(String form) {
-		this.form = form;
-	}
+    public String getTrackDeviceNumber() {
+        return trackDeviceNumber;
+    }
 
-	public String getTo() {
-		return to;
-	}
+    public void setTrackDeviceNumber(String trackDeviceNumber) {
+        this.trackDeviceNumber = trackDeviceNumber;
+    }
 
-	public void setTo(String to) {
-		this.to = to;
-	}
+    public String getEsealNumber() {
+        return esealNumber;
+    }
 
-	public String getFormName() {
-		return formName;
-	}
+    public void setEsealNumber(String esealNumber) {
+        this.esealNumber = esealNumber;
+    }
 
-	public void setFormName(String formName) {
-		this.formName = formName;
-	}
+    public String getSensorNumber() {
+        return sensorNumber;
+    }
 
-	public String getToName() {
-		return toName;
-	}
+    public void setSensorNumber(String sensorNumber) {
+        this.sensorNumber = sensorNumber;
+    }
 
-	public void setToName(String toName) {
-		this.toName = toName;
-	}
+    public Date getCheckInDate() {
+        return checkInDate;
+    }
 
-	
+    public void setCheckInDate(Date checkInDate) {
+        this.checkInDate = checkInDate;
+    }
+
+    public Date getCheckOutDate() {
+        return checkOutDate;
+    }
+
+    public void setCheckOutDate(Date checkOutDate) {
+        this.checkOutDate = checkOutDate;
+    }
+
+    public String getForm() {
+        return form;
+    }
+
+    public void setForm(String form) {
+        this.form = form;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
+
+    public String getFormName() {
+        return formName;
+    }
+
+    public void setFormName(String formName) {
+        this.formName = formName;
+    }
+
+    public String getToName() {
+        return toName;
+    }
+
+    public void setToName(String toName) {
+        this.toName = toName;
+    }
+
+    public String getTrackDeviceStatus() {
+        return trackDeviceStatus;
+    }
+
+    public void setTrackDeviceStatus(String trackDeviceStatus) {
+        this.trackDeviceStatus = trackDeviceStatus;
+    }
+
+    public String getSensorStatus() {
+        return sensorStatus;
+    }
+
+    public void setSensorStatus(String sensorStatus) {
+        this.sensorStatus = sensorStatus;
+    }
+
+    public String getEsealStatus() {
+        return esealStatus;
+    }
+
+    public void setEsealStatus(String esealStatus) {
+        this.esealStatus = esealStatus;
+    }
+
 }

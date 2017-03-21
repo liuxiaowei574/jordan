@@ -1,38 +1,40 @@
 package com.nuctech.ls.model.vo.warehouse;
 
+import java.util.Date;
 
 /**
  * 关锁和组织机构VO类
+ * 
  * @author Administrator
  *
  */
 
 public class ElockDepartmentVO {
-	/* 关锁主键 */
-	private String elockId;
 
-	
-	/* 关锁号 */
-	private String elockNumber;
+    /* 关锁主键 */
+    private String elockId;
 
-	/* 所属节点 */
-	private String belongTo;
+    /* 关锁号 */
+    private String elockNumber;
 
-	/* SIM卡号,多个用逗号分开 */
-	private String simCard;
+    /* 所属节点 */
+    private String belongTo;
 
-	/* 信息上传频率 */
-	private String interval;
+    /* SIM卡号,多个用逗号分开 */
+    private String simCard;
 
-	/* 网关地址 */
-	private String gatewayAddress;
+    /* 信息上传频率 */
+    private String interval;
 
-	/*
-	 * 关锁状态 维修、损坏、报废等
-	 */
-	private String elockStatus;
-	
-	private String organizationId;
+    /* 网关地址 */
+    private String gatewayAddress;
+
+    /*
+     * 关锁状态 维修、损坏、报废等
+     */
+    private String elockStatus;
+
+    private String organizationId;
 
     /* 机构名称 */
     private String organizationName;
@@ -40,10 +42,9 @@ public class ElockDepartmentVO {
     /* 上级机构 */
     private String parentId;
 
-    /* 1、国家
-    2、口岸
-    3、监管场所
-    4、建管中心 */
+    /*
+     * 1、国家 2、口岸 3、监管场所 4、建管中心
+     */
     private String organizationType;
 
     /* 层次码 */
@@ -60,162 +61,219 @@ public class ElockDepartmentVO {
 
     /* 机构描述 */
     private String organizationDesc;
-    
-    public ElockDepartmentVO (){
-    	super();
+
+    /* 最后一次使用时间 */
+    private Date lastUseTime;
+
+    /* 最后一次使用人员Id */
+    private String lastUser;
+
+    /* 最后一次使用人员Name */
+    private String lastUserName;
+
+    /* 多长时间未被使用 */
+    private String timeNotInUse;// hours
+
+    /* 创建时间 */
+    private Date createTime;
+
+    public ElockDepartmentVO() {
+        super();
     }
-    
-    public ElockDepartmentVO(String elockId, String elockNumber,String belongTo,
-    		String simCard, String interval,String gatewayAddress,String elockStatus,
-    		String organizationId,String organizationName,String parentId,String organizationType,
-    		String levelCode,String longitude,String latitude,String isEnable,String organizationDesc){
-    	super();
-    	
-    	this.elockId=elockId;
-    	this.elockNumber=elockNumber;
-    	this.belongTo=belongTo;
-    	this.simCard=simCard;
-    	this.interval=interval;
-    	this.gatewayAddress=gatewayAddress;
-    	this.elockStatus=elockStatus;
-    	this.organizationId=organizationId;
-    	this.organizationName=organizationName;
-    	this.parentId=parentId;
-    	this.organizationType=organizationType;
-    	this.levelCode=levelCode;
-    	this.longitude=longitude;
-    	this.latitude=latitude;
-    	this.isEnable=isEnable;
-    	this.organizationDesc=organizationDesc;
+
+    public ElockDepartmentVO(String elockId, String elockNumber, String belongTo, String simCard, String interval,
+            String gatewayAddress, String elockStatus, String organizationId, String organizationName, String parentId,
+            String organizationType, String levelCode, String longitude, String latitude, String isEnable,
+            String organizationDesc, Date lastUseTime, String lastUser, String lastUserName, String timeNotInUse) {
+        super();
+        this.elockId = elockId;
+        this.elockNumber = elockNumber;
+        this.belongTo = belongTo;
+        this.simCard = simCard;
+        this.interval = interval;
+        this.gatewayAddress = gatewayAddress;
+        this.elockStatus = elockStatus;
+        this.organizationId = organizationId;
+        this.organizationName = organizationName;
+        this.parentId = parentId;
+        this.organizationType = organizationType;
+        this.levelCode = levelCode;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.isEnable = isEnable;
+        this.organizationDesc = organizationDesc;
+        this.lastUseTime = lastUseTime;
+        this.lastUser = lastUser;
+        this.lastUserName = lastUserName;
+        this.timeNotInUse = timeNotInUse;
     }
-    
-    
+
     public String getElockId() {
-		return elockId;
-	}
+        return elockId;
+    }
 
-	public void setElockId(String elockId) {
-		this.elockId = elockId;
-	}
+    public void setElockId(String elockId) {
+        this.elockId = elockId;
+    }
 
-	public String getElockNumber() {
-		return elockNumber;
-	}
+    public String getElockNumber() {
+        return elockNumber;
+    }
 
-	public void setElockNumber(String elockNumber) {
-		this.elockNumber = elockNumber;
-	}
+    public void setElockNumber(String elockNumber) {
+        this.elockNumber = elockNumber;
+    }
 
-	public String getBelongTo() {
-		return belongTo;
-	}
+    public String getBelongTo() {
+        return belongTo;
+    }
 
-	public void setBelongTo(String belongTo) {
-		this.belongTo = belongTo;
-	}
+    public void setBelongTo(String belongTo) {
+        this.belongTo = belongTo;
+    }
 
-	public String getSimCard() {
-		return simCard;
-	}
+    public String getSimCard() {
+        return simCard;
+    }
 
-	public void setSimCard(String simCard) {
-		this.simCard = simCard;
-	}
+    public void setSimCard(String simCard) {
+        this.simCard = simCard;
+    }
 
-	public String getInterval() {
-		return interval;
-	}
+    public String getInterval() {
+        return interval;
+    }
 
-	public void setInterval(String interval) {
-		this.interval = interval;
-	}
+    public void setInterval(String interval) {
+        this.interval = interval;
+    }
 
-	public String getGatewayAddress() {
-		return gatewayAddress;
-	}
+    public String getGatewayAddress() {
+        return gatewayAddress;
+    }
 
-	public void setGatewayAddress(String gatewayAddress) {
-		this.gatewayAddress = gatewayAddress;
-	}
+    public void setGatewayAddress(String gatewayAddress) {
+        this.gatewayAddress = gatewayAddress;
+    }
 
-	public String getElockStatus() {
-		return elockStatus;
-	}
+    public String getElockStatus() {
+        return elockStatus;
+    }
 
-	public void setElockStatus(String elockStatus) {
-		this.elockStatus = elockStatus;
-	}
+    public void setElockStatus(String elockStatus) {
+        this.elockStatus = elockStatus;
+    }
 
-	public String getOrganizationId() {
-		return organizationId;
-	}
+    public String getOrganizationId() {
+        return organizationId;
+    }
 
-	public void setOrganizationId(String organizationId) {
-		this.organizationId = organizationId;
-	}
+    public void setOrganizationId(String organizationId) {
+        this.organizationId = organizationId;
+    }
 
-	public String getOrganizationName() {
-		return organizationName;
-	}
+    public String getOrganizationName() {
+        return organizationName;
+    }
 
-	public void setOrganizationName(String organizationName) {
-		this.organizationName = organizationName;
-	}
+    public void setOrganizationName(String organizationName) {
+        this.organizationName = organizationName;
+    }
 
-	public String getParentId() {
-		return parentId;
-	}
+    public String getParentId() {
+        return parentId;
+    }
 
-	public void setParentId(String parentId) {
-		this.parentId = parentId;
-	}
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
 
-	public String getOrganizationType() {
-		return organizationType;
-	}
+    public String getOrganizationType() {
+        return organizationType;
+    }
 
-	public void setOrganizationType(String organizationType) {
-		this.organizationType = organizationType;
-	}
+    public void setOrganizationType(String organizationType) {
+        this.organizationType = organizationType;
+    }
 
-	public String getLevelCode() {
-		return levelCode;
-	}
+    public String getLevelCode() {
+        return levelCode;
+    }
 
-	public void setLevelCode(String levelCode) {
-		this.levelCode = levelCode;
-	}
+    public void setLevelCode(String levelCode) {
+        this.levelCode = levelCode;
+    }
 
-	public String getLongitude() {
-		return longitude;
-	}
+    public String getLongitude() {
+        return longitude;
+    }
 
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
 
-	public String getLatitude() {
-		return latitude;
-	}
+    public String getLatitude() {
+        return latitude;
+    }
 
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
 
-	public String getIsEnable() {
-		return isEnable;
-	}
+    public String getIsEnable() {
+        return isEnable;
+    }
 
-	public void setIsEnable(String isEnable) {
-		this.isEnable = isEnable;
-	}
+    public void setIsEnable(String isEnable) {
+        this.isEnable = isEnable;
+    }
 
-	public String getOrganizationDesc() {
-		return organizationDesc;
-	}
+    public String getOrganizationDesc() {
+        return organizationDesc;
+    }
 
-	public void setOrganizationDesc(String organizationDesc) {
-		this.organizationDesc = organizationDesc;
-	}
+    public void setOrganizationDesc(String organizationDesc) {
+        this.organizationDesc = organizationDesc;
+    }
+
+    public Date getLastUseTime() {
+        return lastUseTime;
+    }
+
+    public void setLastUseTime(Date lastUseTime) {
+        this.lastUseTime = lastUseTime;
+    }
+
+    public String getLastUser() {
+        return lastUser;
+    }
+
+    public void setLastUser(String lastUser) {
+        this.lastUser = lastUser;
+    }
+
+    public String getTimeNotInUse() {
+        return timeNotInUse;
+    }
+
+    public void setTimeNotInUse(String timeNotInUse) {
+        this.timeNotInUse = timeNotInUse;
+    }
+
+    public String getLastUserName() {
+        return lastUserName;
+    }
+
+    public void setLastUserName(String lastUserName) {
+        this.lastUserName = lastUserName;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
 }

@@ -14,11 +14,14 @@ import org.apache.struts2.convention.annotation.Result;
 
 import com.nuctech.ls.center.utils.BeansToJson;
 import com.nuctech.ls.common.base.LSBaseAction;
-import com.nuctech.ls.common.memcached.MemcachedUtil;
 import com.nuctech.ls.model.bo.monitor.LsMonitorVehicleStatusBO;
+import com.nuctech.ls.model.memcached.MemcachedUtil;
+import com.nuctech.ls.model.redis.RedisClientTemplate;
 import com.nuctech.ls.model.service.MonitorTripVehicleService;
 import com.nuctech.ls.model.service.MonitorVehicleStatusService;
 import com.nuctech.ls.model.vo.monitor.LsMonitorTripVehicleVo;
+import com.nuctech.ls.model.vo.system.SessionUser;
+import com.nuctech.util.Constant;
 import com.nuctech.util.NuctechUtil;
 @ParentPackage("json-default")
 @Namespace("/monitorTripVehicle")
@@ -36,6 +39,8 @@ public class MonitorTripVehicleAction extends LSBaseAction {
 	MonitorVehicleStatusService monitorVehicleStatusService;
 	@Resource
 	public MemcachedUtil memcachedUtil;
+	@Resource
+	private RedisClientTemplate redisClientTemplate;
 	
 	private List<LsMonitorTripVehicleVo> lsMonitorTripVehicleVos;
 	private List<LsMonitorVehicleStatusBO> lsMonitorVehicleStatusBOs;
@@ -51,7 +56,12 @@ public class MonitorTripVehicleAction extends LSBaseAction {
 	public void findAllTripVelhicle() throws Exception{
 		logger.info(String.format("根据行程查询对应车辆!"));
 		logger.info("根据车辆完成状态查询车辆列表，目前状态为："+tripStatus+"，出发口岸是："+qdPorts+",到达口岸是："+zdPorts);
-		lsMonitorTripVehicleVos = monitorTripVehicleService.findAllTripVehicleBySql(tripStatus,getStrResult(qdPorts),getStrResult(zdPorts));
+		SessionUser sessionUser = (SessionUser) request.getSession().getAttribute(Constant.SESSION_USER);
+		String organizationId = "";
+		if(sessionUser!=null){
+			organizationId = sessionUser.getOrganizationId();
+		}
+		lsMonitorTripVehicleVos = monitorTripVehicleService.findAllTripVehicleBySql(tripStatus,getStrResult(qdPorts),getStrResult(zdPorts),organizationId);
 		String result = new BeansToJson<LsMonitorTripVehicleVo,Serializable>().beanToJson(this.lsMonitorTripVehicleVos);
 		 try {
 	            this.response.getWriter().println(result);
@@ -70,12 +80,20 @@ public class MonitorTripVehicleAction extends LSBaseAction {
 	
 		logger.info(String.format("缓存中查找车辆列表!"));
 		lsMonitorVehicleStatusBOs = this.monitorVehicleStatusService.findAllOnWayVehicleStatus(null);
-		for (LsMonitorVehicleStatusBO lsMonitorVehicleBo : lsMonitorVehicleStatusBOs) {
-			String trackingDeviceNum = lsMonitorVehicleBo.getTrackingDeviceNumber();
-			Object obj = memcachedUtil.get(trackingDeviceNum);
+//		for (LsMonitorVehicleStatusBO lsMonitorVehicleBo : lsMonitorVehicleStatusBOs) {
+//			String trackingDeviceNum = lsMonitorVehicleBo.getTrackingDeviceNumber();
+//			// Object obj = memcachedUtil.get(trackingDeviceNum,LsMonitorVehicleStatusBO.class);
+//			String value = redisClientTemplate.get(trackingDeviceNum);
+//			LsMonitorVehicleStatusBO monitorVehicleStatusBO = (LsMonitorVehicleStatusBO) JSONObject
+//					.toBean(JSONObject.fromObject(value), LsMonitorVehicleStatusBO.class);
 			//待完善
+//		}
+		SessionUser sessionUser = (SessionUser) request.getSession().getAttribute(Constant.SESSION_USER);
+		String organizationId = "";
+		if(sessionUser!=null){
+			organizationId = sessionUser.getOrganizationId();
 		}
-		lsMonitorTripVehicleVos = monitorTripVehicleService.findAllTripVehicleBySql(tripStatus,getStrResult(qdPorts),getStrResult(zdPorts));
+		lsMonitorTripVehicleVos = monitorTripVehicleService.findAllTripVehicleBySql(tripStatus,getStrResult(qdPorts),getStrResult(zdPorts),organizationId);
 		String result = new BeansToJson<LsMonitorTripVehicleVo,Serializable>().beanToJson(this.lsMonitorTripVehicleVos);
 		 try {
 	            this.response.getWriter().println(result);

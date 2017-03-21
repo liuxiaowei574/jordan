@@ -1,57 +1,47 @@
 package com.nuctech.ls.model.bo.monitor;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 /**
- * 业务对象处理的实体-[记录车辆行程信息，每个车辆包含一条行程信息。]
+ * 业务对象处理的实体-[记录行程信息，每个行程信息可以有多辆车，每辆车1把关锁、1-6把子锁，1-6把传感器，每辆车都要拍照，每辆车有各自的报警，
+ * 每辆车可有多种货物]
  *
  * @author： nuctech
  */
 @Entity
 @Table(name = "LS_MONITOR_TRIP")
-public class LsMonitorTripBO
-{
+public class LsMonitorTripBO implements Serializable {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -7132923470535659020L;
+
     /**
      * 缺省的构造函数
      */
-    public LsMonitorTripBO()
-    {
+    public LsMonitorTripBO() {
         super();
     }
 
     /* 行程主键 */
     private String tripId;
 
-    /* 主键 */
-    private String vehicleId;
-
-    /* 追踪终端号 */
-    private String trackingDeviceNumber;
-
-    /* 子锁号 */
-    private String esealNumber;
-
-    /* 传感器编号 */
-    private String sensorNumber;
-
-    /* 子锁顺序 */
-    private String esealOrder;
-
-    /* 传感器顺序 */
-    private String sensorOrder;
+    /** 报关单号 */
+    private String declarationNumber;
 
     /* 规划路线 */
     private String routeId;
 
-    /* 0. 绿色
-    1. 黄色
-    2. 红色 */
+    /*
+     * 0. 绿色 1. 黄色 2. 红色
+     */
     private String riskStatus;
 
     /* 检入人员 */
@@ -63,9 +53,6 @@ public class LsMonitorTripBO
     /* 检入地点 */
     private String checkinPort;
 
-    /* 检入图片路径 */
-    private String checkinPicture;
-
     /* 检出人员 */
     private String checkoutUser;
 
@@ -75,238 +62,208 @@ public class LsMonitorTripBO
     /* 检出地点 */
     private String checkoutPort;
 
-    /* 检出图片路径 */
-    private String checkoutPicture;
-
     /* 行程耗时 */
     private String timeCost;
 
-    /* 行程状态
-    0. 进行中
-    1. 已结束 */
+    /**
+     * 行程状态 0. 待激活 1. 进行中 2. 待结束 3. 已结束
+     */
     private String tripStatus;
 
     /* 监控组主键 */
     private String groupId;
 
+    /**
+     * 行程激活时选择的target zoon，对应LsMonitorRouteAreaBO表主键，多个用英文逗号隔开
+     */
+    private String targetZoonId;
+
+    /**
+     * 是否特殊申请。0：否，1：是
+     */
+    private String specialFlag;
+
+    /**
+     * 特殊申请的理由
+     */
+    private String reason;
+
     @Id
     @Column(name = "TRIP_ID", nullable = false, length = 50)
-    public String getTripId()
-    {
+    public String getTripId() {
         return this.tripId;
     }
 
-    public void setTripId(String tripId)
-    {
+    public void setTripId(String tripId) {
         this.tripId = tripId;
     }
 
-    @Column(name = "VEHICLE_ID", nullable = true, length = 50)
-    public String getVehicleId()
-    {
-        return this.vehicleId;
-    }
-
-    public void setVehicleId(String vehicleId)
-    {
-        this.vehicleId = vehicleId;
-    }
-
-    @Column(name = "TRACKING_DEVICE_NUMBER", nullable = true, length = 50)
-    public String getTrackingDeviceNumber()
-    {
-        return this.trackingDeviceNumber;
-    }
-
-    public void setTrackingDeviceNumber(String trackingDeviceNumber)
-    {
-        this.trackingDeviceNumber = trackingDeviceNumber;
-    }
-
-    @Column(name = "ESEAL_NUMBER", nullable = true, length = 100)
-    public String getEsealNumber()
-    {
-        return this.esealNumber;
-    }
-
-    public void setEsealNumber(String esealNumber)
-    {
-        this.esealNumber = esealNumber;
-    }
-
-    @Column(name = "SENSOR_NUMBER", nullable = true, length = 100)
-    public String getSensorNumber()
-    {
-        return this.sensorNumber;
-    }
-
-    public void setSensorNumber(String sensorNumber)
-    {
-        this.sensorNumber = sensorNumber;
-    }
-
-    @Column(name = "ESEAL_ORDER", nullable = true, length = 100)
-    public String getEsealOrder()
-    {
-        return this.esealOrder;
-    }
-
-    public void setEsealOrder(String esealOrder)
-    {
-        this.esealOrder = esealOrder;
-    }
-
-    @Column(name = "SENSOR_ORDER", nullable = true, length = 100)
-    public String getSensorOrder()
-    {
-        return this.sensorOrder;
-    }
-
-    public void setSensorOrder(String sensorOrder)
-    {
-        this.sensorOrder = sensorOrder;
-    }
-
     @Column(name = "ROUTE_ID", nullable = true, length = 50)
-    public String getRouteId()
-    {
+    public String getRouteId() {
         return this.routeId;
     }
 
-    public void setRouteId(String routeId)
-    {
+    public void setRouteId(String routeId) {
         this.routeId = routeId;
     }
 
     @Column(name = "RISK_STATUS", nullable = true, length = 2)
-    public String getRiskStatus()
-    {
+    public String getRiskStatus() {
         return this.riskStatus;
     }
 
-    public void setRiskStatus(String riskStatus)
-    {
+    public void setRiskStatus(String riskStatus) {
         this.riskStatus = riskStatus;
     }
 
     @Column(name = "CHECKIN_USER", nullable = true, length = 50)
-    public String getCheckinUser()
-    {
+    public String getCheckinUser() {
         return this.checkinUser;
     }
 
-    public void setCheckinUser(String checkinUser)
-    {
+    public void setCheckinUser(String checkinUser) {
         this.checkinUser = checkinUser;
     }
 
     @Column(name = "CHECKIN_TIME", nullable = true)
-    public Date getCheckinTime()
-    {
+    public Date getCheckinTime() {
         return this.checkinTime;
     }
 
-    public void setCheckinTime(Date checkinTime)
-    {
+    public void setCheckinTime(Date checkinTime) {
         this.checkinTime = checkinTime;
     }
 
     @Column(name = "CHECKIN_PORT", nullable = true, length = 50)
-    public String getCheckinPort()
-    {
+    public String getCheckinPort() {
         return this.checkinPort;
     }
 
-    public void setCheckinPort(String checkinPort)
-    {
+    public void setCheckinPort(String checkinPort) {
         this.checkinPort = checkinPort;
     }
 
-    @Column(name = "CHECKIN_PICTURE", nullable = true, length = 2000)
-    public String getCheckinPicture()
-    {
-        return this.checkinPicture;
-    }
-
-    public void setCheckinPicture(String checkinPicture)
-    {
-        this.checkinPicture = checkinPicture;
-    }
-
     @Column(name = "CHECKOUT_USER", nullable = true, length = 50)
-    public String getCheckoutUser()
-    {
+    public String getCheckoutUser() {
         return this.checkoutUser;
     }
 
-    public void setCheckoutUser(String checkoutUser)
-    {
+    public void setCheckoutUser(String checkoutUser) {
         this.checkoutUser = checkoutUser;
     }
 
     @Column(name = "CHECKOUT_TIME", nullable = true)
-    public Date getCheckoutTime()
-    {
+    public Date getCheckoutTime() {
         return this.checkoutTime;
     }
 
-    public void setCheckoutTime(Date checkoutTime)
-    {
+    public void setCheckoutTime(Date checkoutTime) {
         this.checkoutTime = checkoutTime;
     }
 
     @Column(name = "CHECKOUT_PORT", nullable = true, length = 50)
-    public String getCheckoutPort()
-    {
+    public String getCheckoutPort() {
         return this.checkoutPort;
     }
 
-    public void setCheckoutPort(String checkoutPort)
-    {
+    public void setCheckoutPort(String checkoutPort) {
         this.checkoutPort = checkoutPort;
     }
 
-    @Column(name = "CHECKOUT_PICTURE", nullable = true, length = 2000)
-    public String getCheckoutPicture()
-    {
-        return this.checkoutPicture;
-    }
-
-    public void setCheckoutPicture(String checkoutPicture)
-    {
-        this.checkoutPicture = checkoutPicture;
-    }
-
     @Column(name = "TIME_COST", nullable = true, length = 20)
-    public String getTimeCost()
-    {
+    public String getTimeCost() {
         return this.timeCost;
     }
 
-    public void setTimeCost(String timeCost)
-    {
+    public void setTimeCost(String timeCost) {
         this.timeCost = timeCost;
     }
 
     @Column(name = "TRIP_STATUS", nullable = true, length = 2)
-    public String getTripStatus()
-    {
+    public String getTripStatus() {
         return this.tripStatus;
     }
 
-    public void setTripStatus(String tripStatus)
-    {
+    public void setTripStatus(String tripStatus) {
         this.tripStatus = tripStatus;
     }
 
     @Column(name = "GROUP_ID", nullable = true, length = 50)
-    public String getGroupId()
-    {
+    public String getGroupId() {
         return this.groupId;
     }
 
-    public void setGroupId(String groupId)
-    {
+    public void setGroupId(String groupId) {
         this.groupId = groupId;
     }
+
+    @Column(name = "DECLARATION_NUMBER", nullable = true, length = 50)
+    public String getDeclarationNumber() {
+        return this.declarationNumber;
+    }
+
+    public void setDeclarationNumber(String declarationNumber) {
+        this.declarationNumber = declarationNumber;
+    }
+
+    @Column(name = "TARGET_ZOON_ID", nullable = true, length = 3000)
+    public String getTargetZoonId() {
+        return targetZoonId;
+    }
+
+    public void setTargetZoonId(String targetZoonId) {
+        this.targetZoonId = targetZoonId;
+    }
+
+    @Column(name = "SPECIAL_FLAG", nullable = true, length = 10)
+    public String getSpecialFlag() {
+        return specialFlag;
+    }
+
+    public void setSpecialFlag(String specialFlag) {
+        this.specialFlag = specialFlag;
+    }
+
+    @Column(name = "REASON", nullable = true, length = 2000)
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public LsMonitorTripBO(String tripId, String declarationNumber, String routeId, String riskStatus,
+            String checkinUser, Date checkinTime, String checkinPort, String checkoutUser, Date checkoutTime,
+            String checkoutPort, String timeCost, String tripStatus, String groupId, String targetZoonId,
+            String specialFlag, String reason) {
+        super();
+        this.tripId = tripId;
+        this.declarationNumber = declarationNumber;
+        this.routeId = routeId;
+        this.riskStatus = riskStatus;
+        this.checkinUser = checkinUser;
+        this.checkinTime = checkinTime;
+        this.checkinPort = checkinPort;
+        this.checkoutUser = checkoutUser;
+        this.checkoutTime = checkoutTime;
+        this.checkoutPort = checkoutPort;
+        this.timeCost = timeCost;
+        this.tripStatus = tripStatus;
+        this.groupId = groupId;
+        this.targetZoonId = targetZoonId;
+        this.specialFlag = specialFlag;
+        this.reason = reason;
+    }
+
+    @Override
+    public String toString() {
+        return "LsMonitorTripBO [tripId=" + tripId + ", declarationNumber=" + declarationNumber + ", routeId=" + routeId
+                + ", riskStatus=" + riskStatus + ", checkinUser=" + checkinUser + ", checkinTime=" + checkinTime
+                + ", checkinPort=" + checkinPort + ", checkoutUser=" + checkoutUser + ", checkoutTime=" + checkoutTime
+                + ", checkoutPort=" + checkoutPort + ", timeCost=" + timeCost + ", tripStatus=" + tripStatus
+                + ", groupId=" + groupId + ", targetZoonId=" + targetZoonId + ", specialFlag=" + specialFlag
+                + ", reason=" + reason + "]";
+    }
+
 }

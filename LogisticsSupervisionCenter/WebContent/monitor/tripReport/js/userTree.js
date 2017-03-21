@@ -3,7 +3,7 @@ function initTree() {
 			async: {
 	            enable: true,
 	            type: "get",
-	            url: root+'/notice/findUserTree.action'
+	            url: root+'/notice/findPortUserTree.action'
 	        },
 			check: {
 				enable: true,
@@ -33,7 +33,7 @@ function initTree() {
 			}
 		};
 	$.ajax({
-	    url: root+'/notice/findUserTree.action',
+	    url: root+'/notice/findPortUserTree.action',
 	    dataType: "json",
 	    cache: false,
 	    success: function(data) {
@@ -46,7 +46,7 @@ function initTree1() {
 			async: {
 	            enable: true,
 	            type: "get",
-	            url: root+'/notice/findUserTree.action'
+	            url: root+'/notice/findPortUserTree.action'
 	        },
 			check: {
 				enable: true,
@@ -76,7 +76,7 @@ function initTree1() {
 			}
 		};
 	$.ajax({
-	    url: root+'/notice/findUserTree.action',
+	    url: root+'/notice/findPortUserTree.action',
 	    dataType: "json",
 	    cache: false,
 	    success: function(data) {

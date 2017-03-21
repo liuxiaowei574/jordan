@@ -1,131 +1,251 @@
 package com.nuctech.ls.model.bo.common;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * 业务对象处理的实体-[监管车辆的相关信息 ]
+ * 业务对象处理的实体-[监管车辆的相关信息 ]<br>
+ * 每辆车1把关锁、1-6把子锁，1-6把传感器，每辆车都要拍照，每辆车有各自的报警，每辆车可有多种货物
  *
  * @author： nuctech
  */
 @Entity
 @Table(name = "LS_COMMON_VEHICLE")
-public class LsCommonVehicleBO {
-	/**
-	 * 缺省的构造函数
-	 */
-	public LsCommonVehicleBO() {
-		super();
-	}
+public class LsCommonVehicleBO implements Serializable {
 
-	/* 主键 */
-	private String vehicleId;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1960437051049008732L;
 
-	/* 车牌号 */
-	private String vehiclePlateNumber;
+    /**
+     * 缺省的构造函数
+     */
+    public LsCommonVehicleBO() {
+        super();
+    }
 
-	/* 报关单号 */
-	private String declarationNumber;
+    /* 主键 */
+    private String vehicleId;
 
-	/* 集装箱号 */
-	private String containerNumber;
+    /** 行程Id */
+    private String tripId;
 
-	/* 车辆国家 */
-	private String vehicleCountry;
+    /** 车牌号 */
+    private String vehiclePlateNumber;
 
-	/* 拖车号 */
-	private String trailerNumber;
+    /** 集装箱号，多个用英文逗号隔开 */
+    private String containerNumber;
 
-	/* 司机姓名 */
-	private String driverName;
+    /** 车辆国家 */
+    private String vehicleCountry;
 
-	/* 司机国家 */
-	private String driverCountry;
+    /** 拖车号 */
+    private String trailerNumber;
 
-	/* 车辆类型：0-普通车辆; */
-	private String vehicleType;
+    /** 车辆类型：0-普通车辆; */
+    private String vehicleType;
 
-	@Id
-	@Column(name = "VEHICLE_ID", nullable = false, length = 50)
-	public String getVehicleId() {
-		return this.vehicleId;
-	}
+    /** 司机主键 */
+    private String driverId;
 
-	public void setVehicleId(String vehicleId) {
-		this.vehicleId = vehicleId;
-	}
+    /** 追踪终端号 */
+    private String trackingDeviceNumber;
 
-	@Column(name = "VEHICLE_PLATE_NUMBER", nullable = true, length = 50)
-	public String getVehiclePlateNumber() {
-		return this.vehiclePlateNumber;
-	}
+    /** 子锁号，多个用英文逗号隔开 */
+    private String esealNumber;
 
-	public void setVehiclePlateNumber(String vehiclePlateNumber) {
-		this.vehiclePlateNumber = vehiclePlateNumber;
-	}
+    /** 传感器编号，多个用英文逗号隔开 */
+    private String sensorNumber;
 
-	@Column(name = "DECLARATION_NUMBER", nullable = true, length = 50)
-	public String getDeclarationNumber() {
-		return this.declarationNumber;
-	}
+    /** 子锁顺序 */
+    private String esealOrder;
 
-	public void setDeclarationNumber(String declarationNumber) {
-		this.declarationNumber = declarationNumber;
-	}
+    /** 传感器顺序 */
+    private String sensorOrder;
 
-	@Column(name = "CONTAINER_NUMBER", nullable = true, length = 50)
-	public String getContainerNumber() {
-		return this.containerNumber;
-	}
+    /** 检入图片路径 */
+    private String checkinPicture;
 
-	public void setContainerNumber(String containerNumber) {
-		this.containerNumber = containerNumber;
-	}
+    /** 检出图片路径，多个用英文逗号隔开 */
+    private String checkoutPicture;
 
-	@Column(name = "VEHICLE_COUNTRY", nullable = true, length = 100)
-	public String getVehicleCountry() {
-		return this.vehicleCountry;
-	}
+    /** 货物分类Id，多个用英文逗号隔开 */
+    private String goodsType;
 
-	public void setVehicleCountry(String vehicleCountry) {
-		this.vehicleCountry = vehicleCountry;
-	}
+    /** 车辆是否接收报警 */
+    private String freezeAlarm;
 
-	@Column(name = "TRAILER_NUMBER", nullable = true, length = 50)
-	public String getTrailerNumber() {
-		return this.trailerNumber;
-	}
+    /**
+     * 0. 绿色 1. 黄色 2. 红色
+     */
+    private String riskStatus;
 
-	public void setTrailerNumber(String trailerNumber) {
-		this.trailerNumber = trailerNumber;
-	}
+    @Id
+    @Column(name = "VEHICLE_ID", nullable = false, length = 50)
+    public String getVehicleId() {
+        return this.vehicleId;
+    }
 
-	@Column(name = "DRIVER_NAME", nullable = true, length = 100)
-	public String getDriverName() {
-		return this.driverName;
-	}
+    public void setVehicleId(String vehicleId) {
+        this.vehicleId = vehicleId;
+    }
 
-	public void setDriverName(String driverName) {
-		this.driverName = driverName;
-	}
+    @Column(name = "VEHICLE_PLATE_NUMBER", nullable = true, length = 50)
+    public String getVehiclePlateNumber() {
+        return this.vehiclePlateNumber;
+    }
 
-	@Column(name = "DRIVER_COUNTRY", nullable = true, length = 100)
-	public String getDriverCountry() {
-		return this.driverCountry;
-	}
+    public void setVehiclePlateNumber(String vehiclePlateNumber) {
+        this.vehiclePlateNumber = vehiclePlateNumber;
+    }
 
-	public void setDriverCountry(String driverCountry) {
-		this.driverCountry = driverCountry;
-	}
+    @Column(name = "CONTAINER_NUMBER", nullable = true, length = 50)
+    public String getContainerNumber() {
+        return this.containerNumber;
+    }
 
-	@Column(name = "VEHICLE_TYPE", nullable = true, length = 2)
-	public String getVehicleType() {
-		return this.vehicleType;
-	}
+    public void setContainerNumber(String containerNumber) {
+        this.containerNumber = containerNumber;
+    }
 
-	public void setVehicleType(String vehicleType) {
-		this.vehicleType = vehicleType;
-	}
+    @Column(name = "VEHICLE_COUNTRY", nullable = true, length = 100)
+    public String getVehicleCountry() {
+        return this.vehicleCountry;
+    }
+
+    public void setVehicleCountry(String vehicleCountry) {
+        this.vehicleCountry = vehicleCountry;
+    }
+
+    @Column(name = "TRAILER_NUMBER", nullable = true, length = 50)
+    public String getTrailerNumber() {
+        return this.trailerNumber;
+    }
+
+    public void setTrailerNumber(String trailerNumber) {
+        this.trailerNumber = trailerNumber;
+    }
+
+    @Column(name = "VEHICLE_TYPE", nullable = true, length = 2)
+    public String getVehicleType() {
+        return this.vehicleType;
+    }
+
+    public void setVehicleType(String vehicleType) {
+        this.vehicleType = vehicleType;
+    }
+
+    @Column(name = "DRIVER_ID", nullable = true, length = 50)
+    public String getDriverId() {
+        return driverId;
+    }
+
+    public void setDriverId(String driverId) {
+        this.driverId = driverId;
+    }
+
+    @Column(name = "TRIP_ID", nullable = true, length = 50)
+    public String getTripId() {
+        return tripId;
+    }
+
+    public void setTripId(String tripId) {
+        this.tripId = tripId;
+    }
+
+    @Column(name = "TRACKING_DEVICE_NUMBER", nullable = true, length = 50)
+    public String getTrackingDeviceNumber() {
+        return this.trackingDeviceNumber;
+    }
+
+    public void setTrackingDeviceNumber(String trackingDeviceNumber) {
+        this.trackingDeviceNumber = trackingDeviceNumber;
+    }
+
+    @Column(name = "ESEAL_NUMBER", nullable = true, length = 100)
+    public String getEsealNumber() {
+        return this.esealNumber;
+    }
+
+    public void setEsealNumber(String esealNumber) {
+        this.esealNumber = esealNumber;
+    }
+
+    @Column(name = "SENSOR_NUMBER", nullable = true, length = 100)
+    public String getSensorNumber() {
+        return this.sensorNumber;
+    }
+
+    public void setSensorNumber(String sensorNumber) {
+        this.sensorNumber = sensorNumber;
+    }
+
+    @Column(name = "ESEAL_ORDER", nullable = true, length = 100)
+    public String getEsealOrder() {
+        return this.esealOrder;
+    }
+
+    public void setEsealOrder(String esealOrder) {
+        this.esealOrder = esealOrder;
+    }
+
+    @Column(name = "SENSOR_ORDER", nullable = true, length = 100)
+    public String getSensorOrder() {
+        return this.sensorOrder;
+    }
+
+    public void setSensorOrder(String sensorOrder) {
+        this.sensorOrder = sensorOrder;
+    }
+
+    @Column(name = "CHECKIN_PICTURE", nullable = true, length = 2000)
+    public String getCheckinPicture() {
+        return this.checkinPicture;
+    }
+
+    public void setCheckinPicture(String checkinPicture) {
+        this.checkinPicture = checkinPicture;
+    }
+
+    @Column(name = "CHECKOUT_PICTURE", nullable = true, length = 2000)
+    public String getCheckoutPicture() {
+        return this.checkoutPicture;
+    }
+
+    public void setCheckoutPicture(String checkoutPicture) {
+        this.checkoutPicture = checkoutPicture;
+    }
+
+    @Column(name = "GOODS_TYPE", nullable = true, length = 200)
+    public String getGoodsType() {
+        return goodsType;
+    }
+
+    public void setGoodsType(String goodsType) {
+        this.goodsType = goodsType;
+    }
+
+    @Column(name = "FREEZE_ALARM", nullable = true, length = 2)
+    public String getFreezeAlarm() {
+        return freezeAlarm;
+    }
+
+    public void setFreezeAlarm(String freezeAlarm) {
+        this.freezeAlarm = freezeAlarm;
+    }
+
+    @Column(name = "RISK_STATUS", nullable = true, length = 2)
+    public String getRiskStatus() {
+        return riskStatus;
+    }
+
+    public void setRiskStatus(String riskStatus) {
+        this.riskStatus = riskStatus;
+    }
+
 }

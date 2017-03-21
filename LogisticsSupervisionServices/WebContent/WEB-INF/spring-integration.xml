@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-jms="http://www.springframework.org/schema/integration/jms"
+	xmlns:int-jdbc="http://www.springframework.org/schema/integration/jdbc"
+	xmlns:int-groovy="http://www.springframework.org/schema/integration/groovy"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/integration 
+	http://www.springframework.org/schema/integration/spring-integration-2.1.xsd
+	http://www.springframework.org/schema/integration/jms 
+	http://www.springframework.org/schema/integration/jms/spring-integration-jms-2.1.xsd
+	http://www.springframework.org/schema/integration/jdbc
+	http://www.springframework.org/schema/integration/jdbc/spring-integration-jdbc-2.1.xsd
+	http://www.springframework.org/schema/integration/groovy
+	http://www.springframework.org/schema/integration/groovy/spring-integration-groovy-2.1.xsd
+   ">
+	 
+	
+	 
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+

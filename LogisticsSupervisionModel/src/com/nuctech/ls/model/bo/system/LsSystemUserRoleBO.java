@@ -1,5 +1,7 @@
 package com.nuctech.ls.model.bo.system;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,48 +14,54 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "LS_SYSTEM_USER_ROLE")
-public class LsSystemUserRoleBO {
-	/**
-	 * 缺省的构造函数
-	 */
-	public LsSystemUserRoleBO() {
-		super();
-	}
+public class LsSystemUserRoleBO implements Serializable {
 
-	/* 用户角色主键 */
-	private String userRoleId;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1421521127000462623L;
 
-	/* 角色编码 */
-	private String roleId;
+    /**
+     * 缺省的构造函数
+     */
+    public LsSystemUserRoleBO() {
+        super();
+    }
 
-	/* 用户编码 */
-	private String userId;
+    /* 用户角色主键 */
+    private String userRoleId;
 
-	@Id
-	@Column(name = "USER_ROLE_ID", nullable = false, length = 50)
-	public String getUserRoleId() {
-		return this.userRoleId;
-	}
+    /* 角色编码 */
+    private String roleId;
 
-	public void setUserRoleId(String userRoleId) {
-		this.userRoleId = userRoleId;
-	}
+    /* 用户编码 */
+    private String userId;
 
-	@Column(name = "ROLE_ID", nullable = true, length = 50)
-	public String getRoleId() {
-		return this.roleId;
-	}
+    @Id
+    @Column(name = "USER_ROLE_ID", nullable = false, length = 50)
+    public String getUserRoleId() {
+        return this.userRoleId;
+    }
 
-	public void setRoleId(String roleId) {
-		this.roleId = roleId;
-	}
+    public void setUserRoleId(String userRoleId) {
+        this.userRoleId = userRoleId;
+    }
 
-	@Column(name = "USER_ID", nullable = true, length = 50)
-	public String getUserId() {
-		return this.userId;
-	}
+    @Column(name = "ROLE_ID", nullable = true, length = 50)
+    public String getRoleId() {
+        return this.roleId;
+    }
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
+    }
+
+    @Column(name = "USER_ID", nullable = true, length = 50)
+    public String getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }

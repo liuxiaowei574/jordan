@@ -1,0 +1,24 @@
+远程文件名：= Remote file name:
+远程是否存在文件：= Is there a remote file:
+创建目录失败 = Create directory failed 
+故意报错,你未开启Sql安全过滤,单引号等转义字符在拼接sql时需要转义,不然会导致Sql注入攻击的安全问题，请修改源码使用=Intentional error,you did not open the sql security filtering,when splice sql,you should escape single quotes,
+ otherwise it would lead to sql injection ,please modify the source code and use
+ 开启安全过滤 = open security filter
+ 开始读取站点配置信息 = Start read site configuration information
+ 格式错误 = format error
+ IO错误 = IO error
+ 使用了不支持的加密算法=Used unsuppoorted encryption algorithm
+ 使用了不支持的字符集 = User an unsuppoorted character set
+ 上传文件： = Upload file: 
+ 删除文件： = Delete file:
+ 删除文件夹及其下所有子文件： = Delete file and its child file:
+ 删除文件错误,异常信息: = Delete file failed,exception information is:
+ FTP连接状态： = FTP connection status:
+ 上传%s连接FTP出错 = upload %s connection FTP error
+ 断开FTP发生异常=Break off FTP occurs exception
+ 结束上传文件。上传结果状态： = End upload file.upload result status:
+ 关闭文件流异常 = Close file stream occurs exception
+ 获得指定FTP路径下的文件列表: = Get file list from specified FTP path:
+ 连接FTP出错 = Fail to connect FTP
+ 断开FTP发生异常 = Break off FTP occurs exception
+

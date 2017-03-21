@@ -6,8 +6,9 @@
  * 港口距离（测试）
  * @param oriPoint
  * @param desPoint
+ * @param callback
  */
-function measurePathLength(oriPoint, desPoint,callback,startName,endName) {
+function measurePathLength(oriPoint, desPoint, callback) {
 	var ori, des;
 	if (typeof (oriPoint.lat) != "undefined"
 			&& typeof (oriPoint.lng) != "undefined") {
@@ -30,23 +31,21 @@ function measurePathLength(oriPoint, desPoint,callback,startName,endName) {
 		optimizeWaypoints : true,// 降低路线的总体成本
 		travelMode : google.maps.TravelMode.DRIVING
 	};
-	 var analysisObj = {};
 	directionsService.route(request, function(response, status) {
 		if (status == google.maps.DirectionsStatus.OK) {
 			var distance = response.routes[0].legs[0].distance.text;
-	        var duration = response.routes[0].legs[0].duration.text;
-	        
-	        analysisObj.distance = distance;
-	        analysisObj.duration = duration;
-	        analysisObj.startName = startName;
-	        analysisObj.endName = endName;
-	        callback(analysisObj);
-		} else {
-		    
-	  }
-   });
-	//return analysisObj;
+			var duration = response.routes[0].legs[0].duration.text;
+			var analysisObj = {
+				distance : distance,
+				duration : duration
+			};
+			callback(analysisObj);
+		}
+	});
 }
+
+
+
 var startPoints = new Array();
 var endPoints = new Array();
 var sysDepData = null;
@@ -89,9 +88,10 @@ function getlengthSuccess(obj){
 }
 
 
-
+var r = 0;
 function measurePathLengthstatus(oriPoint, desPoint,callback,startobj,endobj) {
-	
+	r++;
+	console.log(r);
 	//console.log("ii----"+ii);
 	jj++;
 	if(ii>sysDepData.length-1)return;
@@ -101,6 +101,16 @@ function measurePathLengthstatus(oriPoint, desPoint,callback,startobj,endobj) {
 	}
 	
 	var ori, des;
+	if("undefined" == typeof (oriPoint)||"undefined" == typeof (oriPoint)){
+		//ii++;
+		jj++;
+		measurePathLengthstatus(startPoints[ii],endPoints[jj],getlengthSuccess,startObjs[ii],endObjs[jj]);
+	}
+	if("undefined" == typeof (desPoint)||"undefined" == typeof (desPoint)){
+		//ii++;
+		jj++;
+		measurePathLengthstatus(startPoints[ii],endPoints[jj],getlengthSuccess,startObjs[ii],endObjs[jj]);
+	}
 	if (typeof (oriPoint.lat) != "undefined"
 			&& typeof (oriPoint.lng) != "undefined") {
 		ori = new google.maps.LatLng(oriPoint.lat,oriPoint.lng);
@@ -140,19 +150,21 @@ function measurePathLengthstatus(oriPoint, desPoint,callback,startobj,endobj) {
 	        analysisObj.endLatitude = endobj.latitude;
 	        analysisObj.endLongtitude = endobj.longitude
 	       // analysisObj.routeDistance = distance;
-	        analysisObj.routeAreaName =  (Math.round(Math.random() * 20901) + 19968).toString(16);
+	        analysisObj.routeAreaName = analysisObj.startName+"-"+analysisObj.endName;
 	        analysisObj.routeAreaType = '0';
 	        analysisObj.belongToPort = '0000';
 	        analysisObj.routeAreaStatus = '0';
 	        analysisObj.routeAreaBuffer = '20';
-	        analysisObj.routeCost = '34';
+	        analysisObj.routeCost = duration;
 	        var param = JSON.stringify(analysisObj);
-	        insertBeforePlanRoute(param);
+	        var myRoute = response.routes[0];
+			var jsonPoint = getPlanRouteArray(myRoute);
+	        insertBeforePlanRoute(param,jsonPoint);
 	        console.log(startobj.organizationName+"---"+endobj.organizationName+"----"+distance);
-	        if(startobj.organizationName==endobj.organizationName){
-	    		jj++;
-	    	}
-	        var t= setTimeout( "measurePathLengthstatus(startPoints[ii],endPoints[jj],getlengthSuccess,startObjs[ii],endObjs[jj])",2000);
+//	        if(startobj.organizationName==endobj.organizationName){
+//	    		jj++;
+//	    	}
+	        var t= setTimeout( "measurePathLengthstatus(startPoints[ii],endPoints[jj],getlengthSuccess,startObjs[ii],endObjs[jj])",10000);
 	       // callback(analysisObj);
 		} else {
 		    
@@ -164,11 +176,18 @@ function measurePathLengthstatus(oriPoint, desPoint,callback,startobj,endobj) {
 /**
  * 预存线路规划
  */
-function insertBeforePlanRoute(param){
-	var aaccUrl = getRootPath() + "systemdepartmenttest/beforPlanRouteArea.action?aceeptData="+param;
+function insertBeforePlanRoute(param,jsonPoint){
+//	var aaccUrl = getRootPath() + "systemdepartmenttest/beforPlanRouteArea.action";
+//	$.post(aaccUrl,{aceeptData:param,routeAreaPtCol:jsonPoint},function(data){
+//		console.log();
+//		//alert("add rapoint ")
+//	});
+	
+	var aaccUrl = getRootPath() + "systemdepartmenttest/beforPlanRouteArea.action";
 	$.ajax({
 		type : "POST",
 		url : aaccUrl,
+		data : "aceeptData="+param+"&routeAreaPtCol="+jsonPoint,
 		dataType : "json",
 		cache : false,
 		async : false,
@@ -176,7 +195,7 @@ function insertBeforePlanRoute(param){
 			console.log("Status: " + e.status + " message: " + message);
 		},
 		success : function(jsonObj) {
-			alert("add sucess");
+			//alert("add sucess");
 		}
 	});
 }

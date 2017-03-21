@@ -24,61 +24,60 @@ import com.nuctech.util.Constant;
  *
  */
 public class LSBaseService {
-	
-	
-	/**
-	 * 获取主键
-	 * 
-	 * @return
-	 */
-	public String generatePrimaryKey() {
-		UUID uuid = UUID.randomUUID();
-		return uuid.toString();
-	}
-	
-	/**
-	 * @param pageList
-	 * @param jsonConfig
-	 * @param ignoreDefaultExcludes
-	 * @return
-	 */
-	public JSONObject fromObjectList(PageList pageList,JsonConfig jsonConfig,boolean ignoreDefaultExcludes) {
-		JSONObject jsonObject = new JSONObject();
-		JSONArray jsonArray = new JSONArray();		
-		JsonConfig config = new JsonConfig();
-		if(jsonConfig!=null){
-			config = jsonConfig;
-		}
-		config.setIgnoreDefaultExcludes(ignoreDefaultExcludes);     
-		config.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
-		config.registerJsonValueProcessor(Date.class,new JsonDateValueProcessor(Constant.JordanTimeFormat));
-		
-		if(pageList!=null){
-			for(Object obj : pageList){
-				JSONObject jsonObj = JSONObject.fromObject(obj,config);
-				jsonArray.add(jsonObj);
-			}
-			jsonObject.put("total", pageList.getTotalItems());
-		}		
-		jsonObject.put("rows", jsonArray);
-		return jsonObject;
-	}
-	
-	public JSONArray fromArrayList(List pageList,JsonConfig jsonConfig,boolean ignoreDefaultExcludes) {
-		JSONArray jsonArray = new JSONArray();		
-		JsonConfig config = new JsonConfig();
-		if(jsonConfig!=null){
-			config = jsonConfig;
-		}
-		config.setIgnoreDefaultExcludes(ignoreDefaultExcludes);     
-		config.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
-		config.registerJsonValueProcessor(Date.class,new JsonDateValueProcessor(Constant.JordanTimeFormat));
-		if(pageList!=null){
-			for(Object obj : pageList){
-				JSONObject jsonObj = JSONObject.fromObject(obj,config);
-				jsonArray.add(jsonObj);
-			}
-		}		
-		return jsonArray;
-	}
+
+    /**
+     * 获取主键
+     * 
+     * @return
+     */
+    public String generatePrimaryKey() {
+        UUID uuid = UUID.randomUUID();
+        return uuid.toString();
+    }
+
+    /**
+     * @param pageList
+     * @param jsonConfig
+     * @param ignoreDefaultExcludes
+     * @return
+     */
+    public JSONObject fromObjectList(PageList pageList, JsonConfig jsonConfig, boolean ignoreDefaultExcludes) {
+        JSONObject jsonObject = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        JsonConfig config = new JsonConfig();
+        if (jsonConfig != null) {
+            config = jsonConfig;
+        }
+        config.setIgnoreDefaultExcludes(ignoreDefaultExcludes);
+        config.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
+        config.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor(Constant.JordanTimeFormat));
+
+        if (pageList != null) {
+            for (Object obj : pageList) {
+                JSONObject jsonObj = JSONObject.fromObject(obj, config);
+                jsonArray.add(jsonObj);
+            }
+            jsonObject.put("total", pageList.getTotalItems());
+        }
+        jsonObject.put("rows", jsonArray);
+        return jsonObject;
+    }
+
+    public JSONArray fromArrayList(List pageList, JsonConfig jsonConfig, boolean ignoreDefaultExcludes) {
+        JSONArray jsonArray = new JSONArray();
+        JsonConfig config = new JsonConfig();
+        if (jsonConfig != null) {
+            config = jsonConfig;
+        }
+        config.setIgnoreDefaultExcludes(ignoreDefaultExcludes);
+        config.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
+        config.registerJsonValueProcessor(Date.class, new JsonDateValueProcessor(Constant.JordanTimeFormat));
+        if (pageList != null) {
+            for (Object obj : pageList) {
+                JSONObject jsonObj = JSONObject.fromObject(obj, config);
+                jsonArray.add(jsonObj);
+            }
+        }
+        return jsonArray;
+    }
 }

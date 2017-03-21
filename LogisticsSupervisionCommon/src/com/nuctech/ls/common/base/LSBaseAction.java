@@ -11,6 +11,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.interceptor.ServletRequestAware;
@@ -19,6 +20,7 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import com.nuctech.ls.common.page.PageQuery;
 import com.nuctech.ls.common.page.PageQueryFactory;
+import com.nuctech.util.NuctechUtil;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
@@ -29,10 +31,9 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 @ParentPackage("nuctech-struts-base")
 @SuppressWarnings("serial")
-public class LSBaseAction extends ActionSupport 
-		implements SessionAware, ServletRequestAware, ServletResponseAware {
-	
-	/**
+public class LSBaseAction extends ActionSupport implements SessionAware, ServletRequestAware, ServletResponseAware {
+
+    /**
      * 请求action返回信息
      */
     public String message;
@@ -40,113 +41,122 @@ public class LSBaseAction extends ActionSupport
      * 请求action返回结果
      */
     public boolean result;
-	
-	/**
-	 * 获取主键
-	 * 
-	 * @return
-	 */
-	public String generatePrimaryKey() {
-		UUID uuid = UUID.randomUUID();
-		return uuid.toString();
-	}
-	
-	/**
-	 * 内置的request对象，由容器注入。
-	 */
-	protected HttpServletRequest request;
-	/**
-	 * 内置的response对象，由容器注入。
-	 */
-	protected HttpServletResponse response;
-	/**
-	 * 内置的session对象，由容器注入。
-	 */
-	protected Map<String, Object> session;
 
-	/**
-	 * 设置Session Map对象，由容器调用。
-	 * 
-	 * @param att
-	 *            被设置的Session Map对象。
-	 */
-	@Override
-	public void setSession(Map<String, Object> att) {
-		this.session = att;
-	}
+    /**
+     * 获取主键
+     * 
+     * @return
+     */
+    public String generatePrimaryKey() {
+        UUID uuid = UUID.randomUUID();
+        return uuid.toString();
+    }
 
-	/**
-	 * 设置HttpServletRequest实例，由容器调用
-	 * 
-	 * @param request
-	 *            被设置的HttpServletRequest实例
-	 */
-	@Override
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
-	}
+    /**
+     * 内置的request对象，由容器注入。
+     */
+    protected HttpServletRequest request;
+    /**
+     * 内置的response对象，由容器注入。
+     */
+    protected HttpServletResponse response;
+    /**
+     * 内置的session对象，由容器注入。
+     */
+    protected Map<String, Object> session;
 
-	/**
-	 * 设置response实例，供容器调用
-	 * 
-	 * @param response
-	 *            被设置的HttpServletResponse实例
-	 */
-	@Override
-	public void setServletResponse(HttpServletResponse response) {
-		this.response = response;
-	}
+    /**
+     * 设置Session Map对象，由容器调用。
+     * 
+     * @param att
+     *        被设置的Session Map对象。
+     */
+    @Override
+    public void setSession(Map<String, Object> att) {
+        this.session = att;
+    }
 
-	/**
-	 * 
-	 * 
-	 * @param locale
-	 * @return
-	 */
-	private ResourceBundle getResourceBundle(Locale locale) {
-		String baseName = ServletActionContext.getServletContext().getInitParameter("javax.servlet.jsp.jstl.fmt.localizationContext");
-		ResourceBundle rb = ResourceBundle.getBundle(baseName);
-		return rb;
-	}
+    /**
+     * 设置HttpServletRequest实例，由容器调用
+     * 
+     * @param request
+     *        被设置的HttpServletRequest实例
+     */
+    @Override
+    public void setServletRequest(HttpServletRequest request) {
+        this.request = request;
+    }
 
-	protected PageQuery<Map> pageQuery = null;
-	
-	public PageQuery newPageQuery(String defaultSortColumns) {
-		return PageQueryFactory.newPageQuery(ServletActionContext.getRequest(), defaultSortColumns);
-	}
-	
-	/**
-	 * 获取国际化内容
-	 * 
-	 * @param messageKey
-	 * @return
-	 */
-	protected String getLocaleString(String messageKey) {
-		return getResourceBundle(request.getLocale()).getString(messageKey);
-	}
+    /**
+     * 设置response实例，供容器调用
+     * 
+     * @param response
+     *        被设置的HttpServletResponse实例
+     */
+    @Override
+    public void setServletResponse(HttpServletResponse response) {
+        this.response = response;
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    /**
+     * 
+     * 
+     * @param locale
+     * @return
+     */
+    private ResourceBundle getResourceBundle(Locale locale) {
+        String baseName = ServletActionContext.getServletContext()
+                .getInitParameter("javax.servlet.jsp.jstl.fmt.localizationContext");
+        ResourceBundle rb = ResourceBundle.getBundle(baseName, locale);
+        return rb;
+    }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    protected PageQuery<Map> pageQuery = null;
 
-	public boolean isResult() {
-		return result;
-	}
+    public PageQuery newPageQuery(String defaultSortColumns) {
+        return PageQueryFactory.newPageQuery(ServletActionContext.getRequest(), defaultSortColumns);
+    }
 
-	public void setResult(boolean result) {
-		this.result = result;
-	}
+    /**
+     * 获取国际化内容
+     * 
+     * @param messageKey
+     * @return
+     */
+    protected String getLocaleString(String messageKey) {
+        Locale locale = null;
+        String userLocale = (String) request.getSession().getAttribute("userLocale");
+        if (null != userLocale && !"".equals(userLocale)) {
+            int pos = userLocale.indexOf("_");
+            locale = new Locale(userLocale.substring(0, pos), userLocale.substring(pos + 1));
+        } else {
+            locale = request.getLocale();
+        }
+        return getResourceBundle(locale).getString(messageKey);
+    }
 
-	public PageQuery<Map> getPageQuery() {
-		return pageQuery;
-	}
+    public String getMessage() {
+        return message;
+    }
 
-	public void setPageQuery(PageQuery<Map> pageQuery) {
-		this.pageQuery = pageQuery;
-	}
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public boolean isResult() {
+        return result;
+    }
+
+    public void setResult(boolean result) {
+        this.result = result;
+    }
+
+    public PageQuery<Map> getPageQuery() {
+        return pageQuery;
+    }
+
+    public void setPageQuery(PageQuery<Map> pageQuery) {
+        this.pageQuery = pageQuery;
+    }
 
 }

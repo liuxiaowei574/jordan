@@ -8,18 +8,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nuctech.ls.common.base.LSBaseService;
-import com.nuctech.ls.model.bo.common.LsCommonPortBO;
-import com.nuctech.ls.model.dao.CommonPortDao;
+import com.nuctech.ls.model.bo.system.LsSystemDepartmentBO;
+import com.nuctech.ls.model.dao.SystemDepartmentDao;
+import com.nuctech.ls.model.util.OrganizationType;
 
 @Service
 @Transactional
-public class CommonPortService extends LSBaseService{
+public class CommonPortService extends LSBaseService {
 
-	
-	@Resource
-	private CommonPortDao commonPortDao;
-	
-	public List<LsCommonPortBO> findAllCommonPort(){
-		return commonPortDao.findAll();
-	}
+    @Resource
+    private SystemDepartmentDao systemDepartmentDao;
+
+    public List<LsSystemDepartmentBO> findAllCommonPort() {
+        return systemDepartmentDao.findAllBy("organizationType", OrganizationType.Port.getText());
+    }
+
+    public LsSystemDepartmentBO findPortById(String portId) {
+        return systemDepartmentDao.findById(portId);
+    }
 }

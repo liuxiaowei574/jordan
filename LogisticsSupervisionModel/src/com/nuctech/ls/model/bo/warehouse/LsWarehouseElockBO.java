@@ -1,13 +1,12 @@
 package com.nuctech.ls.model.bo.warehouse;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-
 
 /**
  * 业务对象处理的实体-[关锁表]
@@ -16,148 +15,198 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "LS_WAREHOUSE_ELOCK")
-public class LsWarehouseElockBO {
-	/**
-	 * 缺省的构造函数
-	 */
-	public LsWarehouseElockBO() {
-		super();
-	}
+public class LsWarehouseElockBO implements Serializable {
 
-	/* 关锁主键 */
-	private String elockId;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 4976079079546442323L;
 
-	/* 关锁号 */
-	private String elockNumber;
+    /**
+     * 缺省的构造函数
+     */
+    public LsWarehouseElockBO() {
+        super();
+    }
 
-	/* 所属节点 */
-	private String belongTo;
+    /* 关锁主键 */
+    private String elockId;
 
-	/* SIM卡号,多个用逗号分开 */
-	private String simCard;
+    /* 关锁号 */
+    private String elockNumber;
 
-	/* 信息上传频率 */
-	private String interval;
+    /* 所属节点 */
+    private String belongTo;
 
-	/* 网关地址 */
-	private String gatewayAddress;
+    /* SIM卡号,多个用逗号分开 */
+    private String simCard;
 
-	/*
-	 * 关锁状态 维修、损坏、报废等
-	 */
-	private String elockStatus;
+    /* 信息上传频率 */
+    private String interval;
 
-	/* 创建人 */
-	private String createUser;
+    /* 网关地址 */
+    private String gatewayAddress;
 
-	/* 创建时间 */
-	private Date createTime;
+    /*
+     * 关锁状态 维修、损坏、报废等
+     */
+    private String elockStatus;
 
-	/* 更新人员 */
-	private String updateUser;
+    /* 创建人 */
+    private String createUser;
 
-	/* 更新时间 */
-	private Date updateTime;
+    /* 创建时间 */
+    private Date createTime;
 
-	@Id
-	@Column(name = "ELOCK_ID", nullable = false, length = 50)
-	public String getElockId() {
-		return this.elockId;
-	}
+    /* 更新人员 */
+    private String updateUser;
 
-	public void setElockId(String elockId) {
-		this.elockId = elockId;
-	}
+    /* 更新时间 */
+    private Date updateTime;
 
-	@Column(name = "ELOCK_NUMBER", nullable = true, length = 50)
-	public String getElockNumber() {
-		return this.elockNumber;
-	}
+    /* 最后一次使用时间 */
+    private Date lastUseTime;
 
-	public void setElockNumber(String elockNumber) {
-		this.elockNumber = elockNumber;
-	}
+    /* 最后一次使用人员 */
+    private String lastUser;
 
-	@Column(name = "BELONG_TO", nullable = true, length = 50)
-	public String getBelongTo() {
-		return this.belongTo;
-	}
+    /* 多长时间未被使用 */
+    private String timeNotInUse;// hours
 
-	public void setBelongTo(String belongTo) {
-		this.belongTo = belongTo;
-	}
+    @Id
+    @Column(name = "ELOCK_ID", nullable = false, length = 50)
+    public String getElockId() {
+        return this.elockId;
+    }
 
-	@Column(name = "SIM_CARD", nullable = true, length = 100)
-	public String getSimCard() {
-		return this.simCard;
-	}
+    public void setElockId(String elockId) {
+        this.elockId = elockId;
+    }
 
-	public void setSimCard(String simCard) {
-		this.simCard = simCard;
-	}
+    @Column(name = "ELOCK_NUMBER", nullable = true, length = 50)
+    public String getElockNumber() {
+        return this.elockNumber;
+    }
 
-	@Column(name = "INTERVAL", nullable = true, length = 20)
-	public String getInterval() {
-		return this.interval;
-	}
+    public void setElockNumber(String elockNumber) {
+        this.elockNumber = elockNumber;
+    }
 
-	public void setInterval(String interval) {
-		this.interval = interval;
-	}
+    @Column(name = "BELONG_TO", nullable = true, length = 50)
+    public String getBelongTo() {
+        return this.belongTo;
+    }
 
-	@Column(name = "GATEWAY_ADDRESS", nullable = true, length = 20)
-	public String getGatewayAddress() {
-		return this.gatewayAddress;
-	}
+    public void setBelongTo(String belongTo) {
+        this.belongTo = belongTo;
+    }
 
-	public void setGatewayAddress(String gatewayAddress) {
-		this.gatewayAddress = gatewayAddress;
-	}
+    @Column(name = "SIM_CARD", nullable = true, length = 100)
+    public String getSimCard() {
+        return this.simCard;
+    }
 
-	@Column(name = "ELOCK_STATUS", nullable = true, length = 2)
-	public String getElockStatus() {
-		return this.elockStatus;
-	}
+    public void setSimCard(String simCard) {
+        this.simCard = simCard;
+    }
 
-	public void setElockStatus(String elockStatus) {
-		this.elockStatus = elockStatus;
-	}
+    @Column(name = "INTERVAL", nullable = true, length = 20)
+    public String getInterval() {
+        return this.interval;
+    }
 
-	@Column(name = "CREATE_USER", nullable = true, length = 50)
-	public String getCreateUser() {
-		return this.createUser;
-	}
+    public void setInterval(String interval) {
+        this.interval = interval;
+    }
 
-	public void setCreateUser(String createUser) {
-		this.createUser = createUser;
-	}
+    @Column(name = "GATEWAY_ADDRESS", nullable = true, length = 20)
+    public String getGatewayAddress() {
+        return this.gatewayAddress;
+    }
 
-	
-	@Column(name = "CREATE_TIME", nullable = true)
-	public Date getCreateTime() {
-		return this.createTime;
-	}
+    public void setGatewayAddress(String gatewayAddress) {
+        this.gatewayAddress = gatewayAddress;
+    }
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
+    @Column(name = "ELOCK_STATUS", nullable = true, length = 2)
+    public String getElockStatus() {
+        return this.elockStatus;
+    }
 
-	@Column(name = "UPDATE_USER", nullable = true, length = 50)
-	public String getUpdateUser() {
-		return this.updateUser;
-	}
+    public void setElockStatus(String elockStatus) {
+        this.elockStatus = elockStatus;
+    }
 
-	public void setUpdateUser(String updateUser) {
-		this.updateUser = updateUser;
-	}
+    @Column(name = "CREATE_USER", nullable = true, length = 50)
+    public String getCreateUser() {
+        return this.createUser;
+    }
 
-	
-	@Column(name = "UPDATE_TIME", nullable = true)
-	public Date getUpdateTime() {
-		return this.updateTime;
-	}
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
 
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
+    @Column(name = "CREATE_TIME", nullable = true)
+    public Date getCreateTime() {
+        return this.createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    @Column(name = "UPDATE_USER", nullable = true, length = 50)
+    public String getUpdateUser() {
+        return this.updateUser;
+    }
+
+    public void setUpdateUser(String updateUser) {
+        this.updateUser = updateUser;
+    }
+
+    @Column(name = "UPDATE_TIME", nullable = true)
+    public Date getUpdateTime() {
+        return this.updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Column(name = "LAST_USE_TIME", nullable = true)
+    public Date getLastUseTime() {
+        return lastUseTime;
+    }
+
+    public void setLastUseTime(Date lastUseTime) {
+        this.lastUseTime = lastUseTime;
+    }
+
+    @Column(name = "LAST_USER", nullable = true, length = 50)
+    public String getLastUser() {
+        return lastUser;
+    }
+
+    public void setLastUser(String lastUser) {
+        this.lastUser = lastUser;
+    }
+
+    @Column(name = "TIME_NOT_INUSE", nullable = true, length = 50)
+    public String getTimeNotInUse() {
+        return timeNotInUse;
+    }
+
+    public void setTimeNotInUse(String timeNotInUse) {
+        this.timeNotInUse = timeNotInUse;
+    }
+
+    @Override
+    public String toString() {
+        return "LsWarehouseElockBO [elockId=" + elockId + ", elockNumber=" + elockNumber + ", belongTo=" + belongTo
+                + ", simCard=" + simCard + ", interval=" + interval + ", gatewayAddress=" + gatewayAddress
+                + ", elockStatus=" + elockStatus + ", createUser=" + createUser + ", createTime=" + createTime
+                + ", updateUser=" + updateUser + ", updateTime=" + updateTime + ", lastUseTime=" + lastUseTime
+                + ", lastUser=" + lastUser + ", timeNotInUse=" + timeNotInUse + "]";
+    }
+
 }

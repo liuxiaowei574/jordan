@@ -1,13 +1,12 @@
 package com.nuctech.ls.model.bo.warehouse;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-
 
 /**
  * 业务对象处理的实体-[车载台表]
@@ -16,148 +15,160 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "LS_WAREHOUSE_TRACK_UNIT")
-public class LsWarehouseTrackUnitBO {
-	/**
-	 * 缺省的构造函数
-	 */
-	public LsWarehouseTrackUnitBO() {
-		super();
-	}
+public class LsWarehouseTrackUnitBO implements Serializable {
 
-	/* 车载台主键 */
-	private String trackUnitId;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -7938806782134623770L;
 
-	/* 车载台号 */
-	private String trackUnitNumber;
+    /**
+     * 缺省的构造函数
+     */
+    public LsWarehouseTrackUnitBO() {
+        super();
+    }
 
-	/* 所属节点 */
-	private String belongTo;
+    /* 车载台主键 */
+    private String trackUnitId;
 
-	/* SIM卡号,多个用逗号分开 */
-	private String simCard;
+    /* 车载台号 */
+    private String trackUnitNumber;
 
-	/* 信息上传频率 */
-	private String interval;
+    /* 所属节点 */
+    private String belongTo;
 
-	/* 网关地址 */
-	private String gatewayAddress;
+    /* SIM卡号,多个用逗号分开 */
+    private String simCard;
 
-	/*
-	 * 车载台状态 维修、损坏、报废等
-	 */
-	private String trackUnitStatus;
+    /* 信息上传频率 */
+    private String interval;
 
-	/* 创建人 */
-	private String createUser;
+    /* 网关地址 */
+    private String gatewayAddress;
 
-	/* 创建时间 */
-	private Date createTime;
+    /*
+     * 车载台状态 维修、损坏、报废等
+     */
+    private String trackUnitStatus;
 
-	/* 更新人员 */
-	private String updateUser;
+    /* 创建人 */
+    private String createUser;
 
-	/* 更新时间 */
-	private Date updateTime;
+    /* 创建时间 */
+    private Date createTime;
 
-	@Id
-	@Column(name = "TRACK_UNIT_ID", nullable = false, length = 50)
-	public String getTrackUnitId() {
-		return this.trackUnitId;
-	}
+    /* 更新人员 */
+    private String updateUser;
 
-	public void setTrackUnitId(String trackUnitId) {
-		this.trackUnitId = trackUnitId;
-	}
+    /* 更新时间 */
+    private Date updateTime;
 
-	@Column(name = "TRACK_UNIT_NUMBER", nullable = true, length = 50)
-	public String getTrackUnitNumber() {
-		return this.trackUnitNumber;
-	}
+    @Id
+    @Column(name = "TRACK_UNIT_ID", nullable = false, length = 50)
+    public String getTrackUnitId() {
+        return this.trackUnitId;
+    }
 
-	public void setTrackUnitNumber(String trackUnitNumber) {
-		this.trackUnitNumber = trackUnitNumber;
-	}
+    public void setTrackUnitId(String trackUnitId) {
+        this.trackUnitId = trackUnitId;
+    }
 
-	@Column(name = "BELONG_TO", nullable = true, length = 50)
-	public String getBelongTo() {
-		return this.belongTo;
-	}
+    @Column(name = "TRACK_UNIT_NUMBER", nullable = true, length = 50)
+    public String getTrackUnitNumber() {
+        return this.trackUnitNumber;
+    }
 
-	public void setBelongTo(String belongTo) {
-		this.belongTo = belongTo;
-	}
+    public void setTrackUnitNumber(String trackUnitNumber) {
+        this.trackUnitNumber = trackUnitNumber;
+    }
 
-	@Column(name = "SIM_CARD", nullable = true, length = 100)
-	public String getSimCard() {
-		return this.simCard;
-	}
+    @Column(name = "BELONG_TO", nullable = true, length = 50)
+    public String getBelongTo() {
+        return this.belongTo;
+    }
 
-	public void setSimCard(String simCard) {
-		this.simCard = simCard;
-	}
+    public void setBelongTo(String belongTo) {
+        this.belongTo = belongTo;
+    }
 
-	@Column(name = "INTERVAL", nullable = true, length = 20)
-	public String getInterval() {
-		return this.interval;
-	}
+    @Column(name = "SIM_CARD", nullable = true, length = 100)
+    public String getSimCard() {
+        return this.simCard;
+    }
 
-	public void setInterval(String interval) {
-		this.interval = interval;
-	}
+    public void setSimCard(String simCard) {
+        this.simCard = simCard;
+    }
 
-	@Column(name = "GATEWAY_ADDRESS", nullable = true, length = 20)
-	public String getGatewayAddress() {
-		return this.gatewayAddress;
-	}
+    @Column(name = "INTERVAL", nullable = true, length = 20)
+    public String getInterval() {
+        return this.interval;
+    }
 
-	public void setGatewayAddress(String gatewayAddress) {
-		this.gatewayAddress = gatewayAddress;
-	}
+    public void setInterval(String interval) {
+        this.interval = interval;
+    }
 
-	@Column(name = "TRACK_UNIT_STATUS", nullable = true, length = 2)
-	public String getTrackUnitStatus() {
-		return this.trackUnitStatus;
-	}
+    @Column(name = "GATEWAY_ADDRESS", nullable = true, length = 20)
+    public String getGatewayAddress() {
+        return this.gatewayAddress;
+    }
 
-	public void setTrackUnitStatus(String trackUnitStatus) {
-		this.trackUnitStatus = trackUnitStatus;
-	}
+    public void setGatewayAddress(String gatewayAddress) {
+        this.gatewayAddress = gatewayAddress;
+    }
 
-	@Column(name = "CREATE_USER", nullable = true, length = 50)
-	public String getCreateUser() {
-		return this.createUser;
-	}
+    @Column(name = "TRACK_UNIT_STATUS", nullable = true, length = 2)
+    public String getTrackUnitStatus() {
+        return this.trackUnitStatus;
+    }
 
-	public void setCreateUser(String createUser) {
-		this.createUser = createUser;
-	}
+    public void setTrackUnitStatus(String trackUnitStatus) {
+        this.trackUnitStatus = trackUnitStatus;
+    }
 
-	
-	@Column(name = "CREATE_TIME", nullable = true)
-	public Date getCreateTime() {
-		return this.createTime;
-	}
+    @Column(name = "CREATE_USER", nullable = true, length = 50)
+    public String getCreateUser() {
+        return this.createUser;
+    }
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
 
-	@Column(name = "UPDATE_USER", nullable = true, length = 50)
-	public String getUpdateUser() {
-		return this.updateUser;
-	}
+    @Column(name = "CREATE_TIME", nullable = true)
+    public Date getCreateTime() {
+        return this.createTime;
+    }
 
-	public void setUpdateUser(String updateUser) {
-		this.updateUser = updateUser;
-	}
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
-	
-	@Column(name = "UPDATE_TIME", nullable = true)
-	public Date getUpdateTime() {
-		return this.updateTime;
-	}
+    @Column(name = "UPDATE_USER", nullable = true, length = 50)
+    public String getUpdateUser() {
+        return this.updateUser;
+    }
 
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
+    public void setUpdateUser(String updateUser) {
+        this.updateUser = updateUser;
+    }
+
+    @Column(name = "UPDATE_TIME", nullable = true)
+    public Date getUpdateTime() {
+        return this.updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "LsWarehouseTrackUnitBO [trackUnitId=" + trackUnitId + ", trackUnitNumber=" + trackUnitNumber
+                + ", belongTo=" + belongTo + ", simCard=" + simCard + ", interval=" + interval + ", gatewayAddress="
+                + gatewayAddress + ", trackUnitStatus=" + trackUnitStatus + ", createUser=" + createUser
+                + ", createTime=" + createTime + ", updateUser=" + updateUser + ", updateTime=" + updateTime + "]";
+    }
 }

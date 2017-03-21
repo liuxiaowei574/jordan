@@ -33,14 +33,20 @@ function bindWarehouseDeviceApplicationAddForm(){
       var serialize = $form.serialize();
       var url = root+'/warehouseDeviceApplication/addWarehouseDeviceApplication.action';
       $.post(url, serialize, function(data) {
-    	  if(data.result) {
-    		  bootbox.success($.i18n.prop('warehouse.device.application.add.success'));
-  				$('#warehouseDeviceApplicationAddModal').modal('hide');
-  				$table.bootstrapTable('refresh', {});
-    	  } else {
-    		  bootbox.error($.i18n.prop('warehouse.device.application.add.error'));
-    		  $('#warehouseDeviceApplicationAddModal').modal('hide');
-    		  $table.bootstrapTable('refresh', {});
+    	  if(!needLogin(data)) {
+    		  if(data.result=="true") {
+    			  bootbox.success($.i18n.prop('warehouse.device.application.add.success'));
+    			  $('#warehouseDeviceApplicationAddModal').modal('hide');
+    			  $table.bootstrapTable('refresh', {});
+    		  }else if(data.result=="allzero"){
+    			  bootbox.error($.i18n.prop('warehouse.device.application.number.allzero'));
+    			  //$('#warehouseDeviceApplicationAddModal').modal('hide');
+    			  $table.bootstrapTable('refresh', {});
+    		  } else {
+    			  bootbox.error($.i18n.prop('warehouse.device.application.add.error'));
+    			  $('#warehouseDeviceApplicationAddModal').modal('hide');
+    			  $table.bootstrapTable('refresh', {});
+    		  }
     	  }
       }, "json");
   });

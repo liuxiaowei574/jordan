@@ -1,13 +1,12 @@
 package com.nuctech.ls.model.bo.warehouse;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-
 
 /**
  * 业务对象处理的实体-[传感器表]
@@ -16,99 +15,112 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "LS_WAREHOUSE_SENSOR")
-public class LsWarehouseSensorBO {
-	/**
-	 * 缺省的构造函数
-	 */
-	public LsWarehouseSensorBO() {
-		super();
-	}
+public class LsWarehouseSensorBO implements Serializable {
 
-	/* 关锁主键 */
-	private String sensorId;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -2310278359797150488L;
 
-	/* 传感器编号 */
-	private String sensorNumber;
+    /**
+     * 缺省的构造函数
+     */
+    public LsWarehouseSensorBO() {
+        super();
+    }
 
-	/* 所属节点 */
-	private String belongTo;
+    /* 关锁主键 */
+    private String sensorId;
 
-	/*
-	 * 传感器状态 维修、损坏、报废等
-	 */
-	private String sensorStatus;
+    /* 传感器编号 */
+    private String sensorNumber;
 
-	/* 传感器类型 */
-	private String sensorType;
+    /* 所属节点 */
+    private String belongTo;
 
-	/* 创建人 */
-	private String createUser;
+    /*
+     * 传感器状态 维修、损坏、报废等
+     */
+    private String sensorStatus;
 
-	/* 创建时间 */
-	private Date createTime;
+    /* 传感器类型 */
+    private String sensorType;
 
-	@Id
-	@Column(name = "SENSOR_ID", nullable = false, length = 50)
-	public String getSensorId() {
-		return this.sensorId;
-	}
+    /* 创建人 */
+    private String createUser;
 
-	public void setSensorId(String sensorId) {
-		this.sensorId = sensorId;
-	}
+    /* 创建时间 */
+    private Date createTime;
 
-	@Column(name = "SENSOR_NUMBER", nullable = true, length = 50)
-	public String getSensorNumber() {
-		return this.sensorNumber;
-	}
+    @Id
+    @Column(name = "SENSOR_ID", nullable = false, length = 50)
+    public String getSensorId() {
+        return this.sensorId;
+    }
 
-	public void setSensorNumber(String sensorNumber) {
-		this.sensorNumber = sensorNumber;
-	}
+    public void setSensorId(String sensorId) {
+        this.sensorId = sensorId;
+    }
 
-	@Column(name = "BELONG_TO", nullable = true, length = 50)
-	public String getBelongTo() {
-		return this.belongTo;
-	}
+    @Column(name = "SENSOR_NUMBER", nullable = true, length = 50)
+    public String getSensorNumber() {
+        return this.sensorNumber;
+    }
 
-	public void setBelongTo(String belongTo) {
-		this.belongTo = belongTo;
-	}
+    public void setSensorNumber(String sensorNumber) {
+        this.sensorNumber = sensorNumber;
+    }
 
-	@Column(name = "SENSOR_STATUS", nullable = true, length = 2)
-	public String getSensorStatus() {
-		return this.sensorStatus;
-	}
+    @Column(name = "BELONG_TO", nullable = true, length = 50)
+    public String getBelongTo() {
+        return this.belongTo;
+    }
 
-	public void setSensorStatus(String sensorStatus) {
-		this.sensorStatus = sensorStatus;
-	}
+    public void setBelongTo(String belongTo) {
+        this.belongTo = belongTo;
+    }
 
-	@Column(name = "SENSOR_TYPE", nullable = true, length = 2)
-	public String getSensorType() {
-		return this.sensorType;
-	}
+    @Column(name = "SENSOR_STATUS", nullable = true, length = 2)
+    public String getSensorStatus() {
+        return this.sensorStatus;
+    }
 
-	public void setSensorType(String sensorType) {
-		this.sensorType = sensorType;
-	}
+    public void setSensorStatus(String sensorStatus) {
+        this.sensorStatus = sensorStatus;
+    }
 
-	@Column(name = "CREATE_USER", nullable = true, length = 50)
-	public String getCreateUser() {
-		return this.createUser;
-	}
+    @Column(name = "SENSOR_TYPE", nullable = true, length = 2)
+    public String getSensorType() {
+        return this.sensorType;
+    }
 
-	public void setCreateUser(String createUser) {
-		this.createUser = createUser;
-	}
+    public void setSensorType(String sensorType) {
+        this.sensorType = sensorType;
+    }
 
-	
-	@Column(name = "CREATE_TIME", nullable = true)
-	public Date getCreateTime() {
-		return this.createTime;
-	}
+    @Column(name = "CREATE_USER", nullable = true, length = 50)
+    public String getCreateUser() {
+        return this.createUser;
+    }
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
+
+    @Column(name = "CREATE_TIME", nullable = true)
+    public Date getCreateTime() {
+        return this.createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    @Override
+    public String toString() {
+        return "LsWarehouseSensorBO [sensorId=" + sensorId + ", sensorNumber=" + sensorNumber + ", belongTo=" + belongTo
+                + ", sensorStatus=" + sensorStatus + ", sensorType=" + sensorType + ", createUser=" + createUser
+                + ", createTime=" + createTime + "]";
+    }
+
 }

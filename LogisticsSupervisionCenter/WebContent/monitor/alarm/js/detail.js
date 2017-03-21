@@ -3,7 +3,26 @@ $(function() {
 		history.back(-1);
 	});
 	
-	$("#checkinPictures img, #checkoutPictures img").on("click", function(){
+	$("#route").on("click", function(){
+		var url = root + "/vehicletrack/getParamToVehicleTrack.action?routeAreaId=" + $(this).data("routeid") + "&tripId=" + $(this).data("tripid");
+		$('#routeModal').removeData('bs.modal');
+		$('#routeModal').modal({
+			remote : url,
+			show : false,
+			backdrop: 'static', 
+			keyboard: false
+		});
+	});
+	$('#routeModal').on('loaded.bs.modal', function(e) {
+		$(this).modal('show');
+	});
+	//模态框登录判断
+	$('#routeModal').on('show.bs.modal', function(e) {
+		var content = $(this).find(".modal-content").html();
+		needLogin(content);
+	});
+	
+	$("#myTabContent").on("click", "img", function(){
 		$("#imageModal .modal-content").html($(this).clone());
 		$('#imageModal').modal({
 			show : false,
@@ -14,10 +33,6 @@ $(function() {
 		$('#imageModal img').on("click", function(){
 			$("#imageModal img").empty();
 			$('#imageModal').modal("hide");
-		});
-		
-		$('#imageModal').on('hidden.bs.modal', function () {
-			$("#imageModal .modal-content").empty();
 		});
 	});
 	

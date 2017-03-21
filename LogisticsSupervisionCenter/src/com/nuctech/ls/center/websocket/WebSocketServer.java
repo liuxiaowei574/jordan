@@ -35,7 +35,7 @@ public class WebSocketServer{
 	@OnError
 	public void onError(Throwable e, Session currentSession){
          if(onLineUser.containsKey(currentSession.getId())){
-			System.out.println(currentSession.getId()+"close websocket");
+			//System.out.println(currentSession.getId()+"close websocket");
 			onLineUser.remove(currentSession.getId());
 		}
 	}

@@ -1,11 +1,11 @@
 /*********************全局变量*********************/
-var $table = $("#receiveUsersTable");
+var $receiveUsersTable = $("#receiveUsersTable");
 var _id = $("#receiveNoticeId").val();
 
 //设置传入参数
 function queryParams(params) {
 	//遍历form 组装json  
-   $.each($("#searchForm").serializeArray(), function(i, field) {  
+   $.each($("#searchForm1").serializeArray(), function(i, field) {  
         console.info(field.name + ":" + field.value + " ");  
         //可以添加提交验证                   
         params += "&" + field.name +"="+ field.value;  
@@ -16,11 +16,11 @@ function queryParams(params) {
  * 通知列表
  */
 function searchReceiveUsersList() {
-	var url = root + "/notice/findReceiveUserList.action?notice.noticeId="+_id;
-	$table.bootstrapTable({
+	var url = root + "/notice/findReceiveUserList.action?s_noticeId="+_id;
+	$receiveUsersTable.bootstrapTable({
 		clickToSelect : true,
 		showRefresh : false,
-		search : true,
+		search : false,
 		showColumns : true,
 		showExport : false,
 		striped : true,
@@ -28,27 +28,33 @@ function searchReceiveUsersList() {
 		url : url,
 		method : "get",
 		idfield: "noticeRevId",
-		sortName:"noticeRevId",
+		sortName:"receiveTime",
+		sortOrder: 'desc',
+		sortable: true,
 		cache : false,
-		queryParams : queryParams,
-		queryParamsType : "not-limit",
+		//queryParams : queryParams,
+		//queryParamsType : "not-limit",
 		pagination : true,
 		sidePagination : 'server',
 		pageNumber : 1,
 		pageSize : 10,
 		pageList : [ 10, 20, 30 ],
+		exportDataType:"basic",
 		columns : [ {
 			checkbox : true
 		}, {
-			field : 'receiveUserName',
-			title : $.i18n.prop('notice.log.receiveUser')
+			field : 'userName',
+			title : $.i18n.prop('notice.log.receiveUser'),
+			sortable:true
 		}, {
 			field : 'dealType',
 			title : $.i18n.prop('notice.log.status'),
-			formatter : typeFormatter
+			formatter : typeFormatter,
+			sortable:true
 		}, {
 			field : 'receiveTime',
-			title : $.i18n.prop('notice.log.receiveTime')
+			title : $.i18n.prop('notice.log.receiveTime'),
+			sortable:true
 		}]
 
 	});

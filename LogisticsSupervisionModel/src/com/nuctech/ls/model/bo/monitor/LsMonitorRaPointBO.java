@@ -1,5 +1,7 @@
 package com.nuctech.ls.model.bo.monitor;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,72 +14,78 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "LS_MONITOR_RA_POINT")
-public class LsMonitorRaPointBO {
-	/**
-	 * 缺省的构造函数
-	 */
-	public LsMonitorRaPointBO() {
-		super();
-	}
+public class LsMonitorRaPointBO implements Serializable {
 
-	/* 坐标点主键 */
-	private String pointId;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 4664933896998397849L;
 
-	/* 路线区域主键 */
-	private String routeAreaId;
+    /**
+     * 缺省的构造函数
+     */
+    public LsMonitorRaPointBO() {
+        super();
+    }
 
-	/* 位置序列号 */
-	private int gpsSeq;
+    /* 坐标点主键 */
+    private String pointId;
 
-	/* 经度 */
-	private String longitude;
+    /* 路线区域主键 */
+    private String routeAreaId;
 
-	/* 纬度 */
-	private String latitude;
+    /* 位置序列号 */
+    private Long gpsSeq;
 
-	@Id
-	@Column(name = "POINT_ID", nullable = false, length = 50)
-	public String getPointId() {
-		return this.pointId;
-	}
+    /* 经度 */
+    private String longitude;
 
-	public void setPointId(String pointId) {
-		this.pointId = pointId;
-	}
+    /* 纬度 */
+    private String latitude;
 
-	@Column(name = "ROUTE_AREA_ID", nullable = true, length = 50)
-	public String getRouteAreaId() {
-		return this.routeAreaId;
-	}
+    @Id
+    @Column(name = "POINT_ID", nullable = false, length = 50)
+    public String getPointId() {
+        return this.pointId;
+    }
 
-	public void setRouteAreaId(String routeAreaId) {
-		this.routeAreaId = routeAreaId;
-	}
+    public void setPointId(String pointId) {
+        this.pointId = pointId;
+    }
 
-	@Column(name = "GPS_SEQ", nullable = true, length = 50)
-	public int getGpsSeq() {
-		return this.gpsSeq;
-	}
+    @Column(name = "ROUTE_AREA_ID", nullable = true, length = 50)
+    public String getRouteAreaId() {
+        return this.routeAreaId;
+    }
 
-	public void setGpsSeq(int gpsSeq) {
-		this.gpsSeq = gpsSeq;
-	}
+    public void setRouteAreaId(String routeAreaId) {
+        this.routeAreaId = routeAreaId;
+    }
 
-	@Column(name = "LONGITUDE", nullable = true, length = 20)
-	public String getLongitude() {
-		return this.longitude;
-	}
+    @Column(name = "GPS_SEQ", nullable = true, length = 20)
+    public Long getGpsSeq() {
+        return this.gpsSeq;
+    }
 
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
+    public void setGpsSeq(Long gpsSeq) {
+        this.gpsSeq = gpsSeq;
+    }
 
-	@Column(name = "LATITUDE", nullable = true, length = 20)
-	public String getLatitude() {
-		return this.latitude;
-	}
+    @Column(name = "LONGITUDE", nullable = true, length = 20)
+    public String getLongitude() {
+        return this.longitude;
+    }
 
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    @Column(name = "LATITUDE", nullable = true, length = 20)
+    public String getLatitude() {
+        return this.latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
 }

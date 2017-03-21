@@ -1,12 +1,12 @@
 package com.nuctech.ls.model.bo.warehouse;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 
 /**
  * 业务对象处理的实体-[调度申请表]
@@ -15,13 +15,17 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "LS_WAREHOUSE_DEVICE_APPLICATION")
-public class LsWarehouseDeviceApplicationBO
-{
+public class LsWarehouseDeviceApplicationBO implements Serializable {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5150164219116014767L;
+
     /**
      * 缺省的构造函数
      */
-    public LsWarehouseDeviceApplicationBO()
-    {
+    public LsWarehouseDeviceApplicationBO() {
         super();
     }
 
@@ -30,7 +34,7 @@ public class LsWarehouseDeviceApplicationBO
 
     /* 申请节点 */
     private String applcationPort;
-    
+
     /* 申请节点名称 */
     private String applcationPortName;
 
@@ -52,10 +56,9 @@ public class LsWarehouseDeviceApplicationBO
     /* 申请时间 */
     private Date applyTime;
 
-    /* 申请状态
-    1. 已申请
-    2. 已处理
-    3. 已完成 */
+    /*
+     * 申请状态 1. 已申请 2. 已处理 3. 已完成
+     */
     private String applyStatus;
 
     /* 处理人 */
@@ -69,145 +72,129 @@ public class LsWarehouseDeviceApplicationBO
 
     @Id
     @Column(name = "APPLICATION_ID", nullable = false, length = 50)
-    public String getApplicationId()
-    {
+    public String getApplicationId() {
         return this.applicationId;
     }
 
-    public void setApplicationId(String applicationId)
-    {
+    public void setApplicationId(String applicationId) {
         this.applicationId = applicationId;
     }
 
     @Column(name = "APPLCATION_PORT", nullable = true, length = 50)
-    public String getApplcationPort()
-    {
+    public String getApplcationPort() {
         return this.applcationPort;
     }
 
-    public void setApplcationPort(String applcationPort)
-    {
+    public void setApplcationPort(String applcationPort) {
         this.applcationPort = applcationPort;
     }
-    
+
     @Column(name = "APPLCATION_PORT_NAME", nullable = true, length = 50)
-    public String getApplcationPortName()
-    {
+    public String getApplcationPortName() {
         return this.applcationPortName;
     }
 
-    public void setApplcationPortName(String applcationPortName)
-    {
+    public void setApplcationPortName(String applcationPortName) {
         this.applcationPortName = applcationPortName;
     }
 
     @Column(name = "DEVICE_NUMBER", nullable = true, length = 20)
-    public String getDeviceNumber()
-    {
+    public String getDeviceNumber() {
         return this.deviceNumber;
     }
 
-    public void setDeviceNumber(String deviceNumber)
-    {
+    public void setDeviceNumber(String deviceNumber) {
         this.deviceNumber = deviceNumber;
     }
 
     @Column(name = "ESEAL_NUMBER", nullable = true, length = 20)
-    public String getEsealNumber()
-    {
+    public String getEsealNumber() {
         return this.esealNumber;
     }
 
-    public void setEsealNumber(String esealNumber)
-    {
+    public void setEsealNumber(String esealNumber) {
         this.esealNumber = esealNumber;
     }
 
     @Column(name = "SENSOR_NUMBER", nullable = true, length = 20)
-    public String getSensorNumber()
-    {
+    public String getSensorNumber() {
         return this.sensorNumber;
     }
 
-    public void setSensorNumber(String sensorNumber)
-    {
+    public void setSensorNumber(String sensorNumber) {
         this.sensorNumber = sensorNumber;
     }
 
     @Column(name = "OTHER_NUMBER", nullable = true, length = 20)
-    public String getOtherNumber()
-    {
+    public String getOtherNumber() {
         return this.otherNumber;
     }
 
-    public void setOtherNumber(String otherNumber)
-    {
+    public void setOtherNumber(String otherNumber) {
         this.otherNumber = otherNumber;
     }
 
     @Column(name = "APPLY_USER", nullable = true, length = 50)
-    public String getApplyUser()
-    {
+    public String getApplyUser() {
         return this.applyUser;
     }
 
-    public void setApplyUser(String applyUser)
-    {
+    public void setApplyUser(String applyUser) {
         this.applyUser = applyUser;
     }
 
     @Column(name = "APPLY_TIME", nullable = true)
-    public Date getApplyTime()
-    {
+    public Date getApplyTime() {
         return this.applyTime;
     }
 
-    public void setApplyTime(Date applyTime)
-    {
+    public void setApplyTime(Date applyTime) {
         this.applyTime = applyTime;
     }
 
     @Column(name = "APPLY_STATUS", nullable = true, length = 2)
-    public String getApplyStatus()
-    {
+    public String getApplyStatus() {
         return this.applyStatus;
     }
 
-    public void setApplyStatus(String applyStatus)
-    {
+    public void setApplyStatus(String applyStatus) {
         this.applyStatus = applyStatus;
     }
 
     @Column(name = "DEAL_USER", nullable = true, length = 50)
-    public String getDealUser()
-    {
+    public String getDealUser() {
         return this.dealUser;
     }
 
-    public void setDealUser(String dealUser)
-    {
+    public void setDealUser(String dealUser) {
         this.dealUser = dealUser;
     }
 
     @Column(name = "DEAL_TIME", nullable = true)
-    public Date getDealTime()
-    {
+    public Date getDealTime() {
         return this.dealTime;
     }
 
-    public void setDealTime(Date dealTime)
-    {
+    public void setDealTime(Date dealTime) {
         this.dealTime = dealTime;
     }
 
     @Column(name = "FINISH_TIME", nullable = true)
-    public Date getFinishTime()
-    {
+    public Date getFinishTime() {
         return this.finishTime;
     }
 
-    public void setFinishTime(Date finishTime)
-    {
+    public void setFinishTime(Date finishTime) {
         this.finishTime = finishTime;
     }
+
+    @Override
+    public String toString() {
+        return "LsWarehouseDeviceApplicationBO [applicationId=" + applicationId + ", applcationPort=" + applcationPort
+                + ", applcationPortName=" + applcationPortName + ", deviceNumber=" + deviceNumber + ", esealNumber="
+                + esealNumber + ", sensorNumber=" + sensorNumber + ", otherNumber=" + otherNumber + ", applyUser="
+                + applyUser + ", applyTime=" + applyTime + ", applyStatus=" + applyStatus + ", dealUser=" + dealUser
+                + ", dealTime=" + dealTime + ", finishTime=" + finishTime + "]";
+    }
+
 }

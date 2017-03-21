@@ -7,9 +7,9 @@
   	<li>
   		<input type="checkbox" name="check-box" value="${port.portId }"/>
   		<p class="port_name">${port.portName }</p>
-  		<a href="" class="Tracking-device">${port.averageTrackDevice }</a>
-  		<a href="" class="E-Seal">${port.averageEseal }</a>
-  		<a href="" class="Sensor">${port.averageSensor }</a>
+  		<a href="#" class="Tracking-device">${port.trackDeviceNumber }</a>
+  		<a href="#" class="E-Seal">${port.eseal }</a>
+  		<a href="#" class="Sensor">${port.sensor }</a>
   	</li>
   </c:forEach>
  </ul>

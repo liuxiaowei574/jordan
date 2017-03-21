@@ -6,171 +6,210 @@ import java.io.Serializable;
  * 
  * 作者： 徐楠
  *
- * 描述：<p>设备库存 VO对象</p>
+ * 描述：
+ * <p>
+ * 设备库存 VO对象
+ * </p>
  * 创建时间：2016年6月13日
  */
 public class DeviceInventoryVO implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5335808907156799766L;
-	
-	/**
-	 * 流入量
-	 */
-	private long trackDeviceFlowIn;
-	
-	/**
-	 * 流出量
-	 */
-	private long trackDeviceFlowOut;
-	
-	/**
-	 * 转入量
-	 */
-	private long trackDeviceTurnIn;
-	
-	/**
-	 * 转出量
-	 */
-	private long trackDeviceTurnOut;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5335808907156799766L;
 
-	/**
-	 * 流入量
-	 */
-	private long esealFlowIn;
-	
-	/**
-	 * 流出量
-	 */
-	private long esealFlowOut;
-	
-	/**
-	 * 转入量
-	 */
-	private long esealTurnIn;
-	
-	/**
-	 * 转出量
-	 */
-	private long esealTurnOut;
-	
-	/**
-	 * 流入量
-	 */
-	private long sensorFlowIn;
-	
-	/**
-	 * 流出量
-	 */
-	private long sensorFlowOut;
-	
-	/**
-	 * 转入量
-	 */
-	private long sensorTurnIn;
-	
-	/**
-	 * 转出量
-	 */
-	private long sensorTurnOut;
+    /**
+     * 流入量
+     */
+    private long trackDeviceFlowIn;
 
-	public long getTrackDeviceFlowIn() {
-		return trackDeviceFlowIn;
-	}
+    /**
+     * 流出量
+     */
+    private long trackDeviceFlowOut;
 
-	public void setTrackDeviceFlowIn(long trackDeviceFlowIn) {
-		this.trackDeviceFlowIn = trackDeviceFlowIn;
-	}
+    /**
+     * 转入量
+     */
+    private long trackDeviceTurnIn;
 
-	public long getTrackDeviceFlowOut() {
-		return trackDeviceFlowOut;
-	}
+    /**
+     * 转出量
+     */
+    private long trackDeviceTurnOut;
 
-	public void setTrackDeviceFlowOut(long trackDeviceFlowOut) {
-		this.trackDeviceFlowOut = trackDeviceFlowOut;
-	}
+    /**
+     * 流入量
+     */
+    private long esealFlowIn;
 
-	public long getTrackDeviceTurnIn() {
-		return trackDeviceTurnIn;
-	}
+    /**
+     * 流出量
+     */
+    private long esealFlowOut;
 
-	public void setTrackDeviceTurnIn(long trackDeviceTurnIn) {
-		this.trackDeviceTurnIn = trackDeviceTurnIn;
-	}
+    /**
+     * 转入量
+     */
+    private long esealTurnIn;
 
-	public long getTrackDeviceTurnOut() {
-		return trackDeviceTurnOut;
-	}
+    /**
+     * 转出量
+     */
+    private long esealTurnOut;
 
-	public void setTrackDeviceTurnOut(long trackDeviceTurnOut) {
-		this.trackDeviceTurnOut = trackDeviceTurnOut;
-	}
+    /**
+     * 流入量
+     */
+    private long sensorFlowIn;
 
-	public long getEsealFlowIn() {
-		return esealFlowIn;
-	}
+    /**
+     * 流出量
+     */
+    private long sensorFlowOut;
 
-	public void setEsealFlowIn(long esealFlowIn) {
-		this.esealFlowIn = esealFlowIn;
-	}
+    /**
+     * 转入量
+     */
+    private long sensorTurnIn;
 
-	public long getEsealFlowOut() {
-		return esealFlowOut;
-	}
+    /**
+     * 转出量
+     */
+    private long sensorTurnOut;
 
-	public void setEsealFlowOut(long esealFlowOut) {
-		this.esealFlowOut = esealFlowOut;
-	}
+    /**
+     * 关锁库存量
+     */
+    private long trackDeviceInventory;
+    /**
+     * 子锁库存量
+     */
+    private long esealInventory;
+    /**
+     * 传感器库存量
+     */
+    private long sensorInventory;
 
-	public long getEsealTurnIn() {
-		return esealTurnIn;
-	}
+    public long getTrackDeviceFlowIn() {
+        return trackDeviceFlowIn;
+    }
 
-	public void setEsealTurnIn(long esealTurnIn) {
-		this.esealTurnIn = esealTurnIn;
-	}
+    public void setTrackDeviceFlowIn(long trackDeviceFlowIn) {
+        this.trackDeviceFlowIn = trackDeviceFlowIn;
+    }
 
-	public long getEsealTurnOut() {
-		return esealTurnOut;
-	}
+    public long getTrackDeviceFlowOut() {
+        return trackDeviceFlowOut;
+    }
 
-	public void setEsealTurnOut(long esealTurnOut) {
-		this.esealTurnOut = esealTurnOut;
-	}
+    public void setTrackDeviceFlowOut(long trackDeviceFlowOut) {
+        this.trackDeviceFlowOut = trackDeviceFlowOut;
+    }
 
-	public long getSensorFlowIn() {
-		return sensorFlowIn;
-	}
+    public long getTrackDeviceTurnIn() {
+        return trackDeviceTurnIn;
+    }
 
-	public void setSensorFlowIn(long sensorFlowIn) {
-		this.sensorFlowIn = sensorFlowIn;
-	}
+    public void setTrackDeviceTurnIn(long trackDeviceTurnIn) {
+        this.trackDeviceTurnIn = trackDeviceTurnIn;
+    }
 
-	public long getSensorFlowOut() {
-		return sensorFlowOut;
-	}
+    public long getTrackDeviceTurnOut() {
+        return trackDeviceTurnOut;
+    }
 
-	public void setSensorFlowOut(long sensorFlowOut) {
-		this.sensorFlowOut = sensorFlowOut;
-	}
+    public void setTrackDeviceTurnOut(long trackDeviceTurnOut) {
+        this.trackDeviceTurnOut = trackDeviceTurnOut;
+    }
 
-	public long getSensorTurnIn() {
-		return sensorTurnIn;
-	}
+    public long getEsealFlowIn() {
+        return esealFlowIn;
+    }
 
-	public void setSensorTurnIn(long sensorTurnIn) {
-		this.sensorTurnIn = sensorTurnIn;
-	}
+    public void setEsealFlowIn(long esealFlowIn) {
+        this.esealFlowIn = esealFlowIn;
+    }
 
-	public long getSensorTurnOut() {
-		return sensorTurnOut;
-	}
+    public long getEsealFlowOut() {
+        return esealFlowOut;
+    }
 
-	public void setSensorTurnOut(long sensorTurnOut) {
-		this.sensorTurnOut = sensorTurnOut;
-	}
-	
-	
+    public void setEsealFlowOut(long esealFlowOut) {
+        this.esealFlowOut = esealFlowOut;
+    }
+
+    public long getEsealTurnIn() {
+        return esealTurnIn;
+    }
+
+    public void setEsealTurnIn(long esealTurnIn) {
+        this.esealTurnIn = esealTurnIn;
+    }
+
+    public long getEsealTurnOut() {
+        return esealTurnOut;
+    }
+
+    public void setEsealTurnOut(long esealTurnOut) {
+        this.esealTurnOut = esealTurnOut;
+    }
+
+    public long getSensorFlowIn() {
+        return sensorFlowIn;
+    }
+
+    public void setSensorFlowIn(long sensorFlowIn) {
+        this.sensorFlowIn = sensorFlowIn;
+    }
+
+    public long getSensorFlowOut() {
+        return sensorFlowOut;
+    }
+
+    public void setSensorFlowOut(long sensorFlowOut) {
+        this.sensorFlowOut = sensorFlowOut;
+    }
+
+    public long getSensorTurnIn() {
+        return sensorTurnIn;
+    }
+
+    public void setSensorTurnIn(long sensorTurnIn) {
+        this.sensorTurnIn = sensorTurnIn;
+    }
+
+    public long getSensorTurnOut() {
+        return sensorTurnOut;
+    }
+
+    public void setSensorTurnOut(long sensorTurnOut) {
+        this.sensorTurnOut = sensorTurnOut;
+    }
+
+    public long getTrackDeviceInventory() {
+        return trackDeviceInventory;
+    }
+
+    public void setTrackDeviceInventory(long trackDeviceInventory) {
+        this.trackDeviceInventory = trackDeviceInventory;
+    }
+
+    public long getEsealInventory() {
+        return esealInventory;
+    }
+
+    public void setEsealInventory(long esealInventory) {
+        this.esealInventory = esealInventory;
+    }
+
+    public long getSensorInventory() {
+        return sensorInventory;
+    }
+
+    public void setSensorInventory(long sensorInventory) {
+        this.sensorInventory = sensorInventory;
+    }
+
 }

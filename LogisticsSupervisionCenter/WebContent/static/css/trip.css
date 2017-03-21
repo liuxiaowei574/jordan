@@ -100,6 +100,8 @@
 
 .esealNumber-list, .sensorNumber-list {
 	float: left;
+	padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .esealNumber-list ul, .sensorNumber-list ul{
@@ -158,9 +160,9 @@
 }
 
 .carousel-inner > .item > img, .carousel-inner > .item > a > img {
-    max-height: 178px;
+    /* max-height: 178px;
     width: 220px;
-    height: auto;
+    height: auto; */
     overflow: hidden;
 }
 #imageModal.modal.in .modal-dialog {
@@ -184,4 +186,20 @@
 }
 table {
 	font-size: 14px;
+}
+.riskLabel {
+	width: 30%;
+}
+.riskLabel [type='radio'] {
+	height: 100%;
+}
+.riskLabel span{
+	display: inline-block; 
+	position: relative; 
+	top: -10px; 
+	line-height: 30px;
+	height: 30px; 
+	width: 70%; 
+	font-weight: normal!important;
+	text-align: center;
 }

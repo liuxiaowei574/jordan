@@ -2,6 +2,10 @@
 var $table = $("#noticeListTable");
 var $ids=[];
 var $status = [];
+//刷新tale
+$(window).resize(function(){
+	$table.bootstrapTable("resetView");
+});
 /*****************公用方法******************/
 //设置传入参数
 function queryParams(params) {
@@ -26,11 +30,13 @@ function searchNoticeList() {
 		showColumns : false,
 		showExport : false,
 		striped : true,
-		height : "100%",
+		//height : "100%",
 		url : url,
 		method : "get",
 		idfield: "noticeId",
-		sortName:"noticeId",
+		sortable:true,
+		sortName:"deployTime",
+		sortOrder: "desc",
 		cache : false,
 		pagination : true,
 		sidePagination : 'server',
@@ -41,17 +47,26 @@ function searchNoticeList() {
 			checkbox : true
 		}, {
 			field : 'noticeTitle',
-			title : $.i18n.prop('notice.title')
+			title : $.i18n.prop('notice.title'),
+			sortable:true
 		}, {
 			field : 'noticeContent',
-			title :  $.i18n.prop('notice.content')
+			title :  $.i18n.prop('notice.content'),
+			sortable:false
 		}, {
 			field : 'noticeState',
 			title : $.i18n.prop('notice.status'),
-			formatter : stateFormatter
+			formatter : stateFormatter,
+			sortable:true
 		}, {
 			field : 'deployTime',
-			title : $.i18n.prop('notice.deployTime')
+			title : $.i18n.prop('notice.deployTime'),
+			sortable:true
+		}, {
+			field : 'noticeType',
+			title : $.i18n.prop('notice.type'),
+			formatter : noticeTypeFormat,
+			sortable:true 
 		}, {
 			field : '',
 			title : $.i18n.prop('notice.operate'),
@@ -101,6 +116,30 @@ function stateFormatter(value, row, index) {
 	}
 	return [show].join('');
 }
+/**
+ * 类型显示
+ * @param value
+ * @param row
+ * @param index
+ * @returns
+ */
+function noticeTypeFormat(value, row, index){
+	var show;
+	if(value =='0'){
+		show = $.i18n.prop('NoticeType.NomalNotice');
+	}else if(value =='1'){
+		show =$.i18n.prop('NoticeType.AlarmNotice');
+	}else if(value =='2'){
+		show = $.i18n.prop('NoticeType.TripNotice');
+	}else if(value =='3'){
+		show = $.i18n.prop('NoticeType.DispatchNotice');
+	}else if(value =='4'){
+		show = $.i18n.prop('NoticeType.TripEscortNotice');
+	}else{
+		show = '--'
+	}
+	return [show].join('');
+}
 
 /**
  * 获取选中的ID
@@ -136,10 +175,9 @@ function search(){
             //可以添加提交验证                   
             params[field.name] = field.value;  
         });  
-        console.log(params);
         return params;  
     }
-	$table.bootstrapTable('refresh', {});
+	$table.bootstrapTable('refresh');
 }
 
 /**
@@ -157,6 +195,11 @@ function receiveUserList(id) {
 	
 	$('#receiveUserListModal').on('loaded.bs.modal', function(e) {
 		$('#receiveUserListModal').modal('show');
+	});
+	//模态框登录判断
+	$('#receiveUserListModal').on('show.bs.modal', function(e) {
+		var content = $(this).find(".modal-content").html();
+		needLogin(content);
 	});
 }
 
@@ -186,6 +229,11 @@ $(function() {
 		$('#noticeAddModal').on('loaded.bs.modal', function(e) {
 			$('#noticeAddModal').modal('show');
 		});
+		//模态框登录判断
+		$('#noticeAddModal').on('show.bs.modal', function(e) {
+			var content = $(this).find(".modal-content").html();
+			needLogin(content);
+		});
 	});
 	
 	$("#publishBtn").click(function() {
@@ -199,21 +247,63 @@ $(function() {
 			} else {
 				bootbox.confirm($.i18n.prop("system.notice.publish.confirm"), function(result) {
 					if(result) {
-						var ajaxUrl = root+'/notice/publish.action?ids='+$ids;
+						//判断该通知是否有接受人
+						var judgeUrl = root+'/notice/judgePublish.action?ids='+$ids;
 						$.ajax({
-							url : ajaxUrl, // 请求url
+							url : judgeUrl, // 请求url
 							type : "post", // 提交方式
 							dataType : "json", // 数据类型
 							success : function(data) { // 提交成功的回调函数
-								if (data) {
-									bootbox.success($.i18n.prop("system.notice.publish.success"));
-									$table.bootstrapTable('refresh', {});
-								} else {
-									bootbox.error($.i18n.prop("system.notice.publish.error"));
-									$table.bootstrapTable('refresh', {});
+								if(!needLogin(data)) {
+									if (data) {//接收人不为空
+										var ajaxUrl = root+'/notice/publish.action?ids='+$ids;
+										$.ajax({
+											url : ajaxUrl, // 请求url
+											type : "post", // 提交方式
+											dataType : "json", // 数据类型
+											success : function(data) { // 提交成功的回调函数
+												console.log(data);
+												if(!needLogin(data)) {
+													if (data) {
+														bootbox.success($.i18n.prop("system.notice.publish.success"));
+														$table.bootstrapTable('refresh', {});
+													} else {
+														bootbox.error($.i18n.prop("system.notice.publish.error"));
+														$table.bootstrapTable('refresh', {});
+													}
+												}
+											}
+										});
+									} else {//接收人为空
+										bootbox.error($.i18n.prop("system.notice.publish.receveruser.null"));
+										$table.bootstrapTable('refresh', {});
+									}
 								}
 							}
 						});
+						
+						
+						
+						
+//						var ajaxUrl = root+'/notice/publish.action?ids='+$ids;
+//						$.ajax({
+//							url : ajaxUrl, // 请求url
+//							type : "post", // 提交方式
+//							dataType : "json", // 数据类型
+//							success : function(data) { // 提交成功的回调函数
+//								console.log(data);
+//								if(!needLogin(data)) {
+//									if (data) {
+//										bootbox.success($.i18n.prop("system.notice.publish.success"));
+//										$table.bootstrapTable('refresh', {});
+//									} else {
+//										//bootbox.error($.i18n.prop("system.notice.publish.error"));
+//										bootbox.error($.i18n.prop("接收人为空"));
+//										$table.bootstrapTable('refresh', {});
+//									}
+//								}
+//							}
+//						});
 					}
 				});
 			}
@@ -241,6 +331,11 @@ $(function() {
 				$('#noticeEditModal').on('loaded.bs.modal', function(e) {
 					$('#noticeEditModal').modal('show');
 				});
+				//模态框登录判断
+				$('#noticeEditModal').on('show.bs.modal', function(e) {
+					var content = $(this).find(".modal-content").html();
+					needLogin(content);
+				});
 			}
 		}
 		
@@ -253,7 +348,7 @@ $(function() {
 		} else {
 			//alert($status);
 			var flag = true;
-			if($status.length > 1) {
+			if($status.length > 0) {
 				for(var i = 0; i < $status.length; i++) {
 					//alert($status[i]);
 					if($status[i] != '0') {
@@ -273,12 +368,14 @@ $(function() {
 							type : "post", // 提交方式
 							dataType : "json", // 数据类型
 							success : function(data) { // 提交成功的回调函数
-								if (data) {
-									bootbox.success($.i18n.prop("system.notice.delete.success"));
-									$table.bootstrapTable('refresh', {});
-								} else {
-									bootbox.error($.i18n.prop("system.notice.delete.error"));
-									$table.bootstrapTable('refresh', {});
+								if(!needLogin(data)) {
+									if (data) {
+										bootbox.success($.i18n.prop("system.notice.delete.success"));
+										$table.bootstrapTable('refresh', {});
+									} else {
+										bootbox.error($.i18n.prop("system.notice.delete.error"));
+										$table.bootstrapTable('refresh', {});
+									}
 								}
 							}
 						});
@@ -287,4 +384,12 @@ $(function() {
 			}
 		}
 	});
+	
+	
+	
+	
+	
+	
+	
+	
 });

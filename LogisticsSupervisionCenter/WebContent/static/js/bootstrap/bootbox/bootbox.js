@@ -176,9 +176,9 @@
       if (!button.className) {
         if (total <= 2 && index === total-1) {
           // always add a primary to the main option in a two-button dialog
-          button.className = "btn-danger";
+          button.className = "btn-confirm";
         } else {
-          button.className = "btn-default";
+          button.className = "btn-danger";
         }
       }
     });
@@ -363,7 +363,7 @@
   exports.confirm = function() {
     var options;
 
-    options = mergeDialogOptions("confirm", ["cancel", "confirm"], ["message", "callback"], arguments);
+    options = mergeDialogOptions("confirm", [ "confirm","cancel"], ["message", "callback"], arguments);
 
     /**
      * overrides; undo anything the user tried to set they shouldn't have
@@ -406,14 +406,14 @@
     // just because of 'value' and 'inputType' - can we refactor?
     defaults = {
       className: "bootbox-prompt",
-      buttons: createLabels("cancel", "confirm"),
+      buttons: createLabels( "confirm","cancel"),
       value: "",
       inputType: "text"
     };
 
     options = validateButtons(
       mergeArguments(defaults, arguments, ["title", "callback"]),
-      ["cancel", "confirm"]
+      [ "confirm","cancel"]
     );
 
     // capture the user's show value; we always set this to false before
@@ -1053,7 +1053,7 @@
   };
 
   exports.addLocale = function(name, values) {
-    $.each(["OK", "CANCEL", "CONFIRM"], function(_, v) {
+    $.each(["OK", "CONFIRM","CANCEL"], function(_, v) {
       if (!values[v]) {
         throw new Error("Please supply a translation for '" + v + "'");
       }
