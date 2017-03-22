@@ -174,15 +174,16 @@ function chart(x,y1,y2){
 		};
 	vehicleCharts.setOption(vehicleOption);
 	vehicleCharts.on('click',function(params){
+		debugger;
 		$("#s_portname").val(params.name);
-		createtable();
+		createtable(params.name,params.seriesName);
 		//
 	});
 	//加载数据
 	createtable();
 }
 //创建表格
-function createtable(){
+function createtable(portName,arrOrlea){
 	var options = $table.bootstrapTable('getOptions');
 	options.queryParams = function(tparams) {
 		//遍历form 组装json  
@@ -195,7 +196,7 @@ function createtable(){
 	}
 	$table.bootstrapTable("destroy").bootstrapTable({
 		clickToSelect : false,
-		url : '${root}/statisitc/jgxctjDetail.action',
+		url : "${root}/statisitc/jgxctjDetail.action?portName="+portName+"&arrOrlea="+arrOrlea,
 		pagination : true,
 		sidePagination : 'server',
 		pageNumber : 1,
@@ -279,6 +280,7 @@ function search() {
 		cache:false,
 		data:param,
 		success:function(v){
+			debugger;
 			var x=[];
 			var y1=[];
 			var y2=[];

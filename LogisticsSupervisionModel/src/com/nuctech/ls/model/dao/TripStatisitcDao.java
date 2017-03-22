@@ -162,9 +162,19 @@ public class TripStatisitcDao extends LSBaseDao<LsSystemDepartmentBO, Serializab
      * 
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    public PageList<TripStaticVo> tripDetail(PageQuery<Map> pageQuery) {
-        String queryString = "select d,t ,'1'" + " from LsSystemDepartmentBO d,LsMonitorTripBO t"
-                + " where d.organizationId=t.checkoutPort " + "/~ and d.organizationId like '%[portname]%' ~/ "
+    public PageList<TripStaticVo> tripDetail(PageQuery<Map> pageQuery,String portName,String arrOrlea) {
+    	String queryString = "";
+    	queryString =  "select d,t ,'1'" + " from LsSystemDepartmentBO d,LsMonitorTripBO t"
+                + " where (d.organizationId=t.checkoutPort or d.organizationId=t.checkinPort) ";
+    	//点击柱状图，且seriesName为arrived
+    	if(arrOrlea.equals("Arrived")&& !arrOrlea.equals("undefined") &&!portName.equals("undefined")){
+    		queryString += " and d.organizationName='"+portName+"' and d.organizationId = t.checkinPort ";
+    	}
+    	//点击柱状图，且seriesName为leaved
+    	if(arrOrlea.equals("Leaved")&& !arrOrlea.equals("undefined")&&!portName.equals("undefined")){
+    		queryString += " and d.organizationName='"+portName+"' and d.organizationId = t.checkoutPort ";
+    	}
+    	queryString += "/~ and d.organizationId like '%[portname]%' ~/ "
                 + "/~ and t.checkoutTime > '[starttime]' ~/ " + "/~ and t.checkoutTime < '[endtime]' ~/ "
                 + " union select d,t ,'0'" + " from LsSystemDepartmentBO d,LsMonitorTripBO t"
                 + " where d.organizationId=t.checkinPort " + "/~ and d.organizationId like '%[portname]%' ~/ "

@@ -101,8 +101,8 @@ public class StatisitcService extends LSBaseService {
 	 */
 	@SuppressWarnings("rawtypes")
 	public JSONObject queryTripStaicDetail(PageQuery<Map> pageQuery, JsonConfig jsonConfig,
-			boolean ignoreDefaultExcludes) {
-		PageList<TripStaticVo> list = tripStatisitcDao.tripDetail(pageQuery);
+			boolean ignoreDefaultExcludes ,String portName,String arrOrlea) {
+		PageList<TripStaticVo> list = tripStatisitcDao.tripDetail(pageQuery,portName,arrOrlea);
 		return fromObjectList(list, jsonConfig, ignoreDefaultExcludes);
 	}
 

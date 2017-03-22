@@ -67,7 +67,8 @@ public class StatiticAction extends LSBaseAction {
     @Resource
     private SystemUserService systemUserService;
     private List<?> userList;
-    
+    private String portName;
+    private String arrOrlea;
     @Resource
     private CommonVehicleService commonVehicleService;
     /**
@@ -204,7 +205,7 @@ public class StatiticAction extends LSBaseAction {
             pageQuery = this.newPageQuery("t.organizationShort asc");
         }
         pageQuery = dealDateParam(pageQuery);
-        JSONObject json = statisitcService.queryTripStaicDetail(pageQuery, null, false);
+        JSONObject json = statisitcService.queryTripStaicDetail(pageQuery, null, false,portName,arrOrlea);
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
@@ -444,5 +445,21 @@ public class StatiticAction extends LSBaseAction {
     public void setUserList(List<?> userList) {
         this.userList = userList;
     }
+
+	public String getPortName() {
+		return portName;
+	}
+
+	public void setPortName(String portName) {
+		this.portName = portName;
+	}
+
+	public String getArrOrlea() {
+		return arrOrlea;
+	}
+
+	public void setArrOrlea(String arrOrlea) {
+		this.arrOrlea = arrOrlea;
+	}
 
 }

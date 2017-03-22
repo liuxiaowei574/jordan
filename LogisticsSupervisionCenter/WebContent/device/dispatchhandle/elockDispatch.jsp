@@ -50,7 +50,7 @@
 				pagination : true,
 				pageSize : 5,
 				maintainSelected : true,
-
+				pageList : [ 10, 20, 30 ],
 				columns : [ {
 					checkbox : true
 				}, {
